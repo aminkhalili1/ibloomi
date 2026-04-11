@@ -48,7 +48,7 @@
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(232,85,106,0.08);
     }
-    .nav-logo img { height: 30px; width: auto; }
+    .nav-logo img { height: 28px; width: auto; object-fit: contain; }
     .nav-btn {
       font-size: 12px; font-weight: 500; letter-spacing: 0.3px;
       color: var(--pink); border: 1.5px solid var(--pink);
@@ -65,7 +65,8 @@
     }
 
     .logo-mark {
-      width: 120px; height: auto; margin: 0 auto 2.5rem;
+      width: 160px; height: 60px; object-fit: contain;
+      margin: 0 auto 2.5rem;
       animation: float 6s ease-in-out infinite;
     }
     @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
