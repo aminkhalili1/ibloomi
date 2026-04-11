@@ -4,19 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>iBloomi — Floral Design, Reimagined</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 90'><ellipse cx='45' cy='28' rx='7' ry='14' fill='%231D9E75' opacity='0.9'/><ellipse cx='45' cy='28' rx='7' ry='14' fill='%231D9E75' opacity='0.85' transform='rotate(60 45 45)'/><ellipse cx='45' cy='28' rx='7' ry='14' fill='%231D9E75' opacity='0.8' transform='rotate(120 45 45)'/><ellipse cx='45' cy='28' rx='7' ry='14' fill='%235DCAA5' opacity='0.75' transform='rotate(180 45 45)'/><ellipse cx='45' cy='28' rx='7' ry='14' fill='%235DCAA5' opacity='0.7' transform='rotate(240 45 45)'/><ellipse cx='45' cy='28' rx='7' ry='14' fill='%235DCAA5' opacity='0.65' transform='rotate(300 45 45)'/><circle cx='45' cy='45' r='8' fill='%23085041'/><circle cx='45' cy='45' r='4' fill='%239ee3c5'/></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><ellipse cx='38' cy='50' rx='18' ry='11' fill='%23E8556A' transform='rotate(-30 38 50)'/><ellipse cx='62' cy='50' rx='18' ry='11' fill='%23E8556A' transform='rotate(30 62 50)'/><ellipse cx='65' cy='42' rx='12' ry='7' fill='%237AB648' transform='rotate(-20 65 42)'/></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --green-deep: #0a3d2e;
-      --green-mid: #1D9E75;
-      --green-light: #a8dfc9;
-      --green-pale: #e8f7f1;
-      --cream: #faf8f4;
-      --text-dark: #1a1a18;
-      --text-muted: #6b7a72;
+      --pink: #E8556A;
+      --pink-dark: #c93d52;
+      --pink-light: #fde8eb;
+      --pink-mid: #f5a3af;
+      --green: #7AB648;
+      --green-light: #eaf5d6;
+      --dark: #1a1a1a;
+      --muted: #6b6b6b;
+      --cream: #fdfcfa;
     }
 
     html { scroll-behavior: smooth; }
@@ -24,285 +26,144 @@
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--cream);
-      color: var(--text-dark);
+      color: var(--dark);
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* Background organic blobs */
-    .bg-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.35;
-    }
-    .blob-1 {
-      width: 600px; height: 600px;
-      background: #9ee3c5;
-      top: -200px; right: -100px;
-      animation: drift1 18s ease-in-out infinite alternate;
-    }
-    .blob-2 {
-      width: 400px; height: 400px;
-      background: #c5edd9;
-      bottom: -100px; left: -80px;
-      animation: drift2 22s ease-in-out infinite alternate;
-    }
-    .blob-3 {
-      width: 250px; height: 250px;
-      background: #f0c4a8;
-      top: 50%; left: 40%;
-      animation: drift3 15s ease-in-out infinite alternate;
-    }
+    .bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.22; }
+    .blob-1 { width: 700px; height: 700px; background: #E8556A; top: -300px; right: -200px; animation: drift1 20s ease-in-out infinite alternate; }
+    .blob-2 { width: 500px; height: 500px; background: #7AB648; bottom: -200px; left: -150px; animation: drift2 25s ease-in-out infinite alternate; }
+    .blob-3 { width: 300px; height: 300px; background: #f5c6cc; top: 55%; left: 35%; animation: drift3 16s ease-in-out infinite alternate; }
+    @keyframes drift1 { from { transform: translate(0,0); } to { transform: translate(-50px,70px); } }
+    @keyframes drift2 { from { transform: translate(0,0); } to { transform: translate(60px,-50px); } }
+    @keyframes drift3 { from { transform: translate(0,0); } to { transform: translate(-20px,25px); } }
 
-    @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(-40px, 60px) scale(1.1); } }
-    @keyframes drift2 { from { transform: translate(0,0) scale(1); } to { transform: translate(50px, -40px) scale(1.08); } }
-    @keyframes drift3 { from { transform: translate(0,0) scale(1); } to { transform: translate(-30px, 30px) scale(0.9); } }
-
-    /* Layout */
-    .page {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 4rem 1.5rem;
-      text-align: center;
-    }
-
-    /* Nav */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.4rem 2.5rem;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.3rem 2.5rem;
+      background: rgba(253,252,250,0.6);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(232,85,106,0.08);
     }
-    .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: var(--green-deep);
-      letter-spacing: 0.5px;
-      text-decoration: none;
+    .nav-logo img { height: 30px; width: auto; }
+    .nav-btn {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.3px;
+      color: var(--pink); border: 1.5px solid var(--pink);
+      padding: 7px 20px; border-radius: 25px;
+      background: transparent; text-decoration: none;
+      transition: all 0.2s;
     }
-    .nav-logo span { color: var(--green-mid); }
-    .nav-badge {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--green-mid);
-      border: 1px solid var(--green-light);
-      padding: 5px 14px;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.6);
+    .nav-btn:hover { background: var(--pink); color: #fff; }
+
+    .page {
+      position: relative; z-index: 1; min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 7rem 1.5rem 4rem; text-align: center;
     }
 
-    /* Hero */
-    .hero { max-width: 640px; }
-
-    .flower-wrap {
-      margin: 0 auto 2.5rem;
-      width: 90px; height: 90px;
-      animation: spin-slow 30s linear infinite;
+    .logo-mark {
+      width: 120px; height: auto; margin: 0 auto 2.5rem;
+      animation: float 6s ease-in-out infinite;
     }
-
-    @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
     .hero-eyebrow {
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--green-mid);
-      margin-bottom: 1.2rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.2s forwards;
+      font-size: 11px; font-weight: 500; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--pink);
+      margin-bottom: 1.2rem; opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
     }
 
     .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3rem, 8vw, 5.5rem);
-      font-weight: 300;
-      line-height: 1.05;
-      color: var(--green-deep);
-      margin-bottom: 1.5rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.4s forwards;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 400; line-height: 1.1; color: var(--dark);
+      margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
     }
-    .hero-title em {
-      font-style: italic;
-      color: var(--green-mid);
-    }
+    .hero-title em { font-style: italic; color: var(--pink); }
+    .hero-title .g { color: var(--green); font-style: normal; }
 
     .hero-sub {
-      font-size: 1rem;
-      font-weight: 300;
-      color: var(--text-muted);
-      line-height: 1.75;
-      max-width: 420px;
-      margin: 0 auto 2.8rem;
-      opacity: 0;
-      animation: fadeUp 0.8s 0.6s forwards;
+      font-size: 1rem; font-weight: 300; color: var(--muted);
+      line-height: 1.8; max-width: 400px; margin: 0 auto 3rem;
+      opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
     }
 
-    /* Form */
     .form-wrap {
-      display: flex;
-      gap: 0;
-      max-width: 400px;
-      width: 100%;
-      margin: 0 auto;
-      border-radius: 50px;
-      overflow: hidden;
-      border: 1px solid var(--green-light);
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 32px rgba(29,158,117,0.08);
-      opacity: 0;
-      animation: fadeUp 0.8s 0.8s forwards;
+      display: flex; max-width: 410px; width: 100%; margin: 0 auto;
+      border-radius: 50px; overflow: hidden;
+      border: 1.5px solid var(--pink-mid);
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
     }
-
     .form-wrap input[type="email"] {
-      flex: 1;
-      border: none;
-      outline: none;
-      background: transparent;
-      padding: 0 1.2rem;
-      font-size: 14px;
-      font-family: 'DM Sans', sans-serif;
-      color: var(--text-dark);
-      min-width: 0;
+      flex: 1; border: none; outline: none; background: transparent;
+      padding: 0 1.3rem; font-size: 14px;
+      font-family: 'DM Sans', sans-serif; color: var(--dark); min-width: 0;
     }
-    .form-wrap input::placeholder { color: #aab5af; }
-
+    .form-wrap input::placeholder { color: #c8bebe; }
     .form-wrap button {
-      border: none;
-      background: var(--green-mid);
-      color: #fff;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 0 1.5rem;
-      height: 50px;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 0.2s;
-      border-radius: 0 50px 50px 0;
-      letter-spacing: 0.3px;
+      border: none; background: var(--pink); color: #fff;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+      padding: 0 1.6rem; height: 52px; cursor: pointer;
+      border-radius: 0 50px 50px 0; transition: background 0.2s; white-space: nowrap;
     }
-    .form-wrap button:hover { background: var(--green-deep); }
-    .form-wrap button:disabled { background: var(--green-light); cursor: default; }
+    .form-wrap button:hover { background: var(--pink-dark); }
+    .form-wrap button:disabled { background: var(--pink-mid); cursor: default; }
 
     .form-msg {
-      margin-top: 1rem;
-      font-size: 13px;
-      min-height: 20px;
-      opacity: 0;
-      transition: opacity 0.4s;
-      color: var(--green-mid);
+      margin-top: 0.9rem; font-size: 13px; min-height: 20px;
+      opacity: 0; transition: opacity 0.4s; color: var(--green);
     }
     .form-msg.error { color: #c0392b; }
     .form-msg.visible { opacity: 1; }
 
-    /* Divider */
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin: 3rem auto;
-      max-width: 300px;
-      width: 100%;
-      opacity: 0;
-      animation: fadeUp 0.8s 1s forwards;
+    .success-state {
+      display: none; flex-direction: column; align-items: center; gap: 0.5rem;
+      opacity: 0; animation: fadeUp 0.6s forwards;
     }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--green-light);
+    .success-icon {
+      width: 50px; height: 50px; border-radius: 50%; background: var(--pink-light);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;
     }
-    .divider-leaf { font-size: 18px; color: var(--green-light); }
+    .success-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--dark); }
+    .success-sub { font-size: 13px; color: var(--muted); }
 
-    /* Pillars */
+    .divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin: 3rem auto; max-width: 300px; width: 100%;
+      opacity: 0; animation: fadeUp 0.8s 1s forwards;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #f0dde0; }
+    .divider-sym { color: var(--pink-mid); font-size: 14px; }
+
     .pillars {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 0.8s 1.1s forwards;
+      display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.8s 1.1s forwards;
     }
     .pillar {
-      background: rgba(255,255,255,0.7);
-      border: 1px solid var(--green-pale);
-      border-radius: 14px;
-      padding: 1.1rem 1.4rem;
-      font-size: 13px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      backdrop-filter: blur(4px);
+      background: rgba(255,255,255,0.8); border-radius: 50px;
+      padding: 0.65rem 1.2rem; font-size: 13px; color: var(--muted);
+      display: flex; align-items: center; gap: 7px;
+      backdrop-filter: blur(4px); border: 1px solid rgba(232,85,106,0.15);
     }
-    .pillar-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--green-mid);
-      flex-shrink: 0;
-    }
+    .pillar-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .pd-pink { background: var(--pink); }
+    .pd-green { background: var(--green); }
 
-    /* Footer */
     footer {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      z-index: 10;
-      text-align: center;
-      padding: 1.2rem;
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.3px;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 10;
+      text-align: center; padding: 1.2rem;
+      font-size: 11px; color: #bbb; letter-spacing: 0.3px;
     }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    /* Success state */
-    .success-state {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      opacity: 0;
-      animation: fadeUp 0.6s forwards;
-    }
-    .success-icon {
-      width: 48px; height: 48px;
-      border-radius: 50%;
-      background: var(--green-pale);
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 0.5rem;
-    }
-    .success-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      color: var(--green-deep);
-    }
-    .success-sub { font-size: 13px; color: var(--text-muted); }
   </style>
 </head>
 <body>
@@ -314,29 +175,19 @@
   </div>
 
   <nav>
-    <a href="#" class="nav-logo">i<span>Bloomi</span></a>
-    <a href="app.html" class="nav-badge" style="text-decoration:none; cursor:pointer;">Try Me →</a>
+    <a href="#"><img src="logo.png" alt="iBloomi" class="nav-logo" /></a>
+    <a href="app.html" class="nav-btn">Try Me →</a>
   </nav>
 
   <main class="page">
-    <div class="hero">
-
-      <svg class="flower-wrap" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="45" cy="28" rx="7" ry="14" fill="#1D9E75" opacity="0.9"/>
-        <ellipse cx="45" cy="28" rx="7" ry="14" fill="#1D9E75" opacity="0.85" transform="rotate(60 45 45)"/>
-        <ellipse cx="45" cy="28" rx="7" ry="14" fill="#1D9E75" opacity="0.8" transform="rotate(120 45 45)"/>
-        <ellipse cx="45" cy="28" rx="7" ry="14" fill="#5DCAA5" opacity="0.75" transform="rotate(180 45 45)"/>
-        <ellipse cx="45" cy="28" rx="7" ry="14" fill="#5DCAA5" opacity="0.7" transform="rotate(240 45 45)"/>
-        <ellipse cx="45" cy="28" rx="7" ry="14" fill="#5DCAA5" opacity="0.65" transform="rotate(300 45 45)"/>
-        <circle cx="45" cy="45" r="8" fill="#085041"/>
-        <circle cx="45" cy="45" r="4" fill="#9ee3c5"/>
-      </svg>
+    <div>
+      <img src="logo.png" class="logo-mark" alt="iBloomi" />
 
       <p class="hero-eyebrow">Floral design · Reimagined with AI</p>
 
-      <h1 class="hero-title">Where <em>nature</em><br>meets intelligence</h1>
+      <h1 class="hero-title">Where <em>beauty</em><br>meets <span class="g">intelligence</span></h1>
 
-      <p class="hero-sub">iBloomi is a personalized floral design platform that transforms your emotions into unique, meaningful arrangements. Something beautiful is growing.</p>
+      <p class="hero-sub">iBloomi is an AI-powered platform for floral designers, florists, and creative studios. Something beautiful is growing.</p>
 
       <div id="form-section">
         <form class="form-wrap" id="notify-form" onsubmit="handleSubmit(event)">
@@ -354,7 +205,7 @@
         <div class="success-state" style="display:flex;">
           <div class="success-icon">
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <path d="M4 11.5l5 5 9-9" stroke="#1D9E75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 11.5l5 5 9-9" stroke="#E8556A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <div class="success-title">You're on the list</div>
@@ -362,16 +213,13 @@
         </div>
       </div>
 
-      <div class="divider">
-        <span class="divider-leaf">✿</span>
-      </div>
+      <div class="divider"><span class="divider-sym">✦</span></div>
 
       <div class="pillars">
-        <div class="pillar"><span class="pillar-dot"></span>AI floral design</div>
-        <div class="pillar"><span class="pillar-dot"></span>Smart arrangement tools</div>
-        <div class="pillar"><span class="pillar-dot"></span>Built for creatives</div>
+        <div class="pillar"><span class="pillar-dot pd-pink"></span>AI floral design</div>
+        <div class="pillar"><span class="pillar-dot pd-green"></span>Smart arrangement tools</div>
+        <div class="pillar"><span class="pillar-dot pd-pink"></span>Built for creatives</div>
       </div>
-
     </div>
   </main>
 
@@ -383,40 +231,26 @@
       const form = document.getElementById('notify-form');
       const btn = document.getElementById('submit-btn');
       const msg = document.getElementById('form-msg');
-
       const email = form.querySelector('input[name="email"]').value.trim();
       if (!email || !email.includes('@')) {
         msg.textContent = 'Please enter a valid email address.';
         msg.className = 'form-msg error visible';
         return;
       }
-
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
-      msg.className = 'form-msg';
-
+      btn.disabled = true; btn.textContent = 'Sending...'; msg.className = 'form-msg';
       try {
-        const data = new FormData(form);
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          body: data
-        });
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(form) });
         const json = await res.json();
-
         if (json.success) {
           document.getElementById('form-section').style.display = 'none';
           document.getElementById('success-section').style.display = 'block';
-        } else {
-          throw new Error('Submission failed');
-        }
-      } catch (err) {
+        } else { throw new Error(); }
+      } catch {
         msg.textContent = 'Something went wrong. Please try again.';
         msg.className = 'form-msg error visible';
-        btn.disabled = false;
-        btn.textContent = 'Notify me';
+        btn.disabled = false; btn.textContent = 'Notify me';
       }
     }
   </script>
-
 </body>
 </html>
