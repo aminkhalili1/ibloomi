@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iBloomi — Sign In</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 90 90'><ellipse cx='45' cy='28' rx='7' ry='14' fill='%231D9E75' opacity='0.9'/><ellipse cx='45' cy='28' rx='7' ry='14' fill='%231D9E75' opacity='0.85' transform='rotate(60 45 45)'/><ellipse cx='45' cy='28' rx='7' ry='14' fill='%231D9E75' opacity='0.8' transform='rotate(120 45 45)'/><ellipse cx='45' cy='28' rx='7' ry='14' fill='%235DCAA5' opacity='0.75' transform='rotate(180 45 45)'/><ellipse cx='45' cy='28' rx='7' ry='14' fill='%235DCAA5' opacity='0.7' transform='rotate(240 45 45)'/><ellipse cx='45' cy='28' rx='7' ry='14' fill='%235DCAA5' opacity='0.65' transform='rotate(300 45 45)'/><circle cx='45' cy='45' r='8' fill='%23085041'/><circle cx='45' cy='45' r='4' fill='%239ee3c5'/></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-deep: #0a3d2e;
+      --green-mid: #1D9E75;
+      --green-light: #a8dfc9;
+      --green-pale: #e8f7f1;
+      --cream: #faf8f4;
+      --text-dark: #1a1a18;
+      --text-muted: #6b7a72;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text-dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Background blobs */
+    .bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+    }
+    .blob-1 {
+      width: 600px; height: 600px;
+      background: #9ee3c5;
+      top: -200px; right: -100px;
+      animation: drift1 18s ease-in-out infinite alternate;
+    }
+    .blob-2 {
+      width: 400px; height: 400px;
+      background: #c5edd9;
+      bottom: -100px; left: -80px;
+      animation: drift2 22s ease-in-out infinite alternate;
+    }
+    .blob-3 {
+      width: 250px; height: 250px;
+      background: #f0c4a8;
+      top: 50%; left: 40%;
+      animation: drift3 15s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(-40px, 60px) scale(1.1); } }
+    @keyframes drift2 { from { transform: translate(0,0) scale(1); } to { transform: translate(50px, -40px) scale(1.08); } }
+    @keyframes drift3 { from { transform: translate(0,0) scale(1); } to { transform: translate(-30px, 30px) scale(0.9); } }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 2.5rem;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--green-deep);
+      letter-spacing: 0.5px;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--green-mid); }
+    .nav-badge {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      border: 1px solid var(--green-light);
+      padding: 5px 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.6);
+      text-decoration: none;
+    }
+
+    /* Page */
+    .page {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6rem 1.5rem 4rem;
+    }
+
+    /* Card */
+    .login-card {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--green-light);
+      border-radius: 24px;
+      padding: 2.8rem 2.4rem 2.4rem;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 48px rgba(29,158,117,0.1);
+      opacity: 0;
+      animation: fadeUp 0.7s 0.2s forwards;
+    }
+
+    .card-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .flower-wrap {
+      width: 58px; height: 58px;
+      margin-bottom: 1.1rem;
+      animation: spin-slow 30s linear infinite;
+    }
+    @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .card-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--green-deep);
+      line-height: 1.1;
+    }
+    .card-title em { font-style: italic; color: var(--green-mid); }
+
+    /* Fields */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .field {
+      position: relative;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .field input {
+      width: 100%;
+      border: 1px solid var(--green-light);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.7);
+      outline: none;
+      padding: 0.78rem 1rem;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-dark);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .field input:focus {
+      border-color: var(--green-mid);
+      box-shadow: 0 0 0 3px rgba(29,158,117,0.12);
+    }
+    .field input::placeholder { color: #c0cdc7; }
+
+    /* Show password toggle */
+    .field-pw { position: relative; }
+    .field-pw input { padding-right: 2.8rem; }
+    .toggle-pw {
+      position: absolute;
+      right: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .toggle-pw:hover { opacity: 1; }
+
+    /* Submit */
+    .btn-login {
+      width: 100%;
+      border: none;
+      background: var(--green-mid);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 0.85rem;
+      border-radius: 50px;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, transform 0.15s;
+      margin-bottom: 0.2rem;
+    }
+    .btn-login:hover { background: var(--green-deep); transform: translateY(-1px); }
+    .btn-login:active { transform: translateY(0); }
+    .btn-login:disabled { background: var(--green-light); cursor: default; transform: none; }
+
+    /* Error message */
+    .login-msg {
+      min-height: 20px;
+      font-size: 12.5px;
+      color: #c0392b;
+      text-align: center;
+      margin-top: 0.75rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .login-msg.visible { opacity: 1; }
+
+    /* Shake animation */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+    .shake { animation: shake 0.4s ease; }
+
+    /* Success overlay */
+    .success-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.5rem;
+      animation: fadeUp 0.5s forwards;
+    }
+    .success-overlay.show { display: flex; }
+
+    .success-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: var(--green-pale);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 0.6rem;
+    }
+    .success-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      color: var(--green-deep);
+    }
+    .success-sub { font-size: 13px; color: var(--text-muted); }
+
+    /* Divider hint */
+    .card-hint {
+      text-align: center;
+      margin-top: 1.4rem;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .card-hint a {
+      color: var(--green-mid);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .card-hint a:hover { text-decoration: underline; }
+
+    /* Footer */
+    footer {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 10;
+      text-align: center;
+      padding: 1.2rem;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-canvas">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <nav>
+    <a href="index.html" class="nav-logo">i<span>Bloomi</span></a>
+    <span class="nav-badge">Beta Access</span>
+  </nav>
+
+  <main class="page">
+    <div class="login-card" id="login-card">
+
+      <!-- Default: login form -->
+      <div id="form-view">
+        <div class="card-top">
+          <svg class="flower-wrap" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="45" cy="28" rx="7" ry="14" fill="#1D9E75" opacity="0.9"/>
+            <ellipse cx="45" cy="28" rx="7" ry="14" fill="#1D9E75" opacity="0.85" transform="rotate(60 45 45)"/>
+            <ellipse cx="45" cy="28" rx="7" ry="14" fill="#1D9E75" opacity="0.8" transform="rotate(120 45 45)"/>
+            <ellipse cx="45" cy="28" rx="7" ry="14" fill="#5DCAA5" opacity="0.75" transform="rotate(180 45 45)"/>
+            <ellipse cx="45" cy="28" rx="7" ry="14" fill="#5DCAA5" opacity="0.7" transform="rotate(240 45 45)"/>
+            <ellipse cx="45" cy="28" rx="7" ry="14" fill="#5DCAA5" opacity="0.65" transform="rotate(300 45 45)"/>
+            <circle cx="45" cy="45" r="8" fill="#085041"/>
+            <circle cx="45" cy="45" r="4" fill="#9ee3c5"/>
+          </svg>
+          <p class="card-eyebrow">Beta Access</p>
+          <h1 class="card-title">Welcome to <em>iBloomi</em></h1>
+        </div>
+
+        <div class="field-group">
+          <div class="field">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter your username" autocomplete="username" />
+          </div>
+          <div class="field field-pw">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" />
+            <button class="toggle-pw" type="button" onclick="togglePassword()" aria-label="Show/hide password">
+              <svg id="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button class="btn-login" id="login-btn" onclick="handleLogin()">Sign in</button>
+        <p class="login-msg" id="login-msg"></p>
+
+        <p class="card-hint">Back to <a href="index.html">landing page</a></p>
+      </div>
+
+      <!-- Success view -->
+      <div class="success-overlay" id="success-view">
+        <div class="success-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M4 12.5l5.5 5.5 10-10" stroke="#1D9E75" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="success-title">Welcome back ✿</div>
+        <div class="success-sub">Redirecting you to iBloomi…</div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>© 2026 iBloomi. All rights reserved.</footer>
+
+  <script>
+    const CREDENTIALS = { username: 'admin', password: 'iBloomiBeta' };
+    const REDIRECT_URL = 'https://ibloombot-hpv4kyvi.manus.space';
+
+    function togglePassword() {
+      const input = document.getElementById('password');
+      const icon = document.getElementById('eye-icon');
+      const show = input.type === 'password';
+      input.type = show ? 'text' : 'password';
+      icon.innerHTML = show
+        ? `<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>`
+        : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
+    }
+
+    function handleLogin() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('login-btn');
+      const msg = document.getElementById('login-msg');
+      const card = document.getElementById('login-card');
+
+      if (!username || !password) {
+        showError('Please enter both username and password.');
+        card.classList.add('shake');
+        setTimeout(() => card.classList.remove('shake'), 400);
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Signing in…';
+      msg.className = 'login-msg';
+
+      // Simulate brief check
+      setTimeout(() => {
+        if (username === CREDENTIALS.username && password === CREDENTIALS.password) {
+          // Show success then redirect
+          document.getElementById('form-view').style.display = 'none';
+          document.getElementById('success-view').classList.add('show');
+          setTimeout(() => {
+            window.location.href = REDIRECT_URL;
+          }, 1400);
+        } else {
+          showError('Incorrect username or password. Please try again.');
+          card.classList.add('shake');
+          setTimeout(() => card.classList.remove('shake'), 400);
+          btn.disabled = false;
+          btn.textContent = 'Sign in';
+        }
+      }, 600);
+    }
+
+    function showError(text) {
+      const msg = document.getElementById('login-msg');
+      msg.textContent = text;
+      msg.className = 'login-msg visible';
+    }
+
+    // Allow Enter key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleLogin();
+    });
+  </script>
+
+</body>
+</html>
