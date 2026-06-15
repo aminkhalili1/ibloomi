@@ -30,23 +30,6 @@ navLinks.querySelectorAll('a').forEach(link => {
   });
 });
 
-// ---- CONTACT FORM ----
-function handleSubmit(e) {
-  e.preventDefault();
-  const form = document.getElementById('contactForm');
-  const success = document.getElementById('formSuccess');
-
-  // Simple validation
-  const name = form.querySelector('#name').value.trim();
-  const email = form.querySelector('#email').value.trim();
-
-  if (!name || !email) return;
-
-  // Simulate submission (replace with real endpoint if needed)
-  form.style.display = 'none';
-  success.style.display = 'block';
-}
-
 // ---- SMOOTH SCROLL for anchor links ----
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
@@ -62,7 +45,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // ---- SCROLL REVEAL ----
 const revealElements = document.querySelectorAll(
-  '.feature-card, .step, .testimonial-card, .faq-item, .spotlight-content, .spotlight-visual'
+  '.feature-card, .step, .testimonial-card, .faq-item, .team-card'
 );
 
 const revealObserver = new IntersectionObserver((entries) => {
