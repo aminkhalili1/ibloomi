@@ -333,6 +333,36 @@ em { color: var(--green); font-style: italic; }
 }
 
 /* =============================================
+   ABOUT US
+   ============================================= */
+.about {
+  background: var(--off-white);
+}
+
+.about-container {
+  max-width: 760px;
+}
+
+.about-content p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  margin-bottom: 20px;
+}
+
+.about-content .about-tagline {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-top: 32px;
+  margin-bottom: 0;
+}
+.about-content .about-tagline em {
+  font-style: normal;
+}
+
+/* =============================================
    FEATURES
    ============================================= */
 .features {
