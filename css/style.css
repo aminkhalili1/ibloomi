@@ -237,10 +237,11 @@ em { color: var(--green); font-style: italic; }
   grid-template-columns: 1.1fr 1fr;
   gap: 64px;
   align-items: center;
+  width: 100%;
 }
 
 .hero-content {
-  max-width: 600px;
+  min-width: 0;
 }
 
 .hero-headline {
@@ -277,6 +278,7 @@ em { color: var(--green); font-style: italic; }
 .hero-video {
   display: flex;
   justify-content: center;
+  min-width: 0;
 }
 
 .video-frame {
@@ -286,7 +288,8 @@ em { color: var(--green); font-style: italic; }
   border: 1px solid rgba(255,255,255,0.12);
   background: rgba(255,255,255,0.04);
   box-shadow: var(--shadow-lg);
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16/9;
+  min-width: 0;
 }
 
 .video-frame video {
@@ -740,7 +743,7 @@ em { color: var(--green); font-style: italic; }
 /* =============================================
    RESPONSIVE
    ============================================= */
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; gap: 40px; }
 }
 
