@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iBloomi — AI-Powered Bouquet Builder</title>
+  <meta name="description" content="Design your perfect, personalized bouquet with the help of AI. Choose flowers, colors, styles, and more — made just for you." />
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav-wrapper" id="navbar">
+    <nav class="nav container">
+      <a href="#" class="nav-logo">
+        <img src="images/logo.png" alt="iBloomi" />
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="#testimonials">Stories</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-petals" aria-hidden="true">
+      <div class="petal p1"></div>
+      <div class="petal p2"></div>
+      <div class="petal p3"></div>
+      <div class="petal p4"></div>
+      <div class="petal p5"></div>
+    </div>
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1 class="hero-headline hero-headline--bold">
+          Your Flowers,<br />
+          <span class="text-accent">Your Way.</span>
+        </h1>
+        <p class="hero-sub">
+          iBloomi is the first AI-powered bouquet builder that lets you design a truly personal floral arrangement in real time.
+        </p>
+        <div class="hero-actions">
+          <a href="auth.html" class="btn btn-primary">Design Your Bouquet</a>
+          <a href="#how-it-works" class="btn btn-ghost">See How It Works</a>
+        </div>
+      </div>
+      <div class="hero-video">
+        <div class="video-frame">
+          <video controls preload="metadata" poster="images/video-poster.png">
+            <source src="videos/ibloomi-demo.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">The process</span>
+        <h2>From idea to <em>bouquet</em></h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>Select your Flowers, Filler &amp; Foliage</h3>
+            <div class="step-image step-image--overlap">
+              <div class="overlap-card overlap-card--back">
+                <img src="images/step-1a.png" alt="Select main flowers" />
+              </div>
+              <div class="overlap-card overlap-card--front">
+                <img src="images/step-1b.png" alt="Add filler and foliage" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>Select your Bouquet Arrangement</h3>
+            <div class="step-image step-image--sm">
+              <img src="images/step-3.png" alt="Select bouquet arrangement" />
+            </div>
+          </div>
+        </div>
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3>AI-Generated Bouquet Visualization</h3>
+            <div class="step-image step-image--narrow">
+              <img src="images/step-4.png" alt="AI-generated bouquet visualization" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials section" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Early testers</span>
+        <h2>What people are saying</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"I've never felt so creative when buying flowers. I designed exactly what I had in mind — and it was so easy."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">S</div>
+            <div>
+              <strong>Sophie</strong>
+              <span>Anniversary gift</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card testimonial-card--featured">
+          <div class="stars">★★★★★</div>
+          <p>"The AI suggestions were spot on. I had no idea where to start and within 5 minutes I had a beautiful bouquet ready to order."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">T</div>
+            <div>
+              <strong>Thomas</strong>
+              <span>Birthday surprise</span>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p>"Finally, flowers that feel personal. The live preview made all the difference — I could see it before I bought it."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">L</div>
+            <div>
+              <strong>Lisa</strong>
+              <span>Wedding flowers</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq section" id="faq">
+    <div class="container faq-container">
+      <div class="section-header">
+        <span class="eyebrow">Questions</span>
+        <h2>Frequently asked</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>What is iBloomi?</summary>
+          <p>iBloomi is an AI-powered bouquet builder that allows customers to create personalized flower arrangements through an interactive design experience.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How does iBloomi work?</summary>
+          <p>iBloomi guides you through the bouquet creation process using AI assistance, helping you design a bouquet that matches your preferences and occasion while providing real-time visualization and transparent pricing.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need floral design experience?</summary>
+          <p>Not at all. iBloomi is designed for everyone. The platform provides intelligent guidance to help you create beautiful bouquets with confidence.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I customize my bouquet?</summary>
+          <p>Yes. iBloomi is built around personalization, allowing you to create a bouquet that reflects your style, preferences, and gifting needs.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Will I see my bouquet before placing an order?</summary>
+          <p>Yes. iBloomi provides a visual preview during the design process, helping you make informed decisions before purchasing.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="images/logo-white.png" alt="iBloomi" class="footer-logo" />
+          <p>AI-powered bouquet design. Personal, creative, and meaningful flowers for every occasion.</p>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/ibloomi.nl/" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/ibloomi" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Platform</h4>
+            <ul>
+              <li><a href="features.html">Features</a></li>
+              <li><a href="#how-it-works">How It Works</a></li>
+              <li><a href="#testimonials">Stories</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="team.html">Team</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="privacy-policy.html">Privacy Policy</a></li>
+              <li><a href="terms.html">Terms of Use</a></li>
+              <li><a href="cookies.html">Cookie Policy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 iBloomi. All rights reserved. · ibloomi.nl</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

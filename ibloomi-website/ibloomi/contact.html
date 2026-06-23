@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — iBloomi</title>
+  <meta name="description" content="Get in touch with iBloomi. Have a question, partnership idea, or feedback? We'd love to hear from you." />
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav-wrapper" id="navbar">
+    <nav class="nav container">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="iBloomi" />
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="index.html#testimonials">Stories</a></li>
+        <li><a href="index.html#faq">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- CONTACT -->
+  <section class="contact-page" id="contact-section">
+    <div class="container">
+      <div class="contact-page-inner">
+
+        <div class="section-header contact-page-header">
+          <h2>Contact Us</h2>
+          <p class="contact-description">Have a question, partnership idea, or feedback? We'd love to hear from you.</p>
+        </div>
+
+        <!-- Contact form -->
+        <div class="contact-form-card">
+          <form id="contactForm" novalidate>
+
+            <div class="contact-field">
+              <label for="contact-name">Name</label>
+              <input
+                type="text"
+                id="contact-name"
+                name="name"
+                placeholder="Your name"
+                autocomplete="name"
+              />
+              <span class="field-error" id="error-name">Please enter your name.</span>
+            </div>
+
+            <div class="contact-field">
+              <label for="contact-email">Email</label>
+              <input
+                type="email"
+                id="contact-email"
+                name="email"
+                placeholder="your@email.com"
+                autocomplete="email"
+              />
+              <span class="field-error" id="error-email">Please enter a valid email address.</span>
+            </div>
+
+            <div class="contact-field">
+              <label for="contact-message">Message</label>
+              <textarea
+                id="contact-message"
+                name="message"
+                placeholder="Write your message here…"
+              ></textarea>
+              <span class="field-error" id="error-message">Please enter your message.</span>
+            </div>
+
+            <div class="contact-submit">
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </div>
+
+          </form>
+
+          <!-- Success state -->
+          <div class="contact-success" id="contactSuccess">
+            <div class="contact-success-icon">
+              <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+                <circle cx="26" cy="26" r="24" stroke="#7DC51E" stroke-width="2"/>
+                <path d="M15 26l8 8 14-16" stroke="#7DC51E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Message sent!</h3>
+            <p>Thank you for reaching out. We'll get back to you as soon as possible.</p>
+          </div>
+        </div>
+
+        <!-- Contact info -->
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <span class="contact-info-label">Email</span>
+            <a href="mailto:info@ibloomi.nl" class="contact-info-value">info@ibloomi.nl</a>
+          </div>
+          <div class="contact-info-item">
+            <span class="contact-info-label">Location</span>
+            <span class="contact-info-value">Amsterdam, Netherlands</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="images/logo-white.png" alt="iBloomi" class="footer-logo" />
+          <p>AI-powered bouquet design. Personal, creative, and meaningful flowers for every occasion.</p>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/ibloomi.nl/" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/ibloomi" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <div class="footer-col">
+            <h4>Platform</h4>
+            <ul>
+              <li><a href="features.html">Features</a></li>
+              <li><a href="index.html#how-it-works">How It Works</a></li>
+              <li><a href="index.html#testimonials">Stories</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="team.html">Team</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="privacy-policy.html">Privacy Policy</a></li>
+              <li><a href="terms.html">Terms of Use</a></li>
+              <li><a href="cookies.html">Cookie Policy</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 iBloomi. All rights reserved. · ibloomi.nl</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      var form = document.getElementById('contactForm');
+      var success = document.getElementById('contactSuccess');
+
+      function validateEmail(val) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+      }
+
+      function setError(fieldId, errorId, show) {
+        var field = document.getElementById(fieldId);
+        var error = document.getElementById(errorId);
+        if (show) {
+          field.classList.add('input-error');
+          error.classList.add('visible');
+        } else {
+          field.classList.remove('input-error');
+          error.classList.remove('visible');
+        }
+      }
+
+      // Live clear-on-input
+      ['contact-name', 'contact-email', 'contact-message'].forEach(function (id) {
+        document.getElementById(id).addEventListener('input', function () {
+          this.classList.remove('input-error');
+          var errorId = 'error-' + id.replace('contact-', '');
+          document.getElementById(errorId).classList.remove('visible');
+        });
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var name    = document.getElementById('contact-name').value.trim();
+        var email   = document.getElementById('contact-email').value.trim();
+        var message = document.getElementById('contact-message').value.trim();
+
+        var nameErr    = name === '';
+        var emailErr   = !validateEmail(email);
+        var messageErr = message === '';
+
+        setError('contact-name',    'error-name',    nameErr);
+        setError('contact-email',   'error-email',   emailErr);
+        setError('contact-message', 'error-message', messageErr);
+
+        if (nameErr || emailErr || messageErr) return;
+
+        // All valid — show success state
+        form.style.display = 'none';
+        success.style.display = 'block';
+      });
+    })();
+  </script>
+</body>
+</html>

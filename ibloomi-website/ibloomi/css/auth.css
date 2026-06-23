@@ -1,0 +1,342 @@
+/* =============================================
+   iBloomi — auth.css
+   Styles for auth.html only. All selectors are
+   scoped to .auth-* to avoid leaking into other pages.
+   ============================================= */
+
+/* ---- Page layout ---- */
+.auth-body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #080f35 0%, #0D1B5E 60%, #1a3a7a 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Minimal nav ---- */
+.auth-nav {
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+}
+
+.auth-nav .nav-logo img {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+/* ---- Main / card centering ---- */
+.auth-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px 48px;
+}
+
+/* ---- Card ---- */
+.auth-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 48px 44px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 24px 64px rgba(8, 15, 53, 0.28);
+}
+
+/* ---- Card header ---- */
+.auth-card-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-heading {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #0D1B5E;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.auth-subheading {
+  font-size: 0.9rem;
+  color: #5a6480;
+  line-height: 1.55;
+}
+
+/* ---- Google button ---- */
+.auth-google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 13px 20px;
+  background: #ffffff;
+  border: 1.5px solid #e2e6f0;
+  border-radius: 50px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 2px 8px rgba(13, 27, 94, 0.07);
+}
+
+.auth-google-btn:hover:not(:disabled) {
+  background: #f8f9fc;
+  border-color: #c2c8e0;
+  box-shadow: 0 4px 16px rgba(13, 27, 94, 0.12);
+}
+
+.auth-google-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.auth-btn-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: opacity 0.15s;
+}
+
+/* ---- Spinner ---- */
+.auth-spinner {
+  line-height: 0;
+}
+
+@keyframes auth-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ---- Divider ---- */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+  color: #5a6480;
+  font-size: 0.8rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e2e6f0;
+}
+
+/* ---- Tabs ---- */
+.auth-tabs {
+  display: flex;
+  background: #f8f9fc;
+  border-radius: 50px;
+  padding: 4px;
+  margin-bottom: 24px;
+  gap: 4px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 9px 16px;
+  border-radius: 50px;
+  border: none;
+  background: transparent;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #5a6480;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+
+.auth-tab.active {
+  background: #ffffff;
+  color: #0D1B5E;
+  box-shadow: 0 2px 8px rgba(13, 27, 94, 0.10);
+}
+
+.auth-tab:not(.active):hover {
+  color: #0D1B5E;
+}
+
+/* ---- Panels ---- */
+.auth-panel {
+  display: none;
+}
+
+.auth-panel.active {
+  display: block;
+}
+
+/* ---- Form fields ---- */
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 16px;
+}
+
+.auth-field label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #0D1B5E;
+  letter-spacing: 0.02em;
+}
+
+.auth-field input {
+  background: #f8f9fc;
+  border: 1.5px solid #e2e6f0;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  outline: none;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
+  width: 100%;
+  -webkit-appearance: none;
+}
+
+.auth-field input::placeholder {
+  color: #5a6480;
+  opacity: 0.65;
+}
+
+.auth-field input:focus {
+  border-color: #0D1B5E;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(13, 27, 94, 0.08);
+}
+
+.auth-field input.input-error {
+  border-color: #e0443a;
+  background: #fff8f8;
+  box-shadow: 0 0 0 3px rgba(224, 68, 58, 0.08);
+}
+
+/* ---- Error messages ---- */
+.auth-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #e0443a;
+  font-weight: 500;
+}
+
+.auth-error.field-error {
+  margin-top: 2px;
+}
+
+.auth-error.general-error {
+  background: #fff1f0;
+  border: 1px solid #ffd6d4;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 0.85rem;
+}
+
+#error-google {
+  justify-content: center;
+  margin-top: 8px;
+}
+
+/* ---- Submit button ---- */
+.auth-submit-btn {
+  margin-top: 6px;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---- Success state ---- */
+.auth-success {
+  text-align: center;
+  padding: 16px 0 8px;
+}
+
+.auth-success svg {
+  display: block;
+  margin: 0 auto 16px;
+}
+
+.auth-success h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0D1B5E;
+  margin-bottom: 10px;
+}
+
+.auth-success p {
+  font-size: 0.9rem;
+  color: #5a6480;
+  line-height: 1.65;
+}
+
+.auth-success strong {
+  color: #0D1B5E;
+  font-weight: 600;
+}
+
+/* ---- Footer note ---- */
+.auth-footer-note {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #5a6480;
+  line-height: 1.55;
+}
+
+.auth-footer-note a {
+  color: #0D1B5E;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-footer-note a:hover {
+  color: #5fa015;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 500px) {
+  .auth-card {
+    padding: 36px 24px 32px;
+    border-radius: 20px;
+  }
+
+  .auth-nav {
+    padding: 16px 20px;
+  }
+
+  .auth-heading {
+    font-size: 1.4rem;
+  }
+}
+
+/* ---- Config loading / error overlays ---- */
+.auth-config-loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-config-error {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
