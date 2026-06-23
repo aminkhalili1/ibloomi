@@ -1,15 +1,10 @@
 /**
- * iBloomi — auth.js
+ * js/auth.js — iBloomi Authentication
  *
- * Fetches Supabase public config from /api/config (Vercel serverless function),
- * then initialises the Supabase client and runs the full auth flow.
- *
- * Flow:
- *   1. Fetch /api/config  →  { supabaseUrl, supabaseAnonKey }
- *   2. createClient(url, key)
- *   3. Check existing session  →  redirect to builder if already logged in
- *   4. Listen for auth state changes  →  redirect on SIGNED_IN
- *   5. Wire up Google OAuth, email sign-in, email sign-up
+ * Load order in auth.html:
+ *   1. supabase.min.js   (CDN)
+ *   2. js/config.js      (exposes window.loadIbloomiConfig)
+ *   3. js/auth.js        (this file — calls loadIbloomiConfig, then runs auth)
  */
 
 (function () {
@@ -17,11 +12,10 @@
 
   const BUILDER_URL = 'https://builder.ibloomi.nl';
 
-  // ─── DOM helpers ────────────────────────────────────────────────────────────
+  // ─── DOM helpers ─────────────────────────────────────────────────────────────
   const $ = id => document.getElementById(id);
-
-  function show(el) { if (el) el.style.display = ''; }
-  function hide(el) { if (el) el.style.display = 'none'; }
+  const show = el => { if (el) el.style.display = ''; };
+  const hide = el => { if (el) el.style.display = 'none'; };
 
   function setLoading(btn, loading) {
     if (!btn) return;
@@ -32,8 +26,8 @@
     if (label)   label.style.opacity   = loading ? '0.6' : '1';
   }
 
-  function showError(elementId, msg) {
-    const el = $(elementId);
+  function showError(id, msg) {
+    const el = $(id);
     if (!el) return;
     el.textContent = msg;
     el.style.display = msg ? 'flex' : 'none';
@@ -44,12 +38,12 @@
       el.textContent = '';
       el.style.display = 'none';
     });
-    document.querySelectorAll('.auth-field input').forEach(inp => {
-      inp.classList.remove('input-error');
-    });
+    document.querySelectorAll('.auth-field input').forEach(inp =>
+      inp.classList.remove('input-error')
+    );
   }
 
-  function validateEmail(email) {
+  function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   }
 
@@ -57,106 +51,70 @@
     window.location.href = BUILDER_URL;
   }
 
-  // ─── Step 1: Fetch config from Vercel serverless function ───────────────────
-  async function fetchConfig() {
-    const res = await fetch('/api/config');
-    if (!res.ok) {
-      const body = await res.json().catch(() => ({}));
-      throw new Error(body.error || 'Failed to load configuration (' + res.status + ')');
-    }
-    const data = await res.json();
-    if (!data.supabaseUrl || !data.supabaseAnonKey) {
-      throw new Error('Incomplete configuration returned from /api/config');
-    }
-    return data;
-  }
-
-  // ─── Step 2: Create Supabase client ─────────────────────────────────────────
-  function createSupabaseClient(supabaseUrl, supabaseAnonKey) {
-    return window.supabase.createClient(supabaseUrl, supabaseAnonKey);
-  }
-
-  // ─── Step 3: Check existing session ─────────────────────────────────────────
+  // ─── Session check ───────────────────────────────────────────────────────────
   async function checkExistingSession(client) {
     try {
       const { data } = await client.auth.getSession();
-      if (data && data.session) {
-        redirectToBuilder();
-        return true;
-      }
+      if (data && data.session) { redirectToBuilder(); return true; }
     } catch (_) {}
     return false;
   }
 
-  // ─── Step 4: Listen for auth state changes (handles OAuth redirect) ─────────
-  function listenForAuthChanges(client) {
+  // ─── Auth state change (handles OAuth redirect return) ───────────────────────
+  function listenAuthChanges(client) {
     client.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        redirectToBuilder();
-      }
+      if (event === 'SIGNED_IN' && session) redirectToBuilder();
     });
   }
 
-  // ─── Google OAuth ────────────────────────────────────────────────────────────
-  async function handleGoogleLogin(client) {
+  // ─── Google OAuth ─────────────────────────────────────────────────────────────
+  async function handleGoogle(client) {
     clearErrors();
     const btn = $('btn-google');
     setLoading(btn, true);
-
     const { error } = await client.auth.signInWithOAuth({
       provider: 'google',
-      options: {
-        redirectTo: window.location.origin + '/auth.html'
-      }
+      options: { redirectTo: window.location.origin + '/auth.html' }
     });
-
     if (error) {
       setLoading(btn, false);
       showError('error-google', error.message || 'Google sign-in failed. Please try again.');
     }
-    // On success Supabase redirects the browser — no further JS needed.
   }
 
-  // ─── Email Sign Up ───────────────────────────────────────────────────────────
-  async function handleEmailSignUp(client) {
+  // ─── Email Sign Up ────────────────────────────────────────────────────────────
+  async function handleSignUp(client) {
     clearErrors();
     const email    = $('signup-email').value.trim();
     const password = $('signup-password').value;
     const confirm  = $('signup-confirm').value;
-    let hasError   = false;
+    let invalid    = false;
 
-    if (!validateEmail(email)) {
+    if (!isValidEmail(email)) {
       $('signup-email').classList.add('input-error');
       showError('error-signup-email', 'Please enter a valid email address.');
-      hasError = true;
+      invalid = true;
     }
     if (password.length < 6) {
       $('signup-password').classList.add('input-error');
       showError('error-signup-password', 'Password must be at least 6 characters.');
-      hasError = true;
+      invalid = true;
     }
     if (password !== confirm) {
       $('signup-confirm').classList.add('input-error');
       showError('error-signup-confirm', 'Passwords do not match.');
-      hasError = true;
+      invalid = true;
     }
-    if (hasError) return;
+    if (invalid) return;
 
     const btn = $('btn-signup');
     setLoading(btn, true);
-
     const { error } = await client.auth.signUp({ email, password });
     setLoading(btn, false);
 
-    if (error) {
-      showError('error-signup-general', error.message || 'Sign up failed. Please try again.');
-      return;
-    }
+    if (error) { showError('error-signup-general', error.message || 'Sign up failed.'); return; }
 
-    // Show confirmation — user needs to verify email before being signed in.
-    // Supabase sends a verification link; clicking it fires onAuthStateChange → redirect.
-    const panel = $('signup-panel');
-    panel.innerHTML = `
+    $('signup-panel').innerHTML = `
       <div class="auth-success">
         <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
           <circle cx="24" cy="24" r="22" stroke="#7DC51E" stroke-width="2"/>
@@ -164,33 +122,32 @@
                 stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <h3>Check your email</h3>
-        <p>We've sent a confirmation link to <strong>${email}</strong>.
+        <p>We sent a confirmation link to <strong>${email}</strong>.
            Click it to activate your account — you'll be redirected automatically.</p>
       </div>`;
   }
 
   // ─── Email Sign In ────────────────────────────────────────────────────────────
-  async function handleEmailSignIn(client) {
+  async function handleSignIn(client) {
     clearErrors();
     const email    = $('signin-email').value.trim();
     const password = $('signin-password').value;
-    let hasError   = false;
+    let invalid    = false;
 
-    if (!validateEmail(email)) {
+    if (!isValidEmail(email)) {
       $('signin-email').classList.add('input-error');
       showError('error-signin-email', 'Please enter a valid email address.');
-      hasError = true;
+      invalid = true;
     }
     if (!password) {
       $('signin-password').classList.add('input-error');
       showError('error-signin-password', 'Please enter your password.');
-      hasError = true;
+      invalid = true;
     }
-    if (hasError) return;
+    if (invalid) return;
 
     const btn = $('btn-signin');
     setLoading(btn, true);
-
     const { error } = await client.auth.signInWithPassword({ email, password });
     setLoading(btn, false);
 
@@ -202,80 +159,71 @@
       );
       return;
     }
-
     redirectToBuilder();
   }
 
-  // ─── Tab switching ────────────────────────────────────────────────────────────
+  // ─── Tabs ─────────────────────────────────────────────────────────────────────
   function initTabs() {
     document.querySelectorAll('.auth-tab').forEach(tab => {
       tab.addEventListener('click', () => {
-        const target = tab.dataset.tab;
-        document.querySelectorAll('.auth-tab').forEach(t =>
-          t.classList.toggle('active', t.dataset.tab === target)
-        );
+        const t = tab.dataset.tab;
+        document.querySelectorAll('.auth-tab').forEach(x =>
+          x.classList.toggle('active', x.dataset.tab === t));
         document.querySelectorAll('.auth-panel').forEach(p =>
-          p.classList.toggle('active', p.id === target + '-panel')
-        );
+          p.classList.toggle('active', p.id === t + '-panel'));
         clearErrors();
       });
     });
   }
 
-  // ─── Live error clearing ──────────────────────────────────────────────────────
   function initLiveClear() {
     document.querySelectorAll('.auth-field input').forEach(inp => {
       inp.addEventListener('input', function () {
         this.classList.remove('input-error');
-        const errId = this.dataset.errorTarget;
-        if (errId) showError(errId, '');
+        const id = this.dataset.errorTarget;
+        if (id) showError(id, '');
       });
     });
   }
 
-  // ─── Main init ────────────────────────────────────────────────────────────────
+  // ─── Init ─────────────────────────────────────────────────────────────────────
   async function init() {
     const loadingEl = $('auth-config-loading');
     const errorEl   = $('auth-config-error');
     const mainEl    = $('auth-main');
 
-    // Show spinner, hide card
-    show(loadingEl);
-    hide(mainEl);
-    hide(errorEl);
+    show(loadingEl); hide(mainEl); hide(errorEl);
 
-    let config;
     try {
-      config = await fetchConfig();
+      await window.loadIbloomiConfig();
     } catch (err) {
-      console.error('iBloomi auth config error:', err.message);
-      hide(loadingEl);
-      show(errorEl);
+      console.error('iBloomi config error:', err.message);
+      hide(loadingEl); show(errorEl);
       return;
     }
 
-    const client = createSupabaseClient(config.supabaseUrl, config.supabaseAnonKey);
+    const cfg    = window.IBLOOMI_CONFIG;
+    const client = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey);
 
-    // Hide spinner, show card
-    hide(loadingEl);
-    show(mainEl);
-
-    // Check for existing session (handles OAuth redirect return too)
+    // Handle existing session or OAuth redirect
     const redirected = await checkExistingSession(client);
     if (redirected) return;
 
-    listenForAuthChanges(client);
+    listenAuthChanges(client);
+
+    hide(loadingEl); show(mainEl);
+
     initTabs();
     initLiveClear();
 
-    const btnGoogle = $('btn-google');
-    if (btnGoogle) btnGoogle.addEventListener('click', () => handleGoogleLogin(client));
+    const g = $('btn-google');
+    if (g) g.addEventListener('click', () => handleGoogle(client));
 
-    const signupForm = $('form-signup');
-    if (signupForm) signupForm.addEventListener('submit', e => { e.preventDefault(); handleEmailSignUp(client); });
+    const up = $('form-signup');
+    if (up) up.addEventListener('submit', e => { e.preventDefault(); handleSignUp(client); });
 
-    const signinForm = $('form-signin');
-    if (signinForm) signinForm.addEventListener('submit', e => { e.preventDefault(); handleEmailSignIn(client); });
+    const in_ = $('form-signin');
+    if (in_) in_.addEventListener('submit', e => { e.preventDefault(); handleSignIn(client); });
   }
 
   if (document.readyState === 'loading') {
