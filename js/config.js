@@ -1,28 +1,8 @@
-/**
- * js/config.js — iBloomi Supabase Configuration Loader
- *
- * Fetches the public Supabase config at runtime from the Vercel
- * serverless function at /api/config, which reads SUPABASE_URL and
- * SUPABASE_ANON_KEY from Vercel Environment Variables.
- *
- * No credentials are stored in this file.
- * No placeholders. No hardcoded values.
- */
-
 window.IBLOOMI_CONFIG = null;
 
 window.loadIbloomiConfig = async function () {
-  const res = await fetch('/api/config');
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.error || 'Config fetch failed (' + res.status + ')');
-  }
-  const data = await res.json();
-  if (!data.supabaseUrl || !data.supabaseAnonKey) {
-    throw new Error('Incomplete config from /api/config');
-  }
   window.IBLOOMI_CONFIG = {
-    supabaseUrl:     data.supabaseUrl,
-    supabaseAnonKey: data.supabaseAnonKey
+    supabaseUrl: 'https://ihgtppiwxkuxjcfkjvki.supabase.co',
+    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloZ3RwcGl3eGt1eGpjZmtqdmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyMDcyNjYsImV4cCI6MjA5Nzc4MzI2Nn0.8ht-R5_ESgRUk5DeLkmj_uwIUXtjNjECbxUwSDWu0_w'
   };
 };
