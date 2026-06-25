@@ -1,6 +1,5 @@
 /* =============================================
    iBloomi — auth.css
-   Scoped to .auth-* — no impact on other pages
    ============================================= */
 
 /* ---- Page ---- */
@@ -13,7 +12,7 @@
 
 /* ---- Nav ---- */
 .auth-nav {
-  padding: 22px 32px;
+  padding: 20px 32px;
   display: flex;
   align-items: center;
 }
@@ -29,45 +28,45 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 16px 48px;
+  padding: 12px 16px 40px;
 }
 
 /* ---- Card ---- */
 .auth-card {
   background: #ffffff;
   border-radius: 20px;
-  padding: 40px 40px 36px;
+  padding: 36px 36px 32px;
   width: 100%;
-  max-width: 420px;
+  max-width: 400px;
   box-shadow: 0 24px 64px rgba(8, 15, 53, 0.32);
 }
 
 /* ---- Heading ---- */
 .auth-card-header {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 .auth-heading {
   font-family: 'Noto Sans', sans-serif;
-  font-size: 1.55rem;
+  font-size: 1.45rem;
   font-weight: 700;
   color: #0D1B5E;
   line-height: 1.2;
   margin: 0;
 }
 
-/* ---- Tab bar — hidden visually, kept for auth.js ---- */
-.auth-tabs--hidden {
+/* ---- Hidden tab bar — invisible but accessible to auth.js ---- */
+.auth-tabs-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
   padding: 0;
-  margin: 0;
+  margin: -1px;
 }
-/* auth.js still looks up .auth-tab buttons — they work, just invisible */
 
 /* ---- Panels ---- */
 .auth-panel { display: none; }
@@ -77,25 +76,27 @@
 .auth-field {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  margin-bottom: 14px;
+  gap: 4px;
+  margin-bottom: 12px;
 }
 .auth-field label {
-  font-size: 0.82rem;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.81rem;
   font-weight: 600;
   color: #0D1B5E;
 }
 .auth-field input {
   background: #f5f6fa;
   border: 1.5px solid #e2e6f0;
-  border-radius: 10px;
-  padding: 11px 14px;
+  border-radius: 9px;
+  padding: 10px 13px;
   font-family: 'Noto Sans', sans-serif;
   font-size: 0.9rem;
   color: #1a1a2e;
   outline: none;
   transition: border-color 0.18s, box-shadow 0.18s, background 0.18s;
   width: 100%;
+  box-sizing: border-box;
   -webkit-appearance: none;
 }
 .auth-field input::placeholder { color: #9aa0b8; }
@@ -110,26 +111,27 @@
   box-shadow: 0 0 0 3px rgba(224, 68, 58, 0.08);
 }
 
-/* ---- Remember me + Forgot password row ---- */
+/* ---- Remember me + Forgot password — same row ---- */
 .auth-remember-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
 }
 .auth-checkbox-label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   cursor: pointer;
-  font-size: 0.82rem;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.81rem;
   color: #5a6480;
   user-select: none;
 }
 .auth-checkbox-label input[type="checkbox"] { display: none; }
 .auth-checkbox-custom {
-  width: 17px;
-  height: 17px;
+  width: 16px;
+  height: 16px;
   border: 1.5px solid #c8cde0;
   border-radius: 4px;
   background: #f5f6fa;
@@ -144,7 +146,7 @@
 .auth-checkbox-label input[type="checkbox"]:checked + .auth-checkbox-custom::after {
   content: '';
   position: absolute;
-  left: 3px;
+  left: 2px;
   top: 1px;
   width: 8px;
   height: 5px;
@@ -153,6 +155,7 @@
   transform: rotate(-45deg);
 }
 .auth-forgot {
+  font-family: 'Noto Sans', sans-serif;
   font-size: 0.78rem;
   font-weight: 500;
   color: #5a6480;
@@ -166,7 +169,8 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 0.77rem;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.76rem;
   color: #e0443a;
   font-weight: 500;
   margin: 0;
@@ -176,33 +180,37 @@
   background: #fff1f0;
   border: 1px solid #ffd6d4;
   border-radius: 8px;
-  padding: 9px 12px;
-  margin-bottom: 12px;
-  font-size: 0.83rem;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  font-size: 0.82rem;
 }
 
-/* ---- Primary submit button ---- */
+/* ---- Primary submit button — iBloomi green rounded ---- */
 .auth-submit-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   width: 100%;
-  padding: 12px 20px;
+  padding: 11px 20px;
   background: #7DC51E;
   color: #080f35;
   border: none;
   border-radius: 50px;
   font-family: 'Noto Sans', sans-serif;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 700;
   cursor: pointer;
   transition: background 0.18s, box-shadow 0.18s, transform 0.15s;
+  line-height: 1.4;
 }
 .auth-submit-btn:hover:not(:disabled) {
   background: #6ab018;
-  box-shadow: 0 6px 20px rgba(125, 197, 30, 0.32);
+  box-shadow: 0 5px 18px rgba(125, 197, 30, 0.3);
   transform: translateY(-1px);
+}
+.auth-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
 }
 .auth-submit-btn:disabled {
   opacity: 0.6;
@@ -210,14 +218,15 @@
   transform: none;
 }
 
-/* ---- Divider (between submit and Google) ---- */
+/* ---- Divider ---- */
 .auth-divider {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 16px 0;
+  margin: 14px 0;
   color: #9aa0b8;
-  font-size: 0.78rem;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.76rem;
 }
 .auth-divider::before,
 .auth-divider::after {
@@ -227,81 +236,76 @@
   background: #e8eaf2;
 }
 
-/* ---- Google button ---- */
-.auth-google-btn {
+/* ---- Google button — slightly smaller than submit ---- */
+.auth-google-proxy {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 9px;
   width: 100%;
-  padding: 11px 20px;
+  padding: 9px 18px;
   background: #ffffff;
   border: 1.5px solid #e2e6f0;
   border-radius: 50px;
   font-family: 'Noto Sans', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.87rem;
   font-weight: 600;
   color: #1a1a2e;
   cursor: pointer;
   transition: background 0.18s, border-color 0.18s, box-shadow 0.18s;
-  box-shadow: 0 2px 6px rgba(13, 27, 94, 0.06);
+  box-shadow: 0 1px 4px rgba(13, 27, 94, 0.06);
+  line-height: 1.4;
 }
-.auth-google-btn:hover:not(:disabled) {
+.auth-google-proxy:hover:not(:disabled) {
   background: #f5f6fa;
   border-color: #c2c8e0;
-  box-shadow: 0 4px 14px rgba(13, 27, 94, 0.10);
+  box-shadow: 0 3px 12px rgba(13, 27, 94, 0.09);
 }
-.auth-google-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.auth-google-proxy:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
-/* ---- Switch link ---- */
+/* ---- Bottom switch link — plain text ---- */
 .auth-switch {
   text-align: center;
-  font-size: 0.82rem;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 0.81rem;
   color: #5a6480;
-  margin-top: 16px;
+  margin-top: 14px;
   margin-bottom: 0;
 }
-.auth-switch-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  font-family: 'Noto Sans', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 700;
+.auth-switch-link {
   color: #0D1B5E;
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  transition: color 0.15s;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
 }
-.auth-switch-btn:hover { color: #7DC51E; }
+.auth-switch-link:hover {
+  color: #7DC51E;
+  border-bottom-color: #7DC51E;
+}
 
 /* ---- Spinner ---- */
-.auth-spinner { line-height: 0; }
+.auth-spinner { line-height: 0; display: inline-flex; }
+.auth-btn-label { display: inline-flex; align-items: center; gap: 8px; }
 @keyframes auth-spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
-.auth-btn-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  transition: opacity 0.15s;
-}
 
-/* ---- Success state (email sign-up confirmation) ---- */
-.auth-success {
-  text-align: center;
-  padding: 8px 0;
-}
-.auth-success svg { display: block; margin: 0 auto 14px; }
+/* ---- Success state ---- */
+.auth-success { text-align: center; padding: 8px 0; }
+.auth-success svg { display: block; margin: 0 auto 12px; }
 .auth-success h3 {
-  font-size: 1.15rem;
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #0D1B5E;
   margin-bottom: 8px;
 }
-.auth-success p { font-size: 0.88rem; color: #5a6480; line-height: 1.6; }
+.auth-success p { font-size: 0.87rem; color: #5a6480; line-height: 1.6; }
 .auth-success strong { color: #0D1B5E; font-weight: 600; }
 
 /* ---- Config loading / error overlays ---- */
@@ -321,10 +325,7 @@
 
 /* ---- Responsive ---- */
 @media (max-width: 480px) {
-  .auth-card {
-    padding: 30px 20px 26px;
-    border-radius: 16px;
-  }
+  .auth-card { padding: 28px 20px 24px; border-radius: 16px; }
   .auth-nav { padding: 16px 20px; }
-  .auth-heading { font-size: 1.35rem; }
+  .auth-heading { font-size: 1.3rem; }
 }
