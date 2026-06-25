@@ -43,138 +43,104 @@
   <main class="auth-main" id="auth-main" style="display:none;">
     <div class="auth-card">
 
-      <!-- Header — title only, no subtitle -->
+      <!-- Heading -->
       <div class="auth-card-header">
         <h1 class="auth-heading">Welcome to iBloomi</h1>
       </div>
 
-      <!-- Google OAuth — primary action -->
-      <button class="auth-google-btn" id="btn-google" type="button">
-        <span class="auth-spinner" style="display:none;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-               style="animation:auth-spin 0.8s linear infinite;">
-            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-          </svg>
-        </span>
-        <span class="auth-btn-label">
-          <svg width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path fill="#EA4335" d="M24 9.5c3.14 0 5.95 1.08 8.17 2.85l6.08-6.08C34.5 3.01 29.55 1 24 1 14.62 1 6.62 6.48 3.05 14.34l7.09 5.51C11.93 13.36 17.47 9.5 24 9.5z"/>
-            <path fill="#4285F4" d="M46.1 24.5c0-1.64-.15-3.22-.42-4.74H24v8.97h12.43c-.54 2.87-2.17 5.3-4.63 6.93l7.09 5.51C43.18 37.27 46.1 31.36 46.1 24.5z"/>
-            <path fill="#FBBC05" d="M10.14 28.15A14.55 14.55 0 0 1 9.5 24c0-1.44.2-2.84.55-4.16l-7.09-5.51A22.93 22.93 0 0 0 1 24c0 3.7.88 7.2 2.43 10.27l6.71-6.12z"/>
-            <path fill="#34A853" d="M24 47c5.55 0 10.2-1.84 13.6-4.99l-7.09-5.51c-1.84 1.23-4.18 1.95-6.51 1.95-6.53 0-12.07-3.86-13.86-9.3l-6.71 6.12C6.62 41.52 14.62 47 24 47z"/>
-          </svg>
-          Continue with Google
-        </span>
-      </button>
-      <p class="auth-error" id="error-google" style="display:none;"></p>
-
-      <!-- Divider -->
-      <div class="auth-divider">
-        <span>or</span>
-      </div>
-
-      <!-- Tab switcher — kept exactly as auth.js expects -->
-      <div class="auth-tabs" role="tablist">
+      <!-- Tab buttons — hidden visually, kept for auth.js tab system -->
+      <div class="auth-tabs auth-tabs--hidden" role="tablist">
         <button class="auth-tab active" data-tab="signin" role="tab" aria-selected="true"  type="button">Sign In</button>
-        <button class="auth-tab"        data-tab="signup" role="tab" aria-selected="false" type="button">Create Account</button>
+        <button class="auth-tab"        data-tab="signup" role="tab" aria-selected="false" type="button">Sign Up</button>
       </div>
 
-      <!-- Sign In panel — id="signin-panel" required by auth.js -->
+      <!-- ── Sign In panel ── -->
       <div class="auth-panel active" id="signin-panel" role="tabpanel">
         <form id="form-signin" novalidate>
 
           <div class="auth-field">
-            <label for="signin-email">Email</label>
-            <input
-              type="email"
-              id="signin-email"
-              name="email"
-              placeholder="your@email.com"
-              autocomplete="email"
-              data-error-target="error-signin-email"
-            />
+            <label for="signin-email">Email Address</label>
+            <input type="email" id="signin-email" name="email"
+              placeholder="your@email.com" autocomplete="email"
+              data-error-target="error-signin-email" />
             <p class="auth-error field-error" id="error-signin-email" style="display:none;"></p>
           </div>
 
           <div class="auth-field">
-            <div class="auth-field-row">
-              <label for="signin-password">Password</label>
-              <a href="#" class="auth-forgot">Forgot password?</a>
-            </div>
-            <input
-              type="password"
-              id="signin-password"
-              name="password"
-              placeholder="Your password"
-              autocomplete="current-password"
-              data-error-target="error-signin-password"
-            />
+            <label for="signin-password">Password</label>
+            <input type="password" id="signin-password" name="password"
+              placeholder="Your password" autocomplete="current-password"
+              data-error-target="error-signin-password" />
             <p class="auth-error field-error" id="error-signin-password" style="display:none;"></p>
           </div>
 
-          <div class="auth-remember">
+          <div class="auth-remember-row">
             <label class="auth-checkbox-label">
               <input type="checkbox" id="signin-remember" name="remember" />
               <span class="auth-checkbox-custom"></span>
               Remember me
             </label>
+            <a href="#" class="auth-forgot">Forgot password?</a>
           </div>
 
           <p class="auth-error general-error" id="error-signin-general" style="display:none;"></p>
 
           <button class="auth-submit-btn" id="btn-signin" type="submit">
             <span class="auth-spinner" style="display:none;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                   style="animation:auth-spin 0.8s linear infinite;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:auth-spin 0.8s linear infinite;">
                 <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
               </svg>
             </span>
             <span class="auth-btn-label">Sign In</span>
           </button>
 
+          <div class="auth-divider"><span>or</span></div>
+
+          <button class="auth-google-btn auth-google-signin" type="button">
+            <span class="auth-btn-label">
+              <svg width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill="#EA4335" d="M24 9.5c3.14 0 5.95 1.08 8.17 2.85l6.08-6.08C34.5 3.01 29.55 1 24 1 14.62 1 6.62 6.48 3.05 14.34l7.09 5.51C11.93 13.36 17.47 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.1 24.5c0-1.64-.15-3.22-.42-4.74H24v8.97h12.43c-.54 2.87-2.17 5.3-4.63 6.93l7.09 5.51C43.18 37.27 46.1 31.36 46.1 24.5z"/>
+                <path fill="#FBBC05" d="M10.14 28.15A14.55 14.55 0 0 1 9.5 24c0-1.44.2-2.84.55-4.16l-7.09-5.51A22.93 22.93 0 0 0 1 24c0 3.7.88 7.2 2.43 10.27l6.71-6.12z"/>
+                <path fill="#34A853" d="M24 47c5.55 0 10.2-1.84 13.6-4.99l-7.09-5.51c-1.84 1.23-4.18 1.95-6.51 1.95-6.53 0-12.07-3.86-13.86-9.3l-6.71 6.12C6.62 41.52 14.62 47 24 47z"/>
+              </svg>
+              Continue with Google
+            </span>
+          </button>
+
+          <p class="auth-switch">
+            Don't have an account?
+            <button type="button" class="auth-switch-btn" data-tab-target="signup">Sign Up</button>
+          </p>
+
         </form>
       </div>
 
-      <!-- Sign Up panel — id="signup-panel" required by auth.js -->
+      <!-- ── Sign Up panel ── -->
       <div class="auth-panel" id="signup-panel" role="tabpanel">
         <form id="form-signup" novalidate>
 
           <div class="auth-field">
-            <label for="signup-email">Email</label>
-            <input
-              type="email"
-              id="signup-email"
-              name="email"
-              placeholder="your@email.com"
-              autocomplete="email"
-              data-error-target="error-signup-email"
-            />
+            <label for="signup-email">Email Address</label>
+            <input type="email" id="signup-email" name="email"
+              placeholder="your@email.com" autocomplete="email"
+              data-error-target="error-signup-email" />
             <p class="auth-error field-error" id="error-signup-email" style="display:none;"></p>
           </div>
 
           <div class="auth-field">
             <label for="signup-password">Password</label>
-            <input
-              type="password"
-              id="signup-password"
-              name="password"
-              placeholder="At least 6 characters"
-              autocomplete="new-password"
-              data-error-target="error-signup-password"
-            />
+            <input type="password" id="signup-password" name="password"
+              placeholder="At least 6 characters" autocomplete="new-password"
+              data-error-target="error-signup-password" />
             <p class="auth-error field-error" id="error-signup-password" style="display:none;"></p>
           </div>
 
           <div class="auth-field">
             <label for="signup-confirm">Confirm Password</label>
-            <input
-              type="password"
-              id="signup-confirm"
-              name="confirm"
-              placeholder="Repeat your password"
-              autocomplete="new-password"
-              data-error-target="error-signup-confirm"
-            />
+            <input type="password" id="signup-confirm" name="confirm"
+              placeholder="Repeat your password" autocomplete="new-password"
+              data-error-target="error-signup-confirm" />
             <p class="auth-error field-error" id="error-signup-confirm" style="display:none;"></p>
           </div>
 
@@ -182,16 +148,38 @@
 
           <button class="auth-submit-btn" id="btn-signup" type="submit">
             <span class="auth-spinner" style="display:none;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                   style="animation:auth-spin 0.8s linear infinite;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:auth-spin 0.8s linear infinite;">
                 <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
               </svg>
             </span>
-            <span class="auth-btn-label">Create Account</span>
+            <span class="auth-btn-label">Sign Up</span>
           </button>
+
+          <div class="auth-divider"><span>or</span></div>
+
+          <button class="auth-google-btn auth-google-signup" type="button">
+            <span class="auth-btn-label">
+              <svg width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill="#EA4335" d="M24 9.5c3.14 0 5.95 1.08 8.17 2.85l6.08-6.08C34.5 3.01 29.55 1 24 1 14.62 1 6.62 6.48 3.05 14.34l7.09 5.51C11.93 13.36 17.47 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.1 24.5c0-1.64-.15-3.22-.42-4.74H24v8.97h12.43c-.54 2.87-2.17 5.3-4.63 6.93l7.09 5.51C43.18 37.27 46.1 31.36 46.1 24.5z"/>
+                <path fill="#FBBC05" d="M10.14 28.15A14.55 14.55 0 0 1 9.5 24c0-1.44.2-2.84.55-4.16l-7.09-5.51A22.93 22.93 0 0 0 1 24c0 3.7.88 7.2 2.43 10.27l6.71-6.12z"/>
+                <path fill="#34A853" d="M24 47c5.55 0 10.2-1.84 13.6-4.99l-7.09-5.51c-1.84 1.23-4.18 1.95-6.51 1.95-6.53 0-12.07-3.86-13.86-9.3l-6.71 6.12C6.62 41.52 14.62 47 24 47z"/>
+              </svg>
+              Continue with Google
+            </span>
+          </button>
+
+          <p class="auth-switch">
+            Already have an account?
+            <button type="button" class="auth-switch-btn" data-tab-target="signin">Sign In</button>
+          </p>
 
         </form>
       </div>
+
+      <!-- Single btn-google required by auth.js — visually hidden, proxied by the buttons above -->
+      <button id="btn-google" type="button" style="display:none;" aria-hidden="true"></button>
+      <p class="auth-error" id="error-google" style="display:none;text-align:center;justify-content:center;margin-top:8px;"></p>
 
     </div><!-- /auth-card -->
   </main>
@@ -202,6 +190,31 @@
   <script src="/js/config.js"></script>
   <!-- Auth logic -->
   <script src="/js/auth.js"></script>
+  <!-- UI helpers: proxy google buttons → real btn-google; tab switching via data-tab-target -->
+  <script>
+    (function () {
+      // Proxy visible Google buttons to the hidden #btn-google that auth.js wired
+      document.querySelectorAll('.auth-google-signin, .auth-google-signup').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.getElementById('btn-google').click();
+        });
+        // Mirror loading state from #btn-google back to the visible buttons
+        var obs = new MutationObserver(function () {
+          var real = document.getElementById('btn-google');
+          btn.disabled = real.disabled;
+        });
+        obs.observe(document.getElementById('btn-google'), { attributes: true });
+      });
+      // Switch between panels via bottom text links
+      document.querySelectorAll('[data-tab-target]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var target = this.getAttribute('data-tab-target');
+          var tab = document.querySelector('.auth-tab[data-tab="' + target + '"]');
+          if (tab) tab.click();
+        });
+      });
+    })();
+  </script>
 
 </body>
 </html>
