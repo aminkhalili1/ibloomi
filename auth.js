@@ -26,11 +26,31 @@
     if (label)   label.style.opacity   = loading ? '0.6' : '1';
   }
 
+  function extractErrorMessage(error) {
+    if (!error) return '';
+    // error.message is the standard path
+    if (typeof error.message === 'string' && error.message.trim() !== '') {
+      return error.message.trim();
+    }
+    // Some Supabase responses nest the message
+    if (typeof error.msg === 'string' && error.msg.trim() !== '') {
+      return error.msg.trim();
+    }
+    // error_description is used by some OAuth errors
+    if (typeof error.error_description === 'string' && error.error_description.trim() !== '') {
+      return error.error_description.trim();
+    }
+    // Fallback — never show raw objects
+    return 'Something went wrong. Please try again.';
+  }
+
   function showError(id, msg) {
     const el = $(id);
     if (!el) return;
-    el.textContent = msg;
-    el.style.display = msg ? 'flex' : 'none';
+    // Ensure msg is always a plain string, never an object
+    const text = (typeof msg === 'string' && msg.trim() !== '') ? msg.trim() : '';
+    el.textContent = text;
+    el.style.display = text ? 'flex' : 'none';
   }
 
   function clearErrors() {
@@ -78,7 +98,7 @@
     });
     if (error) {
       setLoading(btn, false);
-      showError('error-google', error.message || 'Google sign-in failed. Please try again.');
+      showError('error-google', extractErrorMessage(error) || 'Google sign-in failed. Please try again.');
     }
   }
 
@@ -112,7 +132,7 @@
     const { error } = await client.auth.signUp({ email, password });
     setLoading(btn, false);
 
-    if (error) { showError('error-signup-general', error.message || 'Sign up failed.'); return; }
+    if (error) { showError('error-signup-general', extractErrorMessage(error)); return; }
 
     $('signup-panel').innerHTML = `
       <div class="auth-success">
@@ -152,10 +172,11 @@
     setLoading(btn, false);
 
     if (error) {
+      const msg = extractErrorMessage(error);
       showError('error-signin-general',
-        error.message === 'Invalid login credentials'
+        msg === 'Invalid login credentials'
           ? 'Incorrect email or password. Please try again.'
-          : error.message || 'Sign in failed. Please try again.'
+          : msg
       );
       return;
     }
