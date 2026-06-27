@@ -10,7 +10,7 @@
 (function () {
   'use strict';
 
-  const BUILDER_URL = 'https://builder.ibloomi.nl';
+  const BUILDER_URL = 'https://builder.ibloomi.nl/builder';
 
   // ─── DOM helpers ─────────────────────────────────────────────────────────────
   const $ = id => document.getElementById(id);
