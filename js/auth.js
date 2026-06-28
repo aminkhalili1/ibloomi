@@ -55,23 +55,30 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   }
 
-  async function redirectToBuilder(client) {
+  async function getCurrentSession(client, fallbackSession) {
+    if (fallbackSession) return fallbackSession;
+
+    const { data } = await client.auth.getSession();
+    return data && data.session ? data.session : null;
+  }
+
+  async function redirectToBuilder(client, fallbackSession) {
     try {
-      const { data } = await client.auth.getSession();
+      const session = await getCurrentSession(client, fallbackSession);
 
-      if (data && data.session) {
-        const session = data.session;
-
+      if (session && session.access_token && session.refresh_token) {
         const params = new URLSearchParams({
           access_token: session.access_token,
           refresh_token: session.refresh_token,
-          expires_at: String(session.expires_at),
+          expires_at: String(session.expires_at || ''),
           token_type: session.token_type || 'bearer'
         });
 
-        window.location.href = `${BUILDER_URL}#${params.toString()}`;
+        window.location.href = BUILDER_URL + '#' + params.toString();
         return;
       }
+
+      console.warn('No Supabase session found. Redirecting to builder without session handoff.');
     } catch (error) {
       console.error('Redirect session handoff failed:', error);
     }
@@ -83,7 +90,7 @@
     try {
       const { data } = await client.auth.getSession();
       if (data && data.session) {
-        await redirectToBuilder(client);
+        await redirectToBuilder(client, data.session);
         return true;
       }
     } catch (_) {}
@@ -93,7 +100,7 @@
   function listenAuthChanges(client) {
     client.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session) {
-        redirectToBuilder(client);
+        redirectToBuilder(client, session);
       }
     });
   }
@@ -157,7 +164,7 @@
     }
 
     if (data && data.session) {
-      await redirectToBuilder(client);
+      await redirectToBuilder(client, data.session);
       return;
     }
 
@@ -198,7 +205,7 @@
     const btn = $('btn-signin');
     setLoading(btn, true);
 
-    const { error } = await client.auth.signInWithPassword({ email, password });
+    const { data, error } = await client.auth.signInWithPassword({ email, password });
 
     setLoading(btn, false);
 
@@ -213,7 +220,7 @@
       return;
     }
 
-    await redirectToBuilder(client);
+    await redirectToBuilder(client, data && data.session);
   }
 
   function initTabs() {
