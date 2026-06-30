@@ -1,8 +1,26 @@
-window.IBLOOMI_CONFIG = null;
+/**
+ * js/config.js — iBloomi Supabase Configuration
+ *
+ * Public Supabase Project URL + Publishable Key.
+ * These are safe to expose in frontend code by design.
+ *
+ * This project must use the exact same Supabase Project URL and
+ * Publishable Key as the Bouquet Builder (builder.ibloomi.nl) so
+ * that sessions handed off between the two applications are valid
+ * against the same Supabase project.
+ */
 
+window.IBLOOMI_CONFIG = {
+  supabaseUrl: 'https://ihgtppiwxkuxjcfkjvki.supabase.co',
+  supabaseAnonKey: 'sb_publishable_VMJhGBipry23nGOzFm-Vfg_M8SFqdtE'
+};
+
+// Kept for backward compatibility with js/auth.js, which calls
+// window.loadIbloomiConfig() before reading window.IBLOOMI_CONFIG.
+// Config is static here, so this simply resolves immediately.
 window.loadIbloomiConfig = async function () {
-  window.IBLOOMI_CONFIG = {
-    supabaseUrl: 'https://ihgtppiwxkuxjcfkjvki.supabase.co',
-    supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloZ3RwcGl3eGt1eGpjZmtqdmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyMDcyNjYsImV4cCI6MjA5Nzc4MzI2Nn0.8ht-R5_ESgRUk5DeLkmj_uwIUXtjNjECbxUwSDWu0_w'
-  };
+  if (!window.IBLOOMI_CONFIG || !window.IBLOOMI_CONFIG.supabaseUrl || !window.IBLOOMI_CONFIG.supabaseAnonKey) {
+    throw new Error('Supabase configuration is missing in js/config.js');
+  }
+  return window.IBLOOMI_CONFIG;
 };
