@@ -92,8 +92,8 @@
   }
 
   // ─── Clear all Supabase auth storage ─────────────────────────────────────────
-  function clearAuthStorage(client) {
-    try { client.auth.signOut(); } catch (_) {}
+  async function clearAuthStorage(client) {
+    try { await client.auth.signOut(); } catch (_) {}
     ['localStorage', 'sessionStorage'].forEach(function (storeName) {
       try {
         var store = window[storeName];
@@ -122,7 +122,7 @@
       const { data: userData, error: userError } = await client.auth.getUser();
       if (userError || !userData || !userData.user) {
         // Stale or invalid session — clear it and show the login form
-        clearAuthStorage(client);
+        await clearAuthStorage(client);
         return false;
       }
 
@@ -291,7 +291,7 @@
     // Sign out of Supabase, wipe any cached auth data, clean the URL,
     // then fall through to show the auth form. Never redirect to the builder.
     if (new URLSearchParams(window.location.search).get('logout') === 'true') {
-      clearAuthStorage(client);
+      await clearAuthStorage(client);
 
       // Remove ?logout=true from the URL without triggering a page reload
       var cleanUrl = window.location.pathname +
