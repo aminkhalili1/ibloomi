@@ -91,15 +91,44 @@
     window.location.href = BUILDER_URL;
   }
 
-  // ─── Session check ───────────────────────────────────────────────────────────
+  // ─── Clear all Supabase auth storage ─────────────────────────────────────────
+  function clearAuthStorage(client) {
+    try { client.auth.signOut(); } catch (_) {}
+    ['localStorage', 'sessionStorage'].forEach(function (storeName) {
+      try {
+        var store = window[storeName];
+        Object.keys(store).forEach(function (key) {
+          if (key.startsWith('sb-') || key.includes('supabase')) {
+            store.removeItem(key);
+          }
+        });
+      } catch (_) {}
+    });
+  }
+
+  // ─── Session check ────────────────────────────────────────────────────────────
+  // Never redirects on logout=true.
+  // Never redirects on a stale/expired session — validates with getUser() first.
   async function checkExistingSession(client) {
-    // Never auto-redirect if we just handled a logout — show the auth form instead
+    // Never auto-redirect if we are handling a logout
     if (new URLSearchParams(window.location.search).get('logout') === 'true') {
       return false;
     }
     try {
-      const { data } = await client.auth.getSession();
-      if (data && data.session) { await redirectToBuilder(client); return true; }
+      const { data: sessionData } = await client.auth.getSession();
+      if (!sessionData || !sessionData.session) return false;
+
+      // Session object exists — verify it is still valid with getUser()
+      const { data: userData, error: userError } = await client.auth.getUser();
+      if (userError || !userData || !userData.user) {
+        // Stale or invalid session — clear it and show the login form
+        clearAuthStorage(client);
+        return false;
+      }
+
+      // Session is confirmed valid — redirect with tokens
+      await redirectToBuilder(client);
+      return true;
     } catch (_) {}
     return false;
   }
@@ -262,19 +291,7 @@
     // Sign out of Supabase, wipe any cached auth data, clean the URL,
     // then fall through to show the auth form. Never redirect to the builder.
     if (new URLSearchParams(window.location.search).get('logout') === 'true') {
-      try { await client.auth.signOut(); } catch (_) {}
-
-      // Clear all Supabase auth keys from both storage areas
-      ['localStorage', 'sessionStorage'].forEach(function (storeName) {
-        try {
-          var store = window[storeName];
-          Object.keys(store).forEach(function (key) {
-            if (key.startsWith('sb-') || key.includes('supabase')) {
-              store.removeItem(key);
-            }
-          });
-        } catch (_) {}
-      });
+      clearAuthStorage(client);
 
       // Remove ?logout=true from the URL without triggering a page reload
       var cleanUrl = window.location.pathname +
