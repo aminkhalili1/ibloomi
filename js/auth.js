@@ -147,7 +147,12 @@
     setLoading(btn, true);
     const { error } = await client.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: window.location.origin + '/auth.html' }
+      options: {
+        redirectTo: window.location.origin + '/auth.html',
+        queryParams: {
+          prompt: 'select_account'
+        }
+      }
     });
     if (error) {
       setLoading(btn, false);
