@@ -93,7 +93,17 @@
 
   // ─── Clear all Supabase auth storage ─────────────────────────────────────────
   async function clearAuthStorage(client) {
-    try { await client.auth.signOut(); } catch (_) {}
+    // Only call the logout endpoint if there is an active session.
+    // If the Builder already invalidated the session server-side, calling
+    // signOut() returns 403 Forbidden. scope:'local' avoids a network call
+    // when the server session is already gone.
+    try {
+      const { data } = await client.auth.getSession();
+      if (data && data.session) {
+        await client.auth.signOut({ scope: 'local' });
+      }
+    } catch (_) {}
+    // Always wipe local storage keys regardless of the above
     ['localStorage', 'sessionStorage'].forEach(function (storeName) {
       try {
         var store = window[storeName];
