@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Keep auth gate and legal pages out of search results
+Disallow: /auth.html
+Disallow: /privacy-policy.html
+Disallow: /terms.html
+Disallow: /cookies.html
+
+# Block any API or config endpoints
+Disallow: /api/
+
+Sitemap: https://ibloomi.nl/sitemap.xml
