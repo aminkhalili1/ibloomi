@@ -543,7 +543,7 @@ em { color: var(--green); font-style: italic; }
 
 .benefits-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 24px;
 }
 
@@ -556,6 +556,7 @@ em { color: var(--green); font-style: italic; }
   border-radius: var(--radius);
   padding: 24px 22px;
   box-shadow: var(--shadow-sm);
+  height: 100%;
 }
 
 .benefit-check {
@@ -1118,6 +1119,10 @@ a.contact-info-value:hover {
    ============================================= */
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
