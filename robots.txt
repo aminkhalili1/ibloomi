@@ -3,6 +3,7 @@ Allow: /
 
 # Keep auth gate and legal pages out of search results
 Disallow: /auth.html
+Disallow: /gallery-admin.html
 Disallow: /privacy-policy.html
 Disallow: /terms.html
 Disallow: /cookies.html
