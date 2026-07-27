@@ -45,30 +45,44 @@
         <p class="section-desc">Flowers designed your way, by you.</p>
       </div>
 
-      <div class="gallery-filters" role="tablist" aria-label="Filter gallery by category">
-        <button type="button" class="gallery-filter-btn is-active" data-filter="all" role="tab" aria-selected="true">All</button>
-        <button type="button" class="gallery-filter-btn" data-filter="wrapped-bouquets" role="tab" aria-selected="false">Wrapped Bouquets</button>
-        <button type="button" class="gallery-filter-btn" data-filter="vase-arrangements" role="tab" aria-selected="false">Vase Arrangements</button>
+      <div class="gallery-grid">
+        <div class="gallery-card gallery-card--placeholder">
+          <div class="gallery-placeholder-inner">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M12 2C8 2 5 5.5 5 9c0 5 7 13 7 13s7-8 7-13c0-3.5-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+        </div>
+        <div class="gallery-card gallery-card--placeholder gallery-card--tall">
+          <div class="gallery-placeholder-inner">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M12 2C8 2 5 5.5 5 9c0 5 7 13 7 13s7-8 7-13c0-3.5-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+        </div>
+        <div class="gallery-card gallery-card--placeholder">
+          <div class="gallery-placeholder-inner">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M12 2C8 2 5 5.5 5 9c0 5 7 13 7 13s7-8 7-13c0-3.5-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+        </div>
+        <div class="gallery-card gallery-card--placeholder">
+          <div class="gallery-placeholder-inner">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M12 2C8 2 5 5.5 5 9c0 5 7 13 7 13s7-8 7-13c0-3.5-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+        </div>
+        <div class="gallery-card gallery-card--placeholder gallery-card--tall">
+          <div class="gallery-placeholder-inner">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M12 2C8 2 5 5.5 5 9c0 5 7 13 7 13s7-8 7-13c0-3.5-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+        </div>
+        <div class="gallery-card gallery-card--placeholder">
+          <div class="gallery-placeholder-inner">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><path d="M12 2C8 2 5 5.5 5 9c0 5 7 13 7 13s7-8 7-13c0-3.5-3-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          </div>
+        </div>
       </div>
 
-      <div class="gallery-grid" id="galleryGrid" aria-live="polite">
-        <!-- Gallery cards are rendered here by js/gallery.js from js/gallery-data.js -->
-      </div>
-
-      <div class="gallery-empty-note" id="galleryEmptyNote" hidden>
-        <p>No bouquets in this category yet. Check back soon.</p>
+      <div class="gallery-empty-note">
+        <p>Bouquets designed by iBloomi customers will appear here once the platform launches.</p>
       </div>
     </div>
   </section>
-
-  <!-- GALLERY LIGHTBOX -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Bouquet image preview" aria-hidden="true">
-    <button type="button" class="lightbox-close" id="lightboxClose" aria-label="Close image preview">&times;</button>
-    <figure class="lightbox-content">
-      <img id="lightboxImage" src="" alt="" />
-      <figcaption class="lightbox-caption" id="lightboxCaption"></figcaption>
-    </figure>
-  </div>
 
   <!-- FOOTER -->
   <footer class="footer">
@@ -119,9 +133,6 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="js/config.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/gallery.js"></script>
 </body>
 </html>
