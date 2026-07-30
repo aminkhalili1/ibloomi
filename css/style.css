@@ -1223,3 +1223,51 @@ a.contact-info-value:hover {
     max-width: 100%;
   }
 }
+/* =============================================
+   GALLERY HOVER + LIGHTBOX
+   ============================================= */
+
+.gallery-card {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(13, 27, 94, 0.18);
+  z-index: 2;
+}
+
+/* Lightbox background */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 16px;
+  object-fit: contain;
+}
+
+/* Close button */
+.lightbox-close {
+  position: absolute;
+  top: 25px;
+  right: 35px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+  font-weight: 300;
+}
