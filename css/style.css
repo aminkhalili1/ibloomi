@@ -873,61 +873,6 @@ em { color: var(--green); font-style: italic; }
 }
 
 /* =============================================
-   GALLERY PAGE
-   ============================================= */
-.gallery-page {
-  background: var(--white);
-}
-
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-bottom: 40px;
-}
-
-.gallery-card {
-  border-radius: var(--radius);
-  overflow: hidden;
-  position: relative;
-}
-
-.gallery-card--placeholder {
-  background: var(--off-white);
-  border: 1px solid var(--border);
-  aspect-ratio: 3/4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.gallery-card--tall {
-  grid-row: span 2;
-  aspect-ratio: auto;
-  min-height: 320px;
-}
-
-.gallery-placeholder-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  color: var(--text-muted);
-}
-
-.gallery-empty-note {
-  text-align: center;
-  padding: 24px 0 8px;
-}
-
-.gallery-empty-note p {
-  color: var(--text-muted);
-  font-size: 0.925rem;
-}
-
-/* =============================================
    CONTACT PAGE
    ============================================= */
 .contact-page {
@@ -1240,9 +1185,41 @@ a.contact-info-value:hover {
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; }
 }
+/* =============================================
+   GALLERY IMAGE FIX
+   ============================================= */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  max-width: 900px;
+  margin: 0 auto 40px;
+}
+
+.gallery-card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background: var(--off-white);
+}
+
+.gallery-card--tall {
+  grid-row: span 1;
+  min-height: auto;
+}
+
 .gallery-card img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+  }
 }
