@@ -1240,3 +1240,9 @@ a.contact-info-value:hover {
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; }
 }
+.gallery-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
