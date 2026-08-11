@@ -120,7 +120,9 @@
           token_type: session.token_type || 'bearer'
         });
 
-        console.log('[Auth] Redirecting authenticated user to Builder.');
+        console.log(
+          '[Auth] Redirecting authenticated user to Builder.'
+        );
 
         window.location.href =
           BUILDER_URL + '#' + params.toString();
@@ -167,18 +169,29 @@
       return false;
     }
 
-    console.log('[Auth] Email confirmation link detected.');
-    console.log('[Auth] Confirmation type:', tokenType);
+    console.log(
+      '[Auth] Email confirmation link detected.'
+    );
+
+    console.log(
+      '[Auth] Confirmation type:',
+      tokenType
+    );
 
     try {
       /*
-       * IMPORTANT:
-       * Verify the token_hash before checking for an existing session.
+       * Verify the token_hash explicitly.
+       *
+       * detectSessionInUrl is disabled below because
+       * this function is responsible for processing
+       * the confirmation URL.
        */
-      const { data, error } = await client.auth.verifyOtp({
-        token_hash: tokenHash,
-        type: tokenType
-      });
+
+      const { data, error } =
+        await client.auth.verifyOtp({
+          token_hash: tokenHash,
+          type: tokenType
+        });
 
       if (error) {
         console.error(
@@ -201,6 +214,7 @@
       /*
        * verifyOtp normally returns an authenticated session.
        */
+
       if (data && data.session) {
         console.log(
           '[Auth] Confirmation session received.'
@@ -210,6 +224,7 @@
          * Remove token_hash and type from the browser URL
          * before redirecting.
          */
+
         window.history.replaceState(
           {},
           document.title,
@@ -226,6 +241,7 @@
        * Sometimes the session may already be stored even if
        * it was not returned directly from verifyOtp.
        */
+
       const {
         data: sessionData,
         error: sessionError
@@ -281,7 +297,8 @@
 
   async function clearAuthStorage(client) {
     try {
-      const { data } = await client.auth.getSession();
+      const { data } =
+        await client.auth.getSession();
 
       if (data && data.session) {
         await client.auth.signOut({
@@ -290,7 +307,10 @@
       }
     } catch (_) {}
 
-    ['localStorage', 'sessionStorage'].forEach(function (storeName) {
+    [
+      'localStorage',
+      'sessionStorage'
+    ].forEach(function (storeName) {
       try {
         const store = window[storeName];
 
@@ -317,6 +337,7 @@
     /*
      * Never auto-redirect during logout.
      */
+
     if (params.get('logout') === 'true') {
       return false;
     }
@@ -326,6 +347,7 @@
      * Do not use this function before the email confirmation
      * flow has been processed.
      */
+
     try {
       const {
         data: sessionData,
@@ -343,6 +365,7 @@
       /*
        * Verify that the session is still valid.
        */
+
       const {
         data: userData,
         error: userError
@@ -516,6 +539,7 @@
      * If Supabase returns a session immediately,
      * redirect directly to Builder.
      */
+
     if (
       signUpData &&
       signUpData.session
@@ -527,6 +551,7 @@
     /*
      * Email confirmation required.
      */
+
     const signupPanel = $('signup-panel');
 
     if (signupPanel) {
@@ -817,7 +842,16 @@
           auth: {
             persistSession: true,
             autoRefreshToken: true,
-            detectSessionInUrl: true
+
+            /*
+             * IMPORTANT:
+             * Email confirmation is handled manually
+             * with verifyOtp() below.
+             *
+             * Therefore Supabase must NOT try to process
+             * token_hash automatically as well.
+             */
+            detectSessionInUrl: false
           }
         }
       );
@@ -880,6 +914,7 @@
        * Do NOT check existing session first.
        * First verify the email token.
        */
+
       const confirmed =
         await handleEmailConfirmation(
           client
@@ -893,6 +928,7 @@
        * Confirmation failed.
        * Remove token parameters and show Auth UI.
        */
+
       history.replaceState(
         null,
         '',
