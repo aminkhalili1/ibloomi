@@ -5,7 +5,7 @@
  *
  *   1. supabase.min.js   (CDN)
  *   2. js/config.js      (exposes window.loadIbloomiConfig)
- *   3. js/auth.js        (this file — calls loadIbloomiConfig, then runs auth)
+ *   3. js/auth.js        (this file)
  */
 
 (function () {
@@ -91,36 +91,41 @@
 
     document
       .querySelectorAll('.auth-field input')
-      .forEach(inp => inp.classList.remove('input-error'));
+      .forEach(inp => {
+        inp.classList.remove('input-error');
+      });
   }
 
   function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   }
 
-  // ─── Redirect to builder with session tokens ─────────────────────────────────
-
-  // Sends access_token, refresh_token, expires_at and token_type
-  // to the Builder using the URL hash.
+  // ─── Redirect to Builder ─────────────────────────────────────────────────────
 
   async function redirectToBuilder(client) {
     try {
-      const { data } = await client.auth.getSession();
+      const { data, error } = await client.auth.getSession();
+
+      if (error) {
+        console.error('[Auth] getSession failed:', error);
+      }
 
       if (data && data.session) {
-        const s = data.session;
+        const session = data.session;
 
         const params = new URLSearchParams({
-          access_token: s.access_token,
-          refresh_token: s.refresh_token,
-          expires_at: String(s.expires_at),
-          token_type: s.token_type || 'bearer'
+          access_token: session.access_token,
+          refresh_token: session.refresh_token,
+          expires_at: String(session.expires_at || ''),
+          token_type: session.token_type || 'bearer'
         });
+
+        console.log('[Auth] Redirecting authenticated user to Builder.');
 
         window.location.href =
           BUILDER_URL + '#' + params.toString();
 
-        return;
+        return true;
       }
     } catch (error) {
       console.error(
@@ -129,8 +134,13 @@
       );
     }
 
-    // Fallback: Builder will show sign-in.
+    console.warn(
+      '[Auth] No active session available for Builder redirect.'
+    );
+
     window.location.href = BUILDER_URL;
+
+    return false;
   }
 
   // ─── Email Confirmation ──────────────────────────────────────────────────────
@@ -142,27 +152,32 @@
    *
    * https://ibloomi.nl/auth.html?token_hash=XXXXX&type=email
    *
-   * Supabase sends the user to this page with token_hash.
-   * We must explicitly verify that token before attempting login.
+   * The token_hash must be explicitly verified with Supabase.
    */
 
   async function handleEmailConfirmation(client) {
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(
+      window.location.search
+    );
 
     const tokenHash = params.get('token_hash');
-    const type = params.get('type');
+    const tokenType = params.get('type');
 
-    // No confirmation token → normal Auth flow.
-    if (!tokenHash || type !== 'email') {
+    if (!tokenHash || !tokenType) {
       return false;
     }
 
     console.log('[Auth] Email confirmation link detected.');
+    console.log('[Auth] Confirmation type:', tokenType);
 
     try {
+      /*
+       * IMPORTANT:
+       * Verify the token_hash before checking for an existing session.
+       */
       const { data, error } = await client.auth.verifyOtp({
         token_hash: tokenHash,
-        type: 'email'
+        type: tokenType
       });
 
       if (error) {
@@ -171,46 +186,100 @@
           error
         );
 
+        showError(
+          'error-signin-general',
+          'This email confirmation link is invalid or has expired. Please request a new confirmation email.'
+        );
+
         return false;
       }
 
-      console.log('[Auth] Email confirmed successfully.');
+      console.log(
+        '[Auth] Email confirmation verified successfully.'
+      );
 
-      // verifyOtp should create a session.
+      /*
+       * verifyOtp normally returns an authenticated session.
+       */
       if (data && data.session) {
+        console.log(
+          '[Auth] Confirmation session received.'
+        );
+
+        /*
+         * Remove token_hash and type from the browser URL
+         * before redirecting.
+         */
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+
         await redirectToBuilder(client);
+
         return true;
       }
 
-      // In case Supabase confirms the email but does not return
-      // a session directly, try reading the current session.
-      const { data: sessionData } =
-        await client.auth.getSession();
+      /*
+       * Fallback:
+       * Sometimes the session may already be stored even if
+       * it was not returned directly from verifyOtp.
+       */
+      const {
+        data: sessionData,
+        error: sessionError
+      } = await client.auth.getSession();
 
-      if (sessionData && sessionData.session) {
+      if (
+        !sessionError &&
+        sessionData &&
+        sessionData.session
+      ) {
+        console.log(
+          '[Auth] Confirmation session found in storage.'
+        );
+
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+
         await redirectToBuilder(client);
+
         return true;
       }
 
-      console.warn(
-        '[Auth] Email confirmed, but no session was returned.'
+      console.error(
+        '[Auth] Email was verified but no session was created.'
+      );
+
+      showError(
+        'error-signin-general',
+        'Your email was confirmed, but we could not create your session. Please sign in again.'
       );
 
       return false;
+
     } catch (error) {
       console.error(
         '[Auth] Unexpected email confirmation error:',
         error
       );
 
+      showError(
+        'error-signin-general',
+        'We could not confirm your email. Please request a new confirmation email.'
+      );
+
       return false;
     }
   }
 
-  // ─── Clear all Supabase auth storage ─────────────────────────────────────────
+  // ─── Clear Supabase Auth Storage ──────────────────────────────────────────────
 
   async function clearAuthStorage(client) {
-    // Only call local signOut if there is an active session.
     try {
       const { data } = await client.auth.getSession();
 
@@ -221,7 +290,6 @@
       }
     } catch (_) {}
 
-    // Always wipe local storage keys.
     ['localStorage', 'sessionStorage'].forEach(function (storeName) {
       try {
         const store = window[storeName];
@@ -238,32 +306,47 @@
     });
   }
 
-  // ─── Session check ───────────────────────────────────────────────────────────
+  // ─── Existing Session ────────────────────────────────────────────────────────
 
   async function checkExistingSession(client) {
-    // Never auto-redirect if handling logout.
-    if (
-      new URLSearchParams(window.location.search).get(
-        'logout'
-      ) === 'true'
-    ) {
+
+    const params = new URLSearchParams(
+      window.location.search
+    );
+
+    /*
+     * Never auto-redirect during logout.
+     */
+    if (params.get('logout') === 'true') {
       return false;
     }
 
+    /*
+     * IMPORTANT:
+     * Do not use this function before the email confirmation
+     * flow has been processed.
+     */
     try {
-      const { data: sessionData } =
-        await client.auth.getSession();
+      const {
+        data: sessionData,
+        error: sessionError
+      } = await client.auth.getSession();
 
       if (
+        sessionError ||
         !sessionData ||
         !sessionData.session
       ) {
         return false;
       }
 
-      // Verify that the session is still valid.
-      const { data: userData, error: userError } =
-        await client.auth.getUser();
+      /*
+       * Verify that the session is still valid.
+       */
+      const {
+        data: userData,
+        error: userError
+      } = await client.auth.getUser();
 
       if (
         userError ||
@@ -274,23 +357,40 @@
         return false;
       }
 
-      // Valid session → redirect to Builder.
+      console.log(
+        '[Auth] Existing valid session found.'
+      );
+
       await redirectToBuilder(client);
 
       return true;
-    } catch (_) {}
+
+    } catch (error) {
+      console.error(
+        '[Auth] Existing session check failed:',
+        error
+      );
+    }
 
     return false;
   }
 
-  // ─── Auth state change ───────────────────────────────────────────────────────
+  // ─── Auth State Changes ──────────────────────────────────────────────────────
 
   function listenAuthChanges(client) {
-    client.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        redirectToBuilder(client);
+    client.auth.onAuthStateChange(
+      (event, session) => {
+
+        console.log(
+          '[Auth] Auth state changed:',
+          event
+        );
+
+        if (event === 'SIGNED_IN' && session) {
+          redirectToBuilder(client);
+        }
       }
-    });
+    );
   }
 
   // ─── Google OAuth ─────────────────────────────────────────────────────────────
@@ -393,7 +493,12 @@
       error
     } = await client.auth.signUp({
       email,
-      password
+      password,
+
+      options: {
+        emailRedirectTo:
+          window.location.origin + '/auth.html'
+      }
     });
 
     setLoading(btn, false);
@@ -407,8 +512,10 @@
       return;
     }
 
-    // If Supabase returns a session immediately,
-    // redirect directly to the Builder.
+    /*
+     * If Supabase returns a session immediately,
+     * redirect directly to Builder.
+     */
     if (
       signUpData &&
       signUpData.session
@@ -417,42 +524,50 @@
       return;
     }
 
-    // Email confirmation required.
-    $('signup-panel').innerHTML = `
-      <div class="auth-success">
-        <svg
-          width="48"
-          height="48"
-          viewBox="0 0 48 48"
-          fill="none"
-        >
-          <circle
-            cx="24"
-            cy="24"
-            r="22"
-            stroke="#7DC51E"
-            stroke-width="2"
-          />
+    /*
+     * Email confirmation required.
+     */
+    const signupPanel = $('signup-panel');
 
-          <path
-            d="M13 24l8 8 14-16"
-            stroke="#7DC51E"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+    if (signupPanel) {
+      signupPanel.innerHTML = `
+        <div class="auth-success">
 
-        <h3>Check your email</h3>
+          <svg
+            width="48"
+            height="48"
+            viewBox="0 0 48 48"
+            fill="none"
+          >
+            <circle
+              cx="24"
+              cy="24"
+              r="22"
+              stroke="#7DC51E"
+              stroke-width="2"
+            />
 
-        <p>
-          We sent a confirmation link to
-          <strong>${email}</strong>.
-          Click it to activate your account —
-          you'll be redirected automatically.
-        </p>
-      </div>
-    `;
+            <path
+              d="M13 24l8 8 14-16"
+              stroke="#7DC51E"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+
+          <h3>Check your email</h3>
+
+          <p>
+            We sent a confirmation link to
+            <strong>${email}</strong>.
+            Click it to activate your account —
+            you'll be redirected automatically.
+          </p>
+
+        </div>
+      `;
+    }
   }
 
   // ─── Email Sign In ────────────────────────────────────────────────────────────
@@ -531,41 +646,53 @@
     document
       .querySelectorAll('.auth-tab')
       .forEach(tab => {
-        tab.addEventListener('click', () => {
-          const t = tab.dataset.tab;
 
-          document
-            .querySelectorAll('.auth-tab')
-            .forEach(x =>
-              x.classList.toggle(
-                'active',
-                x.dataset.tab === t
-              )
-            );
+        tab.addEventListener(
+          'click',
+          () => {
 
-          document
-            .querySelectorAll('.auth-panel')
-            .forEach(p =>
-              p.classList.toggle(
-                'active',
-                p.id === t + '-panel'
-              )
-            );
+            const t =
+              tab.dataset.tab;
 
-          clearErrors();
-        });
+            document
+              .querySelectorAll('.auth-tab')
+              .forEach(x => {
+
+                x.classList.toggle(
+                  'active',
+                  x.dataset.tab === t
+                );
+
+              });
+
+            document
+              .querySelectorAll('.auth-panel')
+              .forEach(p => {
+
+                p.classList.toggle(
+                  'active',
+                  p.id === t + '-panel'
+                );
+
+              });
+
+            clearErrors();
+          }
+        );
       });
   }
 
-  // ─── Live input error clearing ────────────────────────────────────────────────
+  // ─── Live Input Error Clearing ────────────────────────────────────────────────
 
   function initLiveClear() {
     document
       .querySelectorAll('.auth-field input')
       .forEach(inp => {
+
         inp.addEventListener(
           'input',
           function () {
+
             this.classList.remove(
               'input-error'
             );
@@ -578,12 +705,58 @@
             }
           }
         );
+
       });
   }
 
-  // ─── Init ─────────────────────────────────────────────────────────────────────
+  // ─── Auth UI Initialization ───────────────────────────────────────────────────
+
+  function initAuthUI(client) {
+
+    initTabs();
+    initLiveClear();
+
+    const googleBtn =
+      $('btn-google');
+
+    if (googleBtn) {
+      googleBtn.addEventListener(
+        'click',
+        () => handleGoogle(client)
+      );
+    }
+
+    const signupForm =
+      $('form-signup');
+
+    if (signupForm) {
+      signupForm.addEventListener(
+        'submit',
+        e => {
+          e.preventDefault();
+          handleSignUp(client);
+        }
+      );
+    }
+
+    const signinForm =
+      $('form-signin');
+
+    if (signinForm) {
+      signinForm.addEventListener(
+        'submit',
+        e => {
+          e.preventDefault();
+          handleSignIn(client);
+        }
+      );
+    }
+  }
+
+  // ─── Main Initialization ──────────────────────────────────────────────────────
 
   async function init() {
+
     const loadingEl =
       $('auth-config-loading');
 
@@ -601,7 +774,9 @@
 
     try {
       await window.loadIbloomiConfig();
+
     } catch (err) {
+
       console.error(
         'iBloomi config error:',
         err.message
@@ -616,27 +791,52 @@
     const cfg =
       window.IBLOOMI_CONFIG;
 
+    if (
+      !cfg ||
+      !cfg.supabaseUrl ||
+      !cfg.supabaseAnonKey
+    ) {
+
+      console.error(
+        '[Auth] Supabase configuration is missing.'
+      );
+
+      hide(loadingEl);
+      show(errorEl);
+
+      return;
+    }
+
+    // ── Create Supabase client ──────────────────────────────────────────────────
+
     const client =
       window.supabase.createClient(
         cfg.supabaseUrl,
-        cfg.supabaseAnonKey
+        cfg.supabaseAnonKey,
+        {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+          }
+        }
       );
 
     // ── Logout flow ─────────────────────────────────────────────────────────────
 
-    if (
+    const urlParams =
       new URLSearchParams(
         window.location.search
-      ).get('logout') === 'true'
+      );
+
+    if (
+      urlParams.get('logout') === 'true'
     ) {
+
       await clearAuthStorage(client);
 
-      // Remove logout parameter.
       const cleanUrl =
-        window.location.pathname +
-        (window.location.hash
-          ? window.location.hash
-          : '');
+        window.location.pathname;
 
       history.replaceState(
         null,
@@ -644,65 +844,22 @@
         cleanUrl
       );
 
-      // Show Auth form.
       hide(loadingEl);
       show(mainEl);
 
-      initTabs();
-      initLiveClear();
-
-      const g = $('btn-google');
-
-      if (g) {
-        g.addEventListener(
-          'click',
-          () => handleGoogle(client)
-        );
-      }
-
-      const up = $('form-signup');
-
-      if (up) {
-        up.addEventListener(
-          'submit',
-          e => {
-            e.preventDefault();
-            handleSignUp(client);
-          }
-        );
-      }
-
-      const in_ = $('form-signin');
-
-      if (in_) {
-        in_.addEventListener(
-          'submit',
-          e => {
-            e.preventDefault();
-            handleSignIn(client);
-          }
-        );
-      }
+      initAuthUI(client);
 
       return;
     }
 
-    // ── Email confirmation flow ────────────────────────────────────────────────
+    // ── EMAIL CONFIRMATION FLOW ────────────────────────────────────────────────
     //
-    // IMPORTANT:
-    // This must happen BEFORE checkExistingSession().
+    // This MUST happen BEFORE checking for an existing session.
     //
-    // Supabase email confirmation URLs look like:
+    // Expected:
     //
     // /auth.html?token_hash=XXXXX&type=email
     //
-    // The token must be verified first.
-    //
-
-    const urlParams =
-      new URLSearchParams(
-        window.location.search
-      );
 
     const tokenHash =
       urlParams.get('token_hash');
@@ -714,10 +871,15 @@
       tokenHash &&
       tokenType === 'email'
     ) {
+
       console.log(
-        '[Auth] Processing email confirmation...'
+        '[Auth] Email confirmation URL detected.'
       );
 
+      /*
+       * Do NOT check existing session first.
+       * First verify the email token.
+       */
       const confirmed =
         await handleEmailConfirmation(
           client
@@ -727,16 +889,14 @@
         return;
       }
 
-      // Confirmation failed.
-      // Remove the confirmation parameters
-      // so they cannot be processed again.
-      const cleanConfirmationUrl =
-        window.location.pathname;
-
+      /*
+       * Confirmation failed.
+       * Remove token parameters and show Auth UI.
+       */
       history.replaceState(
         null,
         '',
-        cleanConfirmationUrl
+        window.location.pathname
       );
 
       hide(loadingEl);
@@ -747,48 +907,12 @@
         'This email confirmation link is invalid or has expired. Please request a new confirmation email.'
       );
 
-      initTabs();
-      initLiveClear();
-
-      const g = $('btn-google');
-
-      if (g) {
-        g.addEventListener(
-          'click',
-          () => handleGoogle(client)
-        );
-      }
-
-      const up = $('form-signup');
-
-      if (up) {
-        up.addEventListener(
-          'submit',
-          e => {
-            e.preventDefault();
-            handleSignUp(client);
-          }
-        );
-      }
-
-      const in_ = $('form-signin');
-
-      if (in_) {
-        in_.addEventListener(
-          'submit',
-          e => {
-            e.preventDefault();
-            handleSignIn(client);
-          }
-        );
-      }
+      initAuthUI(client);
 
       return;
     }
 
-    // ── End email confirmation flow ────────────────────────────────────────────
-
-    // ── Existing session ───────────────────────────────────────────────────────
+    // ── Existing Session ───────────────────────────────────────────────────────
 
     const redirected =
       await checkExistingSession(client);
@@ -797,48 +921,16 @@
       return;
     }
 
+    // ── Auth State Listener ─────────────────────────────────────────────────────
+
     listenAuthChanges(client);
 
-    // ── Show Auth UI ───────────────────────────────────────────────────────────
+    // ── Show Auth UI ────────────────────────────────────────────────────────────
 
     hide(loadingEl);
     show(mainEl);
 
-    initTabs();
-    initLiveClear();
-
-    const g = $('btn-google');
-
-    if (g) {
-      g.addEventListener(
-        'click',
-        () => handleGoogle(client)
-      );
-    }
-
-    const up = $('form-signup');
-
-    if (up) {
-      up.addEventListener(
-        'submit',
-        e => {
-          e.preventDefault();
-          handleSignUp(client);
-        }
-      );
-    }
-
-    const in_ = $('form-signin');
-
-    if (in_) {
-      in_.addEventListener(
-        'submit',
-        e => {
-          e.preventDefault();
-          handleSignIn(client);
-        }
-      );
-    }
+    initAuthUI(client);
   }
 
   // ─── Start ────────────────────────────────────────────────────────────────────
@@ -846,12 +938,16 @@
   if (
     document.readyState === 'loading'
   ) {
+
     document.addEventListener(
       'DOMContentLoaded',
       init
     );
+
   } else {
+
     init();
+
   }
 
 })();
