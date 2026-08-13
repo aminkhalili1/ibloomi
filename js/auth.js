@@ -2,9 +2,10 @@
  * js/auth.js — iBloomi Authentication
  *
  * Load order in auth.html:
- * 1. supabase.min.js   (CDN)
- * 2. js/config.js      (exposes window.loadIbloomiConfig)
- * 3. js/auth.js       (this file)
+ *
+ *   1. supabase.min.js   (CDN)
+ *   2. js/config.js      (exposes window.loadIbloomiConfig)
+ *   3. js/auth.js        (this file)
  */
 
 (function () {
@@ -144,43 +145,131 @@
     return false;
   }
 
-  // ─── Google OAuth Callback ────────────────────────────────────────────────────
+  // ─── Google OAuth Hash Callback ───────────────────────────────────────────────
 
-  async function handleGoogleOAuthCallback(client) {
-    const params = new URLSearchParams(
-      window.location.search
-    );
+  async function handleOAuthHash(client) {
+    const hash = window.location.hash;
 
-    const code = params.get('code');
-
-    if (!code) {
+    if (!hash || hash.length <= 1) {
       return false;
     }
 
-    console.log('[Auth] Google OAuth callback detected.');
+    const hashParams = new URLSearchParams(
+      hash.substring(1)
+    );
+
+    const accessToken =
+      hashParams.get('access_token');
+
+    const refreshToken =
+      hashParams.get('refresh_token');
+
+    const error =
+      hashParams.get('error');
+
+    const errorDescription =
+      hashParams.get('error_description');
+
+    /*
+     * No OAuth tokens and no OAuth error:
+     * this is not an OAuth callback.
+     */
+    if (
+      !accessToken &&
+      !refreshToken &&
+      !error
+    ) {
+      return false;
+    }
+
+    console.log(
+      '[Auth] OAuth callback detected in URL hash.'
+    );
+
+    /*
+     * Handle OAuth errors returned by Supabase/Google.
+     */
+    if (error) {
+      console.error(
+        '[Auth] OAuth callback error:',
+        error,
+        errorDescription || ''
+      );
+
+      showError(
+        'error-google',
+        errorDescription
+          ? decodeURIComponent(
+              errorDescription.replace(/\+/g, ' ')
+            )
+          : 'Google sign-in failed. Please try again.'
+      );
+
+      return true;
+    }
+
+    /*
+     * Both tokens are required to create the Supabase session.
+     */
+    if (!accessToken || !refreshToken) {
+      console.error(
+        '[Auth] OAuth callback is missing access_token or refresh_token.'
+      );
+
+      showError(
+        'error-google',
+        'Google sign-in could not be completed. Please try again.'
+      );
+
+      return true;
+    }
+
+    console.log(
+      '[Auth] OAuth access_token found in URL hash.'
+    );
+
+    console.log(
+      '[Auth] OAuth refresh_token found in URL hash.'
+    );
 
     try {
-      const { data, error } =
-        await client.auth.exchangeCodeForSession(code);
+      /*
+       * IMPORTANT:
+       *
+       * detectSessionInUrl is intentionally FALSE.
+       *
+       * Therefore we explicitly transfer the tokens
+       * from the URL hash into the Supabase client.
+       */
+      const {
+        data,
+        error: sessionError
+      } = await client.auth.setSession({
+        access_token: accessToken,
+        refresh_token: refreshToken
+      });
 
-      if (error) {
+      if (sessionError) {
         console.error(
-          '[Auth] Google OAuth code exchange failed:',
-          error
+          '[Auth] Failed to create Supabase session from OAuth hash:',
+          sessionError
         );
 
         showError(
           'error-google',
-          extractErrorMessage(error) ||
+          extractErrorMessage(sessionError) ||
             'Google sign-in failed. Please try again.'
         );
 
         return true;
       }
 
-      if (!data || !data.session) {
+      if (
+        !data ||
+        !data.session
+      ) {
         console.error(
-          '[Auth] Google OAuth exchange completed but no session was returned.'
+          '[Auth] OAuth tokens were accepted but no session was returned.'
         );
 
         showError(
@@ -195,7 +284,111 @@
         '[Auth] Google OAuth session created successfully.'
       );
 
-      // Remove OAuth code from browser URL before redirecting.
+      console.log(
+        '[Auth] Authenticated Google user:',
+        data.session.user &&
+          data.session.user.email
+          ? data.session.user.email
+          : 'unknown'
+      );
+
+      /*
+       * Remove the OAuth tokens from the browser URL.
+       *
+       * This prevents:
+       * - tokens remaining visible in the address bar
+       * - the callback being processed twice
+       * - accidental re-processing on refresh
+       */
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
+
+      /*
+       * Transfer the authenticated session to Builder.
+       */
+      await redirectToBuilder(client);
+
+      return true;
+
+    } catch (error) {
+      console.error(
+        '[Auth] Unexpected OAuth hash processing error:',
+        error
+      );
+
+      showError(
+        'error-google',
+        extractErrorMessage(error) ||
+          'Google sign-in failed. Please try again.'
+      );
+
+      return true;
+    }
+  }
+
+  // ─── Google OAuth Code Callback ───────────────────────────────────────────────
+
+  async function handleOAuthCode(client) {
+    const params = new URLSearchParams(
+      window.location.search
+    );
+
+    const code = params.get('code');
+
+    if (!code) {
+      return false;
+    }
+
+    console.log(
+      '[Auth] OAuth authorization code detected.'
+    );
+
+    try {
+      const {
+        data,
+        error
+      } = await client.auth.exchangeCodeForSession(
+        code
+      );
+
+      if (error) {
+        console.error(
+          '[Auth] OAuth code exchange failed:',
+          error
+        );
+
+        showError(
+          'error-google',
+          extractErrorMessage(error) ||
+            'Google sign-in failed. Please try again.'
+        );
+
+        return true;
+      }
+
+      if (
+        !data ||
+        !data.session
+      ) {
+        console.error(
+          '[Auth] OAuth code exchange returned no session.'
+        );
+
+        showError(
+          'error-google',
+          'Google sign-in completed, but no active session was created. Please try again.'
+        );
+
+        return true;
+      }
+
+      console.log(
+        '[Auth] OAuth code exchanged successfully.'
+      );
+
       window.history.replaceState(
         {},
         document.title,
@@ -208,7 +401,7 @@
 
     } catch (error) {
       console.error(
-        '[Auth] Google OAuth callback exception:',
+        '[Auth] Unexpected OAuth code processing error:',
         error
       );
 
@@ -223,6 +416,16 @@
   }
 
   // ─── Email Confirmation ──────────────────────────────────────────────────────
+
+  /**
+   * Handles Supabase email confirmation links.
+   *
+   * Expected URL:
+   *
+   * https://ibloomi.nl/auth.html?token_hash=XXXXX&type=email
+   *
+   * The token_hash must be explicitly verified with Supabase.
+   */
 
   async function handleEmailConfirmation(client) {
     const params = new URLSearchParams(
@@ -246,6 +449,13 @@
     );
 
     try {
+      /*
+       * Verify the token_hash explicitly.
+       *
+       * detectSessionInUrl is disabled because
+       * this function is responsible for processing
+       * the confirmation URL.
+       */
       const { data, error } =
         await client.auth.verifyOtp({
           token_hash: tokenHash,
@@ -270,11 +480,18 @@
         '[Auth] Email confirmation verified successfully.'
       );
 
+      /*
+       * verifyOtp normally returns an authenticated session.
+       */
       if (data && data.session) {
         console.log(
           '[Auth] Confirmation session received.'
         );
 
+        /*
+         * Remove token_hash and type from the browser URL
+         * before redirecting.
+         */
         window.history.replaceState(
           {},
           document.title,
@@ -286,7 +503,11 @@
         return true;
       }
 
-      // Fallback: check whether the session was stored.
+      /*
+       * Fallback:
+       * Sometimes the session may already be stored even if
+       * it was not returned directly from verifyOtp.
+       */
       const {
         data: sessionData,
         error: sessionError
@@ -379,10 +600,17 @@
       window.location.search
     );
 
-    // Never auto-redirect during logout.
+    /*
+     * Never auto-redirect during logout.
+     */
     if (params.get('logout') === 'true') {
       return false;
     }
+
+    /*
+     * Do not use this function before OAuth/email
+     * callback processing has been completed.
+     */
 
     try {
       const {
@@ -398,7 +626,9 @@
         return false;
       }
 
-      // Verify that the session is still valid.
+      /*
+       * Verify that the session is still valid.
+       */
       const {
         data: userData,
         error: userError
@@ -483,7 +713,7 @@
     }
   }
 
-  // ─── Email Sign Up ────────────────────────────────────────────────────────────
+  // ─── Email Sign Up ───────────────────────────────────────────────────────────
 
   async function handleSignUp(client) {
     clearErrors();
@@ -568,8 +798,10 @@
       return;
     }
 
-    // If Supabase returns a session immediately,
-    // redirect directly to Builder.
+    /*
+     * If Supabase returns a session immediately,
+     * redirect directly to Builder.
+     */
     if (
       signUpData &&
       signUpData.session
@@ -578,7 +810,9 @@
       return;
     }
 
-    // Email confirmation required.
+    /*
+     * Email confirmation required.
+     */
     const signupPanel = $('signup-panel');
 
     if (signupPanel) {
@@ -622,7 +856,7 @@
     }
   }
 
-  // ─── Email Sign In ────────────────────────────────────────────────────────────
+  // ─── Email Sign In ───────────────────────────────────────────────────────────
 
   async function handleSignIn(client) {
     clearErrors();
@@ -872,14 +1106,15 @@
 
             /*
              * IMPORTANT:
+             *
              * Email confirmation is handled manually
-             * with verifyOtp() below.
+             * with verifyOtp().
              *
-             * Therefore Supabase must NOT try to process
-             * token_hash automatically.
+             * Google OAuth is also handled manually:
+             * - hash tokens → setSession()
+             * - authorization code → exchangeCodeForSession()
              *
-             * Google OAuth callback is handled manually
-             * with exchangeCodeForSession() below.
+             * Therefore this remains FALSE.
              */
             detectSessionInUrl: false
           }
@@ -916,22 +1151,38 @@
       return;
     }
 
-    // ── GOOGLE OAUTH CALLBACK ───────────────────────────────────────────────────
+    // ── GOOGLE OAUTH HASH CALLBACK ──────────────────────────────────────────────
 
     /*
-     * Google redirects back to:
+     * Google/Supabase may return the session in the URL hash:
+     *
+     * /auth.html#access_token=...
+     *              &refresh_token=...
+     *
+     * This must be processed BEFORE checking an existing session.
+     */
+
+    const oauthHashHandled =
+      await handleOAuthHash(client);
+
+    if (oauthHashHandled) {
+      return;
+    }
+
+    // ── GOOGLE OAUTH CODE CALLBACK ──────────────────────────────────────────────
+
+    /*
+     * Some OAuth configurations return:
      *
      * /auth.html?code=...
      *
-     * Because detectSessionInUrl is disabled,
-     * we explicitly exchange the OAuth code for a
-     * Supabase session here.
+     * Support this flow as well.
      */
 
-    const googleHandled =
-      await handleGoogleOAuthCallback(client);
+    const oauthCodeHandled =
+      await handleOAuthCode(client);
 
-    if (googleHandled) {
+    if (oauthCodeHandled) {
       return;
     }
 
