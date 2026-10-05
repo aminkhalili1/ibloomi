@@ -1,7 +1,7 @@
 /**
  * js/auth.js — iBloomi Authentication
  *
- * Load order in auth.html:
+ * Load order in /auth:
  *
  *   1. supabase.min.js   (CDN)
  *   2. js/config.js      (exposes window.loadIbloomiConfig)
@@ -422,7 +422,7 @@
    *
    * Expected URL:
    *
-   * https://ibloomi.nl/auth.html?token_hash=XXXXX&type=email
+   * https://ibloomi.nl/auth?token_hash=XXXXX&type=email
    *
    * The token_hash must be explicitly verified with Supabase.
    */
@@ -694,7 +694,7 @@
 
         options: {
           redirectTo:
-            window.location.origin + '/auth.html',
+            window.location.origin + '//auth',
 
           queryParams: {
             prompt: 'select_account'
@@ -783,7 +783,7 @@
 
       options: {
         emailRedirectTo:
-          window.location.origin + '/auth.html'
+          window.location.origin + '//auth'
       }
     });
 
@@ -1156,7 +1156,7 @@
     /*
      * Google/Supabase may return the session in the URL hash:
      *
-     * /auth.html#access_token=...
+     * //auth#access_token=...
      *              &refresh_token=...
      *
      * This must be processed BEFORE checking an existing session.
@@ -1174,7 +1174,7 @@
     /*
      * Some OAuth configurations return:
      *
-     * /auth.html?code=...
+     * //auth?code=...
      *
      * Support this flow as well.
      */
@@ -1193,7 +1193,7 @@
      *
      * Expected:
      *
-     * /auth.html?token_hash=XXXXX&type=email
+     * //auth?token_hash=XXXXX&type=email
      */
 
     const tokenHash =

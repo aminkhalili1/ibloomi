@@ -1,7 +1,7 @@
 /**
  * js/auth.js — iBloomi Authentication
  *
- * Load order in auth.html:
+ * Load order in /auth:
  * 1. supabase.min.js   (CDN)
  * 2. js/config.js      (exposes window.loadIbloomiConfig)
  * 3. js/auth.js       (this file — calls loadIbloomiConfig, then runs auth)
@@ -145,7 +145,7 @@
    *
    * The email template uses:
    *
-   * {{ .SiteURL }}/auth.html?token_hash={{ .TokenHash }}&type=email
+   * {{ .SiteURL }}//auth?token_hash={{ .TokenHash }}&type=email
    *
    * Supabase verifies the token using verifyOtp().
    */
@@ -265,7 +265,7 @@
       provider: 'google',
       options: {
         redirectTo:
-          window.location.origin + '/auth.html'
+          window.location.origin + '//auth'
       }
     });
 
@@ -335,7 +335,7 @@
       password,
       options: {
         emailRedirectTo:
-          window.location.origin + '/auth.html'
+          window.location.origin + '//auth'
       }
     });
 
