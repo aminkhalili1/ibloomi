@@ -1,11 +1,9 @@
 User-agent: *
 Allow: /
 
-# Keep auth gate and legal pages out of search results
+# Keep the private authentication area out of search results.
+# Legal pages use a noindex meta tag so search engines can see the directive.
 Disallow: /auth.html
-Disallow: /privacy-policy.html
-Disallow: /terms.html
-Disallow: /cookies.html
 
 # Block any API or config endpoints
 Disallow: /api/
