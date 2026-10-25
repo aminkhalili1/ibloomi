@@ -92,6 +92,15 @@
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   }
 
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   /**
    * Redirect authenticated user to the Builder.
    *
@@ -265,7 +274,7 @@
       provider: 'google',
       options: {
         redirectTo:
-          window.location.origin + '//auth'
+          window.location.origin + '/auth'
       }
     });
 
@@ -335,7 +344,7 @@
       password,
       options: {
         emailRedirectTo:
-          window.location.origin + '//auth'
+          window.location.origin + '/auth'
       }
     });
 
@@ -381,7 +390,7 @@
 
         <p>
           We sent a confirmation link to
-          <strong>${email}</strong>.
+          <strong>${escapeHtml(email)}</strong>.
           Click it to activate your account —
           you'll be redirected automatically.
         </p>
