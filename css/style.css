@@ -1729,3 +1729,22 @@ a.contact-info-value:hover {
 .features .features-grid .feature-card:hover {
   box-shadow: 0 6px 18px rgba(13, 27, 94, 0.08);
 }
+
+
+/* =============================================
+   HOMEPAGE SECTION HEADINGS — IBLOOMI NAVY
+   Only homepage section headings; accent words remain green.
+   ============================================= */
+body:has(.hero) .benefits .section-header h2,
+body:has(.hero) .how-it-works .section-header h2,
+body:has(.hero) .testimonials .section-header h2,
+body:has(.hero) .faq .section-header h2 {
+  color: var(--navy);
+}
+
+body:has(.hero) .benefits .section-header h2 em,
+body:has(.hero) .how-it-works .section-header h2 em,
+body:has(.hero) .testimonials .section-header h2 em,
+body:has(.hero) .faq .section-header h2 em {
+  color: var(--green);
+}
