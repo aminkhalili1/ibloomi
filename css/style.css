@@ -208,6 +208,35 @@ em { color: var(--green); font-style: italic; }
   padding: 90px 0;
 }
 
+/* Homepage video background; other pages unchanged. */
+.hero-background-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(5, 12, 37, .76), rgba(5, 12, 37, .46) 55%, rgba(5, 12, 37, .20));
+  z-index: 1;
+  pointer-events: none;
+}
+.hero .hero-grid {
+  grid-template-columns: minmax(0, 760px);
+  gap: 0;
+}
+@media (max-width: 768px) {
+  .hero-video-overlay { background: rgba(5, 12, 37, .61); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-background-video { display: none; }
+}
+
 /* Decorative background petals */
 .hero-bg-petals {
   position: absolute;
