@@ -117,6 +117,19 @@
       text-shadow: none;
     }
 
+    /* Slightly larger desktop navigation; keep mobile layout responsive. */
+    body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a {
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    @media (min-width: 769px) and (max-width: 1100px) {
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a {
+        font-size: 16px;
+        padding-inline: 10px;
+      }
+    }
+
     /* Expanded mobile navigation is always legible. */
     @media (max-width: 768px) {
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links.open {
