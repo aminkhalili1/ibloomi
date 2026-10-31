@@ -1571,3 +1571,23 @@ a.contact-info-value:hover {
     min-height: 105px;
   }
 }
+
+/* =============================================
+   UNIFIED NAVIGATION FONT — ALL PAGES
+   Applies consistently to homepage overlay and inner pages.
+   Overrides older homepage-only 18px inline rules.
+   ============================================= */
+@media (min-width: 769px) {
+  .nav-wrapper .nav-links a {
+    font-size: 17px !important;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-wrapper .nav-links a {
+    font-size: 16px !important;
+    line-height: 1.4;
+  }
+}
