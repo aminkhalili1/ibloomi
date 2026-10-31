@@ -1,22 +1,38 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us — iBloomi</title>
-  <meta name="description" content="Learn about iBloomi's AI-assisted bouquet ordering platform for florists." />
+  <meta name="description" content="Discover iBloomi, a floral technology company integrating AI-powered bouquet customization, visual previews, inventory, live pricing, and personalized QR messages." />
   <link rel="canonical" href="https://ibloomi.nl/about" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="About iBloomi" />
-  <meta property="og:description" content="Learn about iBloomi's AI-assisted bouquet ordering platform for florists." />
+  <meta property="og:description" content="Learn how iBloomi brings artificial intelligence and personalized bouquet design together." />
   <meta property="og:url" content="https://ibloomi.nl/about" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32" />
+
+  <link rel="icon" type="image/png" href="/favicon.png?v=9" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+
+  <!-- ABOUT PAGE SPECIFIC STYLES -->
+  <style>
+    /* Navy heading matching the iBloomi brand */
+    .about .section-header h2 {
+      color: #0D1B5E;
+    }
+
+    /* Justified paragraphs, without affecting the tagline */
+    .about-content > p:not(.about-tagline) {
+      text-align: justify;
+      text-justify: inter-word;
+    }
+  </style>
 </head>
 <body>
 
@@ -26,9 +42,11 @@
       <a href="/" class="nav-logo">
         <img src="images/logo.png" alt="iBloomi" />
       </a>
+
       <button class="nav-toggle" id="navToggle" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
+
       <ul class="nav-links" id="navLinks">
         <li><a href="/about">About Us</a></li>
         <li><a href="/features">Features</a></li>
@@ -42,7 +60,6 @@
     </nav>
   </header>
 
-
   <!-- ABOUT US -->
   <section class="about section" id="about">
     <div class="container about-container">
@@ -50,10 +67,23 @@
         <span class="eyebrow">Our story</span>
         <h2>About iBloomi</h2>
       </div>
+
       <div class="about-content">
-        <p>At iBloomi, we believe every bouquet should be as unique as the person receiving it. By combining artificial intelligence with floral creativity, we enable customers to design, preview, and purchase custom bouquets in a simple and intuitive way.</p>
-        <p>Our AI-powered platform helps users select flowers, colors, wrapping, and vases while creating beautiful, balanced arrangements with confidence. Our mission is to make custom floral design accessible to everyone, and our vision is a future where every bouquet is personal, transparent, and uniquely meaningful.</p>
-        <p class="about-tagline"><em>Your Flowers, Your Way.</em></p>
+        <p>
+          iBloomi is a floral technology company that integrates artificial intelligence with the floral industry. We believe every bouquet should be as unique as the occasion it celebrates, and that creating a custom bouquet should be clear, simple and intuitive.
+        </p>
+
+        <p>
+          Our platform offers AI-powered bouquet customization, allowing flowers, colors, wrapping and vases to be selected and previewed visually before an order is placed. Connected to real inventory and live pricing, every design is both available and accurately priced. Our QR message feature adds a personal, digital dimension to each bouquet, allowing a heartfelt message to accompany the gift.
+        </p>
+
+        <p>
+          Our mission is to make custom floral design accessible to everyone. Our vision is a future where every bouquet is personal, transparent and uniquely meaningful.
+        </p>
+
+        <p class="about-tagline">
+          <em>Your Flowers, Your Way.</em>
+        </p>
       </div>
     </div>
   </section>
@@ -65,33 +95,45 @@
         <div class="footer-brand">
           <img src="images/logo-white.png" alt="iBloomi" class="footer-logo" />
           <p>AI-powered bouquet design. Personal, creative, and meaningful flowers for every occasion.</p>
+
           <div class="footer-socials">
             <a href="https://www.instagram.com/ibloomi.nl/" aria-label="Instagram" target="_blank" rel="noopener">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
             </a>
+
             <a href="https://www.linkedin.com/company/ibloomi/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 0-6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
             </a>
           </div>
         </div>
+
         <div class="footer-links">
           <div class="footer-col">
             <h4>Platform</h4>
             <ul>
               <li><a href="/features">Features</a></li>
               <li><a href="/#how-it-works">How It Works</a></li>
-              
             </ul>
           </div>
+
           <div class="footer-col">
             <h4>Company</h4>
             <ul>
               <li><a href="/about">About Us</a></li>
               <li><a href="/team">Team</a></li>
-        <li><a href="/gallery">Gallery</a></li>
+              <li><a href="/gallery">Gallery</a></li>
               <li><a href="/contact">Contact</a></li>
             </ul>
           </div>
+
           <div class="footer-col">
             <h4>Legal</h4>
             <ul>
@@ -102,6 +144,7 @@
           </div>
         </div>
       </div>
+
       <div class="footer-bottom">
         <p>© 2026 iBloomi. All rights reserved. · ibloomi.nl</p>
       </div>
