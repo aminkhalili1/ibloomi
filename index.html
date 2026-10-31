@@ -64,13 +64,10 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg-petals" aria-hidden="true">
-      <div class="petal p1"></div>
-      <div class="petal p2"></div>
-      <div class="petal p3"></div>
-      <div class="petal p4"></div>
-      <div class="petal p5"></div>
-    </div>
+    <video class="hero-background-video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1">
+      <source src="videos/hero.webm" type="video/webm" />
+    </video>
+    <div class="hero-video-overlay" aria-hidden="true"></div>
     <div class="container hero-grid">
       <div class="hero-content">
         <h1 class="hero-headline hero-headline--bold">
@@ -83,11 +80,6 @@
         <div class="hero-actions">
           <a href="/auth" class="btn btn-primary">Try the AI Bouquet Builder</a>
           <a href="#how-it-works" class="btn btn-ghost">See How It Works</a>
-        </div>
-      </div>
-      <div class="hero-video">
-        <div class="showcase-frame">
-          <img src="images/hero-showcase.png" alt="iBloomi AI bouquet builder shown on laptop and mobile" width="1774" height="887" loading="eager" fetchpriority="high" decoding="async" />
         </div>
       </div>
     </div>
