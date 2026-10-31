@@ -1693,3 +1693,39 @@ a.contact-info-value:hover {
   .features .feature-card { padding: 26px 18px 18px; }
   .features .feature-icon { left: 18px; }
 }
+
+
+/* =============================================
+   FEATURES — UNIFORM PALE GREEN CARDS
+   Same height across the grid, including former accent card.
+   ============================================= */
+.features .features-grid {
+  align-items: stretch;
+  grid-auto-rows: 1fr;
+}
+.features .features-grid .feature-card,
+.features .features-grid .feature-card--accent {
+  height: 100%;
+  min-height: 0;
+  align-self: stretch;
+  background: #F2F9E8;
+  border: 1px solid #DCEBC9;
+  color: var(--navy);
+  box-shadow: none;
+}
+.features .features-grid .feature-card h3,
+.features .features-grid .feature-card--accent h3 {
+  color: var(--navy);
+}
+.features .features-grid .feature-card p,
+.features .features-grid .feature-card--accent p {
+  color: var(--text-muted);
+}
+.features .features-grid .feature-card .feature-icon,
+.features .features-grid .feature-card--accent .feature-icon {
+  background: #E5F2D0;
+  color: var(--navy);
+}
+.features .features-grid .feature-card:hover {
+  box-shadow: 0 6px 18px rgba(13, 27, 94, 0.08);
+}
