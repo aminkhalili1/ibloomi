@@ -1309,3 +1309,16 @@ a.contact-info-value:hover {
   cursor: pointer;
   font-weight: 300;
 }
+
+/* =============================================
+   ABOUT PAGE — HEADING AND BODY ALIGNMENT
+   Scoped to About so other pages remain unchanged.
+   ============================================= */
+.about .section-header h2 {
+  color: var(--navy);
+}
+
+.about .about-content > p:not(.about-tagline) {
+  text-align: justify;
+  text-justify: inter-word;
+}
