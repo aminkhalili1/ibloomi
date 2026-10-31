@@ -1646,3 +1646,50 @@ a.contact-info-value:hover {
   .features .features-grid { grid-template-columns: 1fr; gap: 16px; }
   .features .feature-card { padding: 20px; }
 }
+
+/* =============================================
+   FEATURES: SHORTER CARDS, ICONS ON TOP BORDER
+   Only affects the Features page cards.
+   ============================================= */
+.features .features-grid {
+  align-items: start;
+  row-gap: 32px;
+}
+.features .feature-card {
+  position: relative;
+  height: auto;
+  min-height: 0;
+  align-self: start;
+  padding: 27px 20px 18px;
+  overflow: visible;
+}
+.features .feature-icon {
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  border-radius: 11px;
+  background: #e9ecf4;
+  z-index: 1;
+}
+.features .feature-card--accent .feature-icon {
+  background: #293b7b;
+  color: #fff;
+}
+.features .feature-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.12rem;
+  line-height: 1.32;
+}
+.features .feature-card p {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+@media (max-width: 600px) {
+  .features .features-grid { row-gap: 30px; }
+  .features .feature-card { padding: 26px 18px 18px; }
+  .features .feature-icon { left: 18px; }
+}
