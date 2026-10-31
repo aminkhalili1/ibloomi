@@ -1484,3 +1484,90 @@ a.contact-info-value:hover {
     margin-bottom: 22px;
   }
 }
+
+/* CONTACT PAGE — COMPACT DESKTOP FORM (other pages unchanged) */
+@media (min-width: 769px) {
+  .contact-page {
+    padding-top: 18px;
+    padding-bottom: 28px;
+  }
+  .contact-page .contact-page-inner {
+    max-width: 680px;
+  }
+  .contact-page .contact-page-header {
+    margin-bottom: 18px;
+  }
+  .contact-page .contact-page-header h2 {
+    font-size: 32px;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .contact-page .contact-description {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .contact-page .contact-form-card {
+    padding: 22px 28px;
+  }
+  .contact-page .contact-field {
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+  .contact-page .contact-field label {
+    font-size: 13px;
+  }
+  .contact-page .contact-field input {
+    padding: 9px 12px;
+    min-height: 40px;
+    font-size: 14px;
+  }
+  .contact-page .contact-field textarea {
+    padding: 9px 12px;
+    min-height: 90px;
+    height: 95px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .contact-page .contact-submit {
+    margin-top: 4px;
+    padding: 10px 22px;
+    font-size: 14px;
+  }
+  .contact-page .contact-info {
+    margin-top: 16px;
+    padding: 14px 18px;
+    gap: 8px;
+  }
+}
+
+/* Compact but still touch-friendly on mobile */
+@media (max-width: 768px) {
+  .contact-page {
+    padding-top: 18px;
+    padding-bottom: 32px;
+  }
+  .contact-page .contact-page-header {
+    margin-bottom: 18px;
+  }
+  .contact-page .contact-page-header h2 {
+    font-size: 30px;
+    margin-bottom: 8px;
+  }
+  .contact-page .contact-description {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .contact-page .contact-form-card {
+    padding: 22px 18px;
+  }
+  .contact-page .contact-field {
+    margin-bottom: 14px;
+  }
+  .contact-page .contact-field input,
+  .contact-page .contact-field textarea {
+    font-size: 16px;
+  }
+  .contact-page .contact-field textarea {
+    min-height: 105px;
+  }
+}
