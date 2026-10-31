@@ -1591,3 +1591,17 @@ a.contact-info-value:hover {
     line-height: 1.4;
   }
 }
+
+/* =============================================
+   UNIFIED NAVIGATION ORDER — ALL PAGES
+   Matches the homepage menu without touching page content.
+   ============================================= */
+.nav-wrapper .nav-links > li:has(> a[href="/features"]) { order: 1; }
+.nav-wrapper .nav-links > li:has(> a[href$="#how-it-works"]) { order: 2; }
+.nav-wrapper .nav-links > li:has(> a[href="/gallery"]) { order: 3; }
+.nav-wrapper .nav-links > li:has(> a[href="/about"]) { order: 4; }
+.nav-wrapper .nav-links > li:has(> a[href$="#testimonials"]) { order: 5; }
+.nav-wrapper .nav-links > li:has(> a[href$="#faq"]) { order: 6; }
+.nav-wrapper .nav-links > li:has(> a[href="/contact"]) { order: 7; }
+/* Team remains accessible from the footer, not the top navigation. */
+.nav-wrapper .nav-links > li:has(> a[href="/team"]) { display: none; }
