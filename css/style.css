@@ -1790,3 +1790,23 @@ body:has(.hero) .how-it-works .section-header h2 {
     margin-bottom: 28px;
   }
 }
+
+
+/* =============================================
+   FEATURES — SMALLER TYPOGRAPHY + JUSTIFIED COPY
+   Scoped to feature cards; other pages unaffected.
+   ============================================= */
+.features .features-grid .feature-card h3 {
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.features .features-grid .feature-card p {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
