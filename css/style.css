@@ -1605,3 +1605,44 @@ a.contact-info-value:hover {
 .nav-wrapper .nav-links > li:has(> a[href="/contact"]) { order: 7; }
 /* Team remains accessible from the footer, not the top navigation. */
 .nav-wrapper .nav-links > li:has(> a[href="/team"]) { display: none; }
+
+
+/* =============================================
+   FEATURES PAGE: COMPACT CARDS (SCOPED)
+   ============================================= */
+.features .features-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 20px;
+}
+.features .feature-card {
+  height: auto;
+  min-height: 0;
+  align-self: start;
+  padding: 22px 22px 24px;
+}
+.features .feature-icon {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 15px;
+}
+.features .feature-card h3 {
+  color: var(--navy);
+  font-size: 1.12rem;
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+.features .feature-card p {
+  color: var(--text-muted);
+  font-size: 0.94rem;
+  line-height: 1.62;
+}
+.features .feature-card--accent h3 { color: var(--white); }
+.features .feature-card--accent p { color: rgba(255,255,255,0.88); }
+@media (max-width: 900px) {
+  .features .features-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .features .features-grid { grid-template-columns: 1fr; gap: 16px; }
+  .features .feature-card { padding: 20px; }
+}
