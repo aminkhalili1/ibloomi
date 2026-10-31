@@ -1759,3 +1759,34 @@ body:has(.hero) .faq .section-header h2 em {
   background: #EAF6DA;
   color: var(--navy);
 }
+
+
+/* =============================================
+   HOMEPAGE — HOW IT WORKS COMPACT SPACING
+   Reduce unused space above The Process, bring
+   the three steps closer to the heading.
+   ============================================= */
+body:has(.hero) .how-it-works.section {
+  padding-top: 24px;
+  padding-bottom: 64px;
+  scroll-margin-top: 72px;
+}
+
+body:has(.hero) .how-it-works .section-header {
+  margin-bottom: 34px;
+}
+
+body:has(.hero) .how-it-works .section-header h2 {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  body:has(.hero) .how-it-works.section {
+    padding-top: 20px;
+    padding-bottom: 48px;
+    scroll-margin-top: 12px;
+  }
+  body:has(.hero) .how-it-works .section-header {
+    margin-bottom: 28px;
+  }
+}
