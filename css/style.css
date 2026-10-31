@@ -1810,3 +1810,63 @@ body:has(.hero) .how-it-works .section-header h2 {
   hyphens: auto;
   overflow-wrap: break-word;
 }
+
+
+/* =========================================================
+   HOMEPAGE — COMPACT BENEFITS, STORIES AND FAQ
+   Reduces excess space above section headings without
+   affecting inner pages, the hero video, or Features cards.
+   ========================================================= */
+body:has(.hero) .benefits.section,
+body:has(.hero) .testimonials.section,
+body:has(.hero) .faq.section {
+  padding-top: 24px;
+  padding-bottom: 48px;
+}
+
+body:has(.hero) .benefits .section-header,
+body:has(.hero) .testimonials .section-header,
+body:has(.hero) .faq .section-header {
+  margin-bottom: 28px;
+}
+
+body:has(.hero) .benefits .section-header h2,
+body:has(.hero) .testimonials .section-header h2,
+body:has(.hero) .faq .section-header h2 {
+  margin-bottom: 0;
+}
+
+/* FAQ: shorter question rows and compact answer spacing */
+body:has(.hero) .faq .faq-item summary {
+  padding: 14px 20px;
+  min-height: 56px;
+  line-height: 1.45;
+}
+
+body:has(.hero) .faq .faq-item p {
+  padding: 0 20px 16px;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  body:has(.hero) .benefits.section,
+  body:has(.hero) .testimonials.section,
+  body:has(.hero) .faq.section {
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+
+  body:has(.hero) .benefits .section-header,
+  body:has(.hero) .testimonials .section-header,
+  body:has(.hero) .faq .section-header {
+    margin-bottom: 24px;
+  }
+
+  body:has(.hero) .faq .faq-item summary {
+    padding: 13px 16px;
+    min-height: 52px;
+  }
+  body:has(.hero) .faq .faq-item p {
+    padding: 0 16px 14px;
+  }
+}
