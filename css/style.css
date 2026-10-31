@@ -1696,8 +1696,8 @@ a.contact-info-value:hover {
 
 
 /* =============================================
-   FEATURES — UNIFORM PALE GREEN CARDS
-   Same height across the grid, including former accent card.
+   FEATURES — SAME CARD COLORS AS HOMEPAGE BENEFITS
+   Uniform height, icons remain on the upper border.
    ============================================= */
 .features .features-grid {
   align-items: stretch;
@@ -1708,10 +1708,10 @@ a.contact-info-value:hover {
   height: 100%;
   min-height: 0;
   align-self: stretch;
-  background: #F2F9E8;
-  border: 1px solid #DCEBC9;
+  background: var(--off-white);
+  border: 1px solid var(--border);
   color: var(--navy);
-  box-shadow: none;
+  box-shadow: var(--shadow-sm);
 }
 .features .features-grid .feature-card h3,
 .features .features-grid .feature-card--accent h3 {
@@ -1723,11 +1723,11 @@ a.contact-info-value:hover {
 }
 .features .features-grid .feature-card .feature-icon,
 .features .features-grid .feature-card--accent .feature-icon {
-  background: #E5F2D0;
+  background: #e9ecf4;
   color: var(--navy);
 }
 .features .features-grid .feature-card:hover {
-  box-shadow: 0 6px 18px rgba(13, 27, 94, 0.08);
+  box-shadow: var(--shadow-md);
 }
 
 
