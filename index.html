@@ -140,6 +140,27 @@
         text-shadow: none;
       }
     }
+
+    /* Homepage: reversible scroll reveal (both downward and upward). */
+    body.home-scroll-effects .home-reveal {
+      opacity: 0;
+      transform: translate3d(0, 22px, 0);
+      transition: opacity 650ms cubic-bezier(.22,1,.36,1),
+                  transform 650ms cubic-bezier(.22,1,.36,1);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+    body.home-scroll-effects .home-reveal.is-visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      body.home-scroll-effects .home-reveal,
+      body.home-scroll-effects .home-reveal.is-visible {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
   </style>
 
 </head>
@@ -473,6 +494,36 @@
       }
       window.addEventListener('scroll', updateHomeNavbar, { passive: true });
       updateHomeNavbar();
+    })();
+  </script>
+
+  <!-- Reversible scroll transitions for homepage content. -->
+  <script>
+    (function () {
+      if (!('IntersectionObserver' in window) ||
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      const selectors = [
+        '.hero .hero-content',
+        '.how-it-works .section-header', '.how-it-works .step',
+        '.benefits .section-header', '.benefits .benefit-card',
+        '.testimonials .section-header', '.testimonials .testimonial-card',
+        '.faq .section-header', '.faq .faq-item',
+        '.footer .footer-top', '.footer .footer-bottom'
+      ];
+      const elements = document.querySelectorAll(selectors.join(', '));
+      if (!elements.length) return;
+
+      elements.forEach((element) => element.classList.add('home-reveal'));
+      document.body.classList.add('home-scroll-effects');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle('is-visible', entry.isIntersecting);
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
+
+      elements.forEach((element) => observer.observe(element));
     })();
   </script>
 
