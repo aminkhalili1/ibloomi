@@ -141,6 +141,37 @@
       }
     }
 
+    /* Animated underline for homepage navigation links. */
+    @media (min-width: 769px) and (hover: hover) {
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a {
+        position: relative;
+        transform: none;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        bottom: 4px;
+        height: 2px;
+        background: var(--green, #7DC51E);
+        border-radius: 2px;
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 190ms ease-out;
+        pointer-events: none;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a:hover::after,
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a:focus-visible::after {
+        transform: scaleX(1);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a::after {
+        transition: none;
+      }
+    }
+
     /* Homepage: reversible scroll reveal (both downward and upward). */
     body.home-scroll-effects .home-reveal {
       opacity: 0;
