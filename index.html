@@ -148,7 +148,7 @@
         background: transparent !important;
         box-shadow: none !important;
         border-radius: 0;
-        transition: transform 180ms ease-out, color 180ms ease-out;
+        transition: transform 180ms ease-out, color 180ms ease-out, text-shadow 180ms ease-out;
         transform-origin: center center;
       }
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a:hover,
@@ -160,10 +160,12 @@
       body:has(> .nav-wrapper + .hero) .nav-wrapper:not(.home-nav-scrolled) .nav-links a:hover,
       body:has(> .nav-wrapper + .hero) .nav-wrapper:not(.home-nav-scrolled) .nav-links a:focus-visible {
         color: #fff;
+        text-shadow: 0 2px 5px rgba(6, 15, 54, .9), 0 0 12px rgba(6, 15, 54, .6);
       }
       body:has(> .nav-wrapper + .hero) .nav-wrapper.home-nav-scrolled .nav-links a:hover,
       body:has(> .nav-wrapper + .hero) .nav-wrapper.home-nav-scrolled .nav-links a:focus-visible {
         color: #0D1B5E;
+        text-shadow: 0 2px 5px rgba(13, 27, 94, .28), 0 0 9px rgba(13, 27, 94, .14);
       }
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a::after {
         content: "";
