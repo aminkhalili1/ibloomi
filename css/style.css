@@ -1352,3 +1352,68 @@ a.contact-info-value:hover {
     line-height: 1.6;
   }
 }
+
+
+/* =============================================
+   INNER PAGES — CONSISTENT COMPACT LAYOUT
+   Scope to standalone About, Gallery, Features and Team sections.
+   Homepage Hero, Benefits, How It Works, Testimonials and FAQ remain unchanged.
+   ============================================= */
+.gallery.section,
+.features.section,
+.team.section {
+  padding-top: 28px;
+  padding-bottom: 48px;
+}
+
+.gallery .section-header,
+.features .section-header,
+.team .section-header {
+  margin-bottom: 32px;
+}
+
+.gallery .section-header h2,
+.features .section-header h2,
+.team .section-header h2 {
+  color: var(--navy);
+  font-size: clamp(2rem, 3.2vw, 2.65rem);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.gallery .section-desc,
+.features .section-desc,
+.team .section-desc {
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.features .feature-card p,
+.team .team-card p {
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+@media (max-width: 600px) {
+  .gallery.section,
+  .features.section,
+  .team.section {
+    padding-top: 20px;
+    padding-bottom: 40px;
+  }
+
+  .gallery .section-header,
+  .features .section-header,
+  .team .section-header {
+    margin-bottom: 24px;
+  }
+
+  .gallery .section-desc,
+  .features .section-desc,
+  .team .section-desc,
+  .features .feature-card p,
+  .team .team-card p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
