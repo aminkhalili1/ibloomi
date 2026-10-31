@@ -1417,3 +1417,70 @@ a.contact-info-value:hover {
     line-height: 1.6;
   }
 }
+
+
+/* =============================================
+   GALLERY + CONTACT — VERIFIED PAGE CLASS FIXES
+   Scoped to gallery-page and contact-page only.
+   ============================================= */
+.gallery-page.section {
+  padding-top: 24px;
+  padding-bottom: 48px;
+}
+.gallery-page .section-header {
+  margin-bottom: 30px;
+}
+.gallery-page .section-header h2 {
+  color: var(--navy);
+  font-size: clamp(2rem, 3.2vw, 2.65rem);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.gallery-page .section-desc {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.contact-page {
+  padding-top: 24px;
+  padding-bottom: 48px;
+}
+.contact-page .contact-page-header {
+  margin-bottom: 26px;
+}
+.contact-page .contact-page-header h2 {
+  color: var(--navy);
+  font-size: clamp(2rem, 3.2vw, 2.65rem);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.contact-page .contact-description {
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.contact-page .contact-field label,
+.contact-page .contact-field input,
+.contact-page .contact-field textarea {
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .gallery-page.section,
+  .contact-page {
+    padding-top: 20px;
+    padding-bottom: 36px;
+  }
+  .gallery-page .section-header {
+    margin-bottom: 24px;
+  }
+  .gallery-page .section-desc,
+  .contact-page .contact-description {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .contact-page .contact-page-header {
+    margin-bottom: 22px;
+  }
+}
