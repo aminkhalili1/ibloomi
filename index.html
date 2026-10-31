@@ -39,6 +39,75 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Homepage only: transparent menu on hero, cream glow behind original logo -->
+  <style>
+    body:has(> .nav-wrapper + .hero) .nav-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      transition: background .22s ease, border-color .22s ease, box-shadow .22s ease;
+    }
+
+    body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-logo {
+      position: relative;
+      isolation: isolate;
+    }
+
+    /* Cream glow stays strictly around logo; no change to hero's navy overlay. */
+    body:has(> .nav-wrapper + .hero) .nav-wrapper:not(.home-nav-scrolled) .nav-logo::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: -22px -38px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center,
+        rgba(255,248,232,.96) 0%,
+        rgba(255,248,232,.83) 40%,
+        rgba(255,248,232,.45) 65%,
+        rgba(255,248,232,0) 100%);
+      pointer-events: none;
+    }
+
+    body:has(> .nav-wrapper + .hero) .nav-wrapper:not(.home-nav-scrolled) .nav-links a {
+      color: #fff;
+      text-shadow: 0 1px 5px rgba(8,15,53,.5);
+    }
+    body:has(> .nav-wrapper + .hero) .nav-wrapper:not(.home-nav-scrolled) .nav-toggle span {
+      background: #fff;
+    }
+
+    body:has(> .nav-wrapper + .hero) .nav-wrapper.home-nav-scrolled {
+      background: rgba(255,255,255,.98);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    body:has(> .nav-wrapper + .hero) .nav-wrapper.home-nav-scrolled .nav-links a {
+      color: var(--navy);
+      text-shadow: none;
+    }
+
+    /* Expanded mobile navigation is always legible. */
+    @media (max-width: 768px) {
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links.open {
+        background: #fff;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links.open a {
+        color: var(--navy);
+        text-shadow: none;
+      }
+    }
+  </style>
+
 </head>
 <body>
 
@@ -359,5 +428,19 @@
   </footer>
 
   <script src="js/main.js"></script>
+
+  <!-- Home navbar: solid only after scrolling; works independently of main.js -->
+  <script>
+    (function () {
+      const navbar = document.getElementById('navbar');
+      if (!navbar) return;
+      function updateHomeNavbar() {
+        navbar.classList.toggle('home-nav-scrolled', window.scrollY > 24);
+      }
+      window.addEventListener('scroll', updateHomeNavbar, { passive: true });
+      updateHomeNavbar();
+    })();
+  </script>
+
 </body>
 </html>
