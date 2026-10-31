@@ -40,7 +40,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 
-  <!-- Homepage only: transparent menu on hero, cream glow behind original logo -->
+  <!-- Homepage only: transparent navbar, seamless cream wash behind original logo -->
   <style>
     body:has(> .nav-wrapper + .hero) .nav-wrapper {
       position: fixed;
@@ -56,24 +56,45 @@
       transition: background .22s ease, border-color .22s ease, box-shadow .22s ease;
     }
 
-    body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-logo {
-      position: relative;
-      isolation: isolate;
+    /* Home hero fills the first screen; centered content sits lower naturally. */
+    body:has(> .nav-wrapper + .hero) > .hero {
+      min-height: 100vh;
+      min-height: 100svh;
+      padding-top: clamp(150px, 19vh, 220px);
+      padding-bottom: clamp(85px, 11vh, 135px);
     }
 
-    /* Cream glow stays strictly around logo; no change to hero's navy overlay. */
-    body:has(> .nav-wrapper + .hero) .nav-wrapper:not(.home-nav-scrolled) .nav-logo::before {
+    /* A wide, seamless cream-to-navy wash behind the ORIGINAL logo.
+       Keep the existing navy video overlay unchanged. */
+    body:has(> .nav-wrapper + .hero) > .hero::after {
       content: "";
       position: absolute;
-      z-index: -1;
-      inset: -22px -38px;
-      border-radius: 50%;
-      background: radial-gradient(ellipse at center,
-        rgba(255,248,232,.96) 0%,
-        rgba(255,248,232,.83) 40%,
-        rgba(255,248,232,.45) 65%,
-        rgba(255,248,232,0) 100%);
+      top: 0;
+      left: 0;
+      width: min(72vw, 1100px);
+      height: clamp(160px, 24vh, 245px);
+      z-index: 1;
       pointer-events: none;
+      background: linear-gradient(90deg,
+        rgba(252, 243, 223, .80) 0%,
+        rgba(252, 243, 223, .61) 22%,
+        rgba(252, 243, 223, .30) 53%,
+        rgba(252, 243, 223, 0) 100%);
+      -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.82) 30%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.82) 30%, transparent 100%);
+    }
+
+    @media (max-width: 768px) {
+      body:has(> .nav-wrapper + .hero) > .hero {
+        min-height: 100svh;
+        padding-top: 135px;
+        padding-bottom: 65px;
+      }
+      body:has(> .nav-wrapper + .hero) > .hero::after {
+        width: 100%;
+        height: 160px;
+        background: linear-gradient(90deg, rgba(252,243,223,.76), rgba(252,243,223,0) 90%);
+      }
     }
 
     body:has(> .nav-wrapper + .hero) .nav-wrapper:not(.home-nav-scrolled) .nav-links a {
