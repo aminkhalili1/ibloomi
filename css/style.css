@@ -1748,3 +1748,14 @@ body:has(.hero) .testimonials .section-header h2 em,
 body:has(.hero) .faq .section-header h2 em {
   color: var(--green);
 }
+
+
+/* =============================================
+   FEATURES — SOFT GREEN ICON BACKGROUNDS
+   Applies to all six Features cards only.
+   ============================================= */
+.features .features-grid .feature-card .feature-icon,
+.features .features-grid .feature-card--accent .feature-icon {
+  background: #EAF6DA;
+  color: var(--navy);
+}
