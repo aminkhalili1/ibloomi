@@ -402,6 +402,50 @@
       body:has(.hero) .footer .footer-top { margin-bottom: 14px; padding-bottom: 16px; gap: 24px; }
     }
   </style>
+
+  <style>
+    /* Stories: original avatar + name + occasion layout */
+    body:has(.hero) .testimonials .testimonial-card .story-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 0 0 8px;
+      padding: 0;
+    }
+    body:has(.hero) .testimonials .testimonial-card .story-author .author-avatar {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      border-radius: 50%;
+      background: #7DC51E;
+      color: #0D1B5E;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    body:has(.hero) .testimonials .testimonial-card .story-author .story-name {
+      color: #0D1B5E;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin: 0 0 5px;
+    }
+    body:has(.hero) .testimonials .testimonial-card .story-author .story-context {
+      margin: 0;
+      color: #66718D;
+      font-size: 14px;
+      line-height: 1.45;
+      opacity: 1;
+    }
+    body:has(.hero) .testimonials .testimonial-card--featured .story-author .story-name {
+      color: #FFFFFF;
+    }
+    body:has(.hero) .testimonials .testimonial-card--featured .story-author .story-context {
+      color: #AAB3CC;
+    }
+  </style>
 </head>
 <body>
 
@@ -552,21 +596,24 @@
 
       <div class="testimonials-grid">
         <article class="testimonial-card">
-          <h3 class="story-name">Sophie</h3>
+          <div class="testimonial-author story-author"><div class="author-avatar" aria-hidden="true">S</div><div><h3 class="story-name">Sophie</h3><p class="story-context">Anniversary gift</p></div></div>
           <p class="story-quote">“I've never felt so creative when buying flowers. I designed exactly what I had in mind, and it was so easy.”</p>
-          <p class="story-context">Anniversary gift</p>
+
+
         </article>
 
         <article class="testimonial-card testimonial-card--featured">
-          <h3 class="story-name">Thomas</h3>
+          <div class="testimonial-author story-author"><div class="author-avatar" aria-hidden="true">T</div><div><h3 class="story-name">Thomas</h3><p class="story-context">Birthday surprise</p></div></div>
           <p class="story-quote">“The AI suggestions were spot on. I had no idea where to start, and within 5 minutes I had a beautiful bouquet ready to order.”</p>
-          <p class="story-context">Birthday surprise</p>
+
+
         </article>
 
         <article class="testimonial-card">
-          <h3 class="story-name">Lisa</h3>
+          <div class="testimonial-author story-author"><div class="author-avatar" aria-hidden="true">L</div><div><h3 class="story-name">Lisa</h3><p class="story-context">Wedding flowers</p></div></div>
           <p class="story-quote">“Finally, flowers that feel personal. The live preview made all the difference. I could see it before I bought it.”</p>
-          <p class="story-context">Wedding flowers</p>
+
+
         </article>
       </div>
     </div>
