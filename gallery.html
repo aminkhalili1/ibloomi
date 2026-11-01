@@ -16,6 +16,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <!-- Gallery-only, two-way scroll reveal. Does not affect other pages. -->
+  <style>
+    @media (prefers-reduced-motion: no-preference) {
+      .gallery-motion-enabled .gallery-grid .gallery-card {
+        opacity: 0;
+        translate: 0 22px;
+        transition: opacity 560ms ease, translate 560ms cubic-bezier(.2,.7,.2,1), transform 260ms ease, box-shadow 260ms ease;
+        transition-delay: var(--reveal-delay, 0ms);
+      }
+      .gallery-motion-enabled .gallery-grid .gallery-card.is-visible {
+        opacity: 1;
+        translate: 0 0;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .gallery-grid .gallery-card {
+        opacity: 1 !important;
+        translate: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+
 </head>
 <body>
   <!-- NAV -->
@@ -171,5 +194,32 @@
     <img id="lightbox-img" src="" alt="Gallery preview" />
   </div>
   <script src="js/main.js"></script>
+  <script>
+    // Reveal images on entry and reset them on exit, in both scroll directions.
+    (function () {
+      const grid = document.querySelector('.gallery-grid');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!grid || reduceMotion || !('IntersectionObserver' in window)) return;
+
+      const cards = Array.from(grid.querySelectorAll('.gallery-card'));
+      cards.forEach((card, index) => {
+        card.style.setProperty('--reveal-delay', ((index % 4) * 45) + 'ms');
+      });
+
+      // Enable motion only when the observer is available: a no-JS visitor sees all images.
+      document.body.classList.add('gallery-motion-enabled');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(({target, isIntersecting}) => {
+          target.classList.toggle('is-visible', isIntersecting);
+        });
+      }, {
+        threshold: 0.08,
+        rootMargin: '0px 0px -4% 0px'
+      });
+      cards.forEach(card => observer.observe(card));
+    })();
+  </script>
+
 </body>
 </html>
