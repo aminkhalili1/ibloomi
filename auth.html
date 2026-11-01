@@ -182,7 +182,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="/js/config.js"></script>
-  <script src="/js/auth.js"></script>
+  <script src="/js/auth.js?v=auth-loading-fix-20261101"></script>
   <script>
     (function () {
       // Proxy visible Google buttons → hidden #btn-google (wired by auth.js)
@@ -199,6 +199,25 @@
           if (tab) tab.click();
         });
       });
+    })();
+  </script>
+
+  <script>
+    // Initialization failure safeguard: never leave an endless spinner.
+    (function () {
+      var timeoutId = window.setTimeout(function () {
+        var loading = document.getElementById('auth-config-loading');
+        if (!loading || getComputedStyle(loading).display === 'none') return;
+        loading.style.display = 'none';
+        var error = document.getElementById('auth-config-error');
+        if (!error) return;
+        error.style.display = 'flex';
+        var card = error.querySelector('.auth-card');
+        if (card) card.innerHTML = '<p style="color:#0D1B5E;font-weight:700;margin-bottom:10px">Sign-in is taking longer than expected</p><p style="color:#5a6480;font-size:.88rem;line-height:1.6">Please check your connection and reload this page. If this continues, contact <a href="mailto:info@ibloomi.nl">info@ibloomi.nl</a>.</p><button type="button" id="auth-reload" style="margin-top:18px;padding:10px 22px;border-radius:24px;background:#7DC51E;border:0;color:#0D1B5E;font-weight:700;cursor:pointer">Try again</button>';
+        var retry = document.getElementById('auth-reload');
+        if (retry) retry.addEventListener('click', function () { window.location.reload(); });
+      }, 12000);
+      // Do not require global hooks; timer will be ignored once loading is hidden.
     })();
   </script>
 
