@@ -39,7 +39,7 @@
     });
     navLinks.addEventListener('click',e => {if(e.target.closest('a'))close();});
     document.addEventListener('pointerdown',e => {
-      if(isOpen() && !navbar.contains(e.target))close();
+      if(isOpen() && !navLinks.contains(e.target) && !navToggle.contains(e.target))close();
     });
     document.addEventListener('keydown',e => {
       if(e.key === 'Escape' && isOpen())close(true);
