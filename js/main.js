@@ -1,76 +1,68 @@
-// iBloomi | Main JavaScript
-// One shared mobile navigation controller across all pages.
-
+// iBloomi - shared script; navigation uses one single controller.
+// Homepage keeps its own CSS/overlay. Inner pages use ib-inner-page rules.
 const navbar = document.getElementById('navbar');
-// Marker avoids brittle :has() selectors and limits CSS to inner pages.
-if (!document.querySelector('.hero')) document.body.classList.add('ib-inner-page');
-if (navbar) {
-  const updateNavbar = () => navbar.classList.toggle('scrolled', window.scrollY > 20);
-  window.addEventListener('scroll', updateNavbar, { passive: true });
-  updateNavbar();
-}
-
 const navToggle = document.getElementById('navToggle');
 const navLinks = document.getElementById('navLinks');
 const mobileViewport = window.matchMedia('(max-width: 768px)');
+const isHomepage = !!document.querySelector('.hero');
+if (!isHomepage) document.body.classList.add('ib-inner-page');
+
+if (navbar) {
+  const updateNav = () => navbar.classList.toggle('scrolled', window.scrollY > 20);
+  updateNav();
+  window.addEventListener('scroll', updateNav, {passive:true});
+}
 
 if (navbar && navToggle && navLinks) {
   navToggle.setAttribute('aria-controls', 'navLinks');
-
-  const menuIsOpen = () => mobileViewport.matches && navLinks.classList.contains('open');
-  const syncMenu = () => {
-    const open = menuIsOpen();
+  const isOpen = () => mobileViewport.matches && navLinks.classList.contains('open');
+  const sync = () => {
+    const open = isOpen();
     navToggle.setAttribute('aria-expanded', String(open));
     navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    // Preserve the homepage's existing mobile-menu-open styles.
     navbar.classList.toggle('mobile-menu-open', open);
   };
-  const closeMenu = (returnFocus = false) => {
+  const close = (focus = false) => {
     navLinks.classList.remove('open');
-    syncMenu();
-    if (returnFocus) navToggle.focus();
+    sync();
+    if (focus) navToggle.focus();
   };
-
-  navToggle.addEventListener('click', () => {
+  navToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
     if (!mobileViewport.matches) return;
     navLinks.classList.toggle('open');
-    syncMenu();
+    sync();
   });
-
-  navLinks.addEventListener('click', event => {
-    if (event.target.closest('a')) closeMenu();
+  navLinks.addEventListener('click', e => {
+    if (e.target.closest('a')) close();
   });
-
-  // Outside tap closes the dropdown, but no page-wide overlay is added.
-  document.addEventListener('pointerdown', event => {
-    if (menuIsOpen() && !navbar.contains(event.target)) closeMenu();
+  document.addEventListener('pointerdown', e => {
+    if (isOpen() && !navbar.contains(e.target)) close();
   });
-
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && menuIsOpen()) closeMenu(true);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && isOpen()) close(true);
   });
-
-  mobileViewport.addEventListener('change', () => closeMenu());
-  syncMenu();
+  mobileViewport.addEventListener('change', () => close());
+  sync();
 }
 
-// Smooth scrolling for in-page anchors.
+// Smooth in-page anchor navigation.
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (event) {
+  anchor.addEventListener('click', function(e) {
     const href = this.getAttribute('href');
     if (!href || href === '#') return;
     let target;
-    try { target = document.querySelector(href); } catch { return; }
+    try {target = document.querySelector(href);} catch {return;}
     if (!target) return;
-    event.preventDefault();
+    e.preventDefault();
     const top = target.getBoundingClientRect().top + window.scrollY - 80;
-    window.scrollTo({ top, behavior: 'smooth' });
+    window.scrollTo({top, behavior:'smooth'});
   });
 });
 
-// Existing reveal animations.
+// Existing card entrance transitions.
 const revealElements = document.querySelectorAll('.feature-card, .step, .testimonial-card, .faq-item, .team-card');
-if ('IntersectionObserver' in window) {
+if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -79,27 +71,29 @@ if ('IntersectionObserver' in window) {
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  }, {threshold:0.1,rootMargin:'0px 0px -40px 0px'});
   revealElements.forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    el.style.transition = 'opacity .5s ease, transform .5s ease';
     revealObserver.observe(el);
   });
 }
 
-// Gallery image lightbox.
+// Gallery lightbox remains operational.
 const galleryImages = document.querySelectorAll('.gallery-card img');
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const lightboxClose = document.getElementById('lightbox-close');
-if (galleryImages.length && lightbox && lightboxClose && lightboxImg) {
-  galleryImages.forEach(img => img.addEventListener('click', () => {
-    lightboxImg.src = img.src;
-    lightbox.classList.add('active');
-  }));
+if (galleryImages.length && lightbox && lightboxImg && lightboxClose) {
+  galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.add('active');
+    });
+  });
   lightboxClose.addEventListener('click', () => lightbox.classList.remove('active'));
-  lightbox.addEventListener('click', event => {
-    if (event.target === lightbox) lightbox.classList.remove('active');
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) lightbox.classList.remove('active');
   });
 }
