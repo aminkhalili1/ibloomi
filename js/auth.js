@@ -1272,18 +1272,12 @@
       return;
     }
 
-    // ── Existing Session ───────────────────────────────────────────────────────
-
-    const redirected =
-      await checkExistingSession(client);
-
-    if (redirected) {
-      return;
-    }
-
-    // ── Auth State Listener ─────────────────────────────────────────────────────
-
-    listenAuthChanges(client);
+    // ── Explicit visit to /auth ────────────────────────────────────────────────
+    // Always show the sign-in/sign-up UI, even if a session exists.
+    // Never auto-redirect from stored sessions or INITIAL_SESSION/SIGNED_IN
+    // events; redirects are initiated by explicit sign-in/sign-up actions
+    // and processed OAuth / confirmation callbacks above.
+    // Do not clear the existing session here: Builder handoff still needs it.
 
     // ── Show Auth UI ────────────────────────────────────────────────────────────
 
