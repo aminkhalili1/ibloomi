@@ -484,40 +484,42 @@
     }
   </style>
 
-  <!-- Mobile navigation: clean dropdown, no backdrop or page tint. -->
+  <!-- Mobile: compact anchored disclosure menu, preserving the Hero underneath. -->
   <style>
     @media (max-width: 768px) {
       body:has(> .nav-wrapper + .hero) .nav-wrapper {
         z-index: 1201;
-        overflow: visible;
+        overflow: visible !important;
       }
       body:has(> .nav-wrapper + .hero) .nav-wrapper.mobile-menu-open {
-        background: rgba(255,255,255,.98) !important;
-        border-bottom: 1px solid #e6e9ef;
-        box-shadow: 0 5px 16px rgba(0,0,0,.06);
+        background: rgba(255,255,255,.97) !important;
+        -webkit-backdrop-filter: blur(14px);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(13,27,94,.08);
+        box-shadow: 0 4px 20px rgba(10,17,41,.045);
       }
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-toggle {
+        display: flex !important;
         position: relative;
-        z-index: 3;
-        display: flex;
-        width: 44px;
-        height: 44px;
+        z-index: 7;
         align-items: center;
         justify-content: center;
-        gap: 5px;
-        border-radius: 10px;
+        width: 44px;
+        height: 44px;
         padding: 10px;
         background: transparent !important;
+        border: 0;
         box-shadow: none !important;
+        border-radius: 12px;
         -webkit-tap-highlight-color: transparent;
       }
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-toggle span {
-        width: 24px;
+        width: 23px;
         height: 2px;
         flex: 0 0 2px;
+        border-radius: 3px;
         background: #0D1B5E !important;
-        transform-origin: center;
-        transition: transform .2s ease, opacity .2s ease;
+        transition: transform .18s ease, opacity .18s ease;
       }
       body:has(> .nav-wrapper + .hero) .nav-wrapper.mobile-menu-open .nav-toggle span:nth-child(1) {
         transform: translateY(7px) rotate(45deg);
@@ -528,71 +530,88 @@
       body:has(> .nav-wrapper + .hero) .nav-wrapper.mobile-menu-open .nav-toggle span:nth-child(3) {
         transform: translateY(-7px) rotate(-45deg);
       }
+      /* Small floating menu aligned with the menu icon, NOT a full-width sheet. */
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links {
         position: absolute !important;
-        top: calc(100% + 7px) !important;
-        left: 16px !important;
-        right: 16px !important;
-        width: auto !important;
-        margin: 0 !important;
-        padding: 8px !important;
+        top: calc(100% + 8px) !important;
+        left: auto !important;
+        right: max(18px, env(safe-area-inset-right)) !important;
+        width: min(302px, calc(100vw - 36px)) !important;
+        max-height: min(420px, calc(100dvh - 115px));
         display: none !important;
         flex-direction: column !important;
         align-items: stretch !important;
         gap: 0 !important;
-        max-height: min(67dvh, 440px);
         overflow-y: auto;
+        margin: 0 !important;
+        padding: 9px !important;
+        border: 1px solid #e7eaf0 !important;
+        border-radius: 17px !important;
         background: #fff !important;
-        border: 1px solid #e3e8f0 !important;
-        border-radius: 14px !important;
-        box-shadow: 0 12px 30px rgba(18,24,48,.12) !important;
+        box-shadow: 0 16px 40px rgba(13,27,94,.13), 0 2px 8px rgba(13,27,94,.035) !important;
         -webkit-overflow-scrolling: touch;
-        z-index: 5;
+        z-index: 8;
       }
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links.open {
         display: flex !important;
-        animation: ibloomiDropdownIn .16s ease-out both;
+        animation: ibloomiMenuIn .16s cubic-bezier(.2,.8,.2,1) both;
       }
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links li {
-        display: block;
-        margin: 0;
         width: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
       }
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a,
       body:has(> .nav-wrapper + .hero) .nav-wrapper:not(.home-nav-scrolled) .nav-links.open a {
         display: flex !important;
-        width: 100%;
-        min-height: 44px;
         align-items: center;
-        padding: 10px 14px !important;
-        border-radius: 9px;
-        background: transparent !important;
+        justify-content: space-between;
+        width: 100%;
+        min-height: 45px;
+        padding: 10px 13px !important;
         border: 0 !important;
+        border-radius: 9px !important;
+        background: transparent !important;
         box-shadow: none !important;
         color: #0D1B5E !important;
-        font-size: 16px !important;
-        font-weight: 500;
-        line-height: 1.4 !important;
+        font-size: 15px !important;
+        font-weight: 600 !important;
+        line-height: 1.35 !important;
         text-shadow: none !important;
+        filter: none !important;
         transform: none !important;
+        transition: background-color .14s ease, color .14s ease;
       }
+      /* Subtle directional marker; never touches the link label. */
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a::after {
-        content: none !important;
+        content: '' !important;
+        position: static !important;
+        display: block !important;
+        width: 6px !important;
+        height: 6px !important;
+        flex: 0 0 6px;
+        border: 0 !important;
+        border-top: 1.5px solid #8893aa !important;
+        border-right: 1.5px solid #8893aa !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        transform: rotate(45deg) !important;
+        opacity: .75;
       }
-      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a:focus-visible {
-        outline: 2px solid #78c61e;
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a:is(:hover,:focus-visible) {
+        background: #f3f8ed !important;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a:focus-visible,
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-toggle:focus-visible {
+        outline: 2px solid #7DC51E;
         outline-offset: -2px;
       }
-      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a:active {
-        background: #f1f8e7 !important;
-      }
-      /* No dark layer, no backdrop and no page scroll locking. */
       .ibloomi-mobile-menu-backdrop { display: none !important; }
       body.ibloomi-mobile-menu-active { overflow: auto !important; }
     }
-    @keyframes ibloomiDropdownIn {
-      from { opacity: 0; transform: translateY(-5px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes ibloomiMenuIn {
+      from { opacity: 0; transform: translateY(-6px) scale(.985); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
     }
     @media (prefers-reduced-motion: reduce) {
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links.open { animation: none !important; }
