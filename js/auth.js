@@ -615,92 +615,11 @@
     });
   }
 
-  // ─── Existing Session ────────────────────────────────────────────────────────
-
-  async function checkExistingSession(client) {
-
-    const params = new URLSearchParams(
-      window.location.search
-    );
-
-    /*
-     * Never auto-redirect during logout.
-     */
-    if (params.get('logout') === 'true') {
-      return false;
-    }
-
-    /*
-     * Do not use this function before OAuth/email
-     * callback processing has been completed.
-     */
-
-    try {
-      const {
-        data: sessionData,
-        error: sessionError
-      } = await withTimeout(client.auth.getSession(), 6500, 'Session lookup');
-
-      if (
-        sessionError ||
-        !sessionData ||
-        !sessionData.session
-      ) {
-        return false;
-      }
-
-      /*
-       * Verify that the session is still valid.
-       */
-      const {
-        data: userData,
-        error: userError
-      } = await withTimeout(client.auth.getUser(), 6500, 'User verification');
-
-      if (
-        userError ||
-        !userData ||
-        !userData.user
-      ) {
-        await clearAuthStorage(client);
-        return false;
-      }
-
-      console.log(
-        '[Auth] Existing valid session found.'
-      );
-
-      await redirectToBuilder(client);
-
-      return true;
-
-    } catch (error) {
-      console.error(
-        '[Auth] Existing session check failed:',
-        error
-      );
-    }
-
-    return false;
-  }
-
-  // ─── Auth State Changes ──────────────────────────────────────────────────────
-
-  function listenAuthChanges(client) {
-    client.auth.onAuthStateChange(
-      (event, session) => {
-
-        console.log(
-          '[Auth] Auth state changed:',
-          event
-        );
-
-        if (event === 'SIGNED_IN' && session) {
-          redirectToBuilder(client);
-        }
-      }
-    );
-  }
+  // ─── Session restoration behavior ──────────────────────────────────────────
+  // A normal visit to /auth must never redirect merely because Supabase
+  // restored a previous session (INITIAL_SESSION, SIGNED_IN, TOKEN_REFRESHED).
+  // Redirects remain ONLY in explicit sign-in/sign-up handlers and verified
+  // OAuth/email callback handlers. Do not sign the user out here.
 
   // ─── Google OAuth ─────────────────────────────────────────────────────────────
 
