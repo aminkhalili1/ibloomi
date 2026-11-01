@@ -225,6 +225,16 @@
         transition: none;
       }
     }
+
+    /* Customer + florist headings: highlight only the audience words in brand green. */
+    body:has(> .nav-wrapper + .hero) .benefits .section-header h2 .audience-highlight {
+      color: #7DC51E;
+      font-style: normal;
+    }
+    /* Match existing 4-by-2 florist benefit cards without modifying other pages. */
+    body:has(> .nav-wrapper + .hero) .customer-benefits .benefit-card {
+      min-width: 0;
+    }
   </style>
 
 </head>
@@ -331,12 +341,33 @@
     </div>
   </section>
 
+  <!-- WHY CUSTOMERS CHOOSE IBLOOMI -->
+  <section class="benefits section customer-benefits" id="customer-benefits" aria-labelledby="customer-benefits-title">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">For customers</span>
+        <h2 id="customer-benefits-title">Why <span class="audience-highlight">Customers</span> Choose <em>iBloomi</em></h2>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-card"><span class="benefit-check" aria-hidden="true">✔</span><p>Design your own bouquet</p></div>
+        <div class="benefit-card"><span class="benefit-check" aria-hidden="true">✔</span><p>See AI-powered previews instantly</p></div>
+        <div class="benefit-card"><span class="benefit-check" aria-hidden="true">✔</span><p>Send a QR message with your bouquet</p></div>
+        <div class="benefit-card"><span class="benefit-check" aria-hidden="true">✔</span><p>Know exactly what you’ll get</p></div>
+        <div class="benefit-card"><span class="benefit-check" aria-hidden="true">✔</span><p>Order in minutes, not phone calls</p></div>
+        <div class="benefit-card"><span class="benefit-check" aria-hidden="true">✔</span><p>Eco-friendly and sustainable solution</p></div>
+        <div class="benefit-card"><span class="benefit-check" aria-hidden="true">✔</span><p>AI assistant to pick the perfect bouquet</p></div>
+        <div class="benefit-card"><span class="benefit-check" aria-hidden="true">✔</span><p>Perfect for every occasion</p></div>
+      </div>
+    </div>
+  </section>
+
   <!-- WHY FLORISTS CHOOSE IBLOOMI -->
   <section class="benefits section" id="benefits">
     <div class="container">
       <div class="section-header">
         <span class="eyebrow">For florists</span>
-        <h2>Why Florists Choose <em>iBloomi</em></h2>
+        <h2>Why <span class="audience-highlight">Florists</span> Choose <em>iBloomi</em></h2>
       </div>
 
       <div class="benefits-grid">
