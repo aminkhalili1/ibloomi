@@ -4,7 +4,7 @@
    browser UA stylesheet and style.css overrides.
    ============================================= */
 
-/* ---- Premium minimalist page canvas (forms remain unchanged) ---- */
+/* ---- iBloomi premium canvas: ivory, botanical green and restrained navy ---- */
 .auth-body {
   min-height: 100vh;
   min-height: 100svh;
@@ -16,18 +16,18 @@
   isolation: isolate;
   overflow-x: hidden;
   background:
-    radial-gradient(ellipse 55% 60% at 102% 4%, rgba(125,197,30,.115), transparent 72%),
-    radial-gradient(ellipse 50% 60% at -12% 100%, rgba(13,27,94,.065), transparent 75%),
-    linear-gradient(145deg, #fafbf8 0%, #f4f7f1 48%, #f9faf7 100%);
+    radial-gradient(ellipse 49% 63% at -13% 98%, rgba(13,27,94,.22) 0%, rgba(31,54,109,.12) 36%, transparent 79%),
+    radial-gradient(ellipse 38% 42% at 104% 2%, rgba(125,197,30,.15), transparent 78%),
+    radial-gradient(ellipse 62% 70% at 52% 48%, rgba(255,255,255,.72), transparent 88%),
+    linear-gradient(133deg, #f9faf8 0%, #f2f5f3 56%, #f8faf7 100%);
 }
-/* Subtle brand-inspired organic shapes, intentionally behind the form. */
+/* Oversized botanical silhouettes stay behind the form, never intercept clicks. */
 .auth-body::before,
 .auth-body::after {
   content: "";
   position: fixed;
   z-index: -1;
   pointer-events: none;
-  border: 1px solid rgba(13,27,94,.065);
   transform: rotate(-28deg);
 }
 .auth-body::before {
@@ -35,16 +35,28 @@
   height: min(75vw, 880px);
   right: -32vw;
   top: -35vw;
+  border: 1px solid rgba(13,27,94,.07);
   border-radius: 52% 8% 52% 8%;
-  background: linear-gradient(140deg, rgba(125,197,30,.085), rgba(255,255,255,0) 68%);
+  background: linear-gradient(145deg, rgba(125,197,30,.11), rgba(255,255,255,0) 72%);
 }
 .auth-body::after {
-  width: min(42vw, 520px);
-  height: min(60vw, 710px);
-  left: -32vw;
-  bottom: -34vw;
+  width: min(42vw, 540px);
+  height: min(65vw, 760px);
+  left: -30vw;
+  bottom: -36vw;
+  border: 1px solid rgba(13,27,94,.11);
   border-radius: 52% 8% 52% 8%;
-  background: linear-gradient(120deg, rgba(13,27,94,.035), rgba(255,255,255,0) 75%);
+  background: linear-gradient(130deg, rgba(13,27,94,.14), rgba(13,27,94,.025) 75%);
+}
+@media (max-width: 720px) {
+  .auth-body {
+    background:
+      radial-gradient(ellipse 70% 40% at -23% 100%, rgba(13,27,94,.14), transparent 82%),
+      radial-gradient(ellipse 70% 40% at 115% 0%, rgba(125,197,30,.11), transparent 78%),
+      linear-gradient(145deg, #fafbf8, #f3f6f3 70%, #fafbf8);
+  }
+  .auth-body::before { right: -57vw; top: -31vw; width: 94vw; height: 115vw; }
+  .auth-body::after { left: -70vw; bottom: -55vw; width: 90vw; height: 125vw; }
 }
 
 /* ---- Clean brand header ---- */
