@@ -1872,96 +1872,101 @@ body:has(.hero) .faq .faq-item p {
 }
 
 
-/* ========================================================
-   iBloomi mobile navigation — inner pages, authoritative.
-   JS adds .ib-inner-page. No backdrop, no viewport-height menu.
-   ======================================================== */
-@media (max-width: 768px) {
-  body.ib-inner-page #navbar.nav-wrapper {
+/* ============================================================
+   iBloomi | Mobile navigation for all INNER pages (2026-11)
+   Important: CSS-only; works with existing main.js `.open` toggle.
+   Does not rely on JS-added body classes or CSS in index.html.
+   Keep this block at the VERY END of the shared stylesheet.
+   ============================================================ */
+@media screen and (max-width: 768px) {
+  body:not(:has(.hero)) #navbar.nav-wrapper {
     position: sticky !important;
     top: 0 !important;
-    z-index: 1500 !important;
+    z-index: 3000 !important;
     overflow: visible !important;
-    background: #fff !important;
+    background: rgba(255,255,255,.98) !important;
     border-bottom: 1px solid #e2e6f0 !important;
   }
-  body.ib-inner-page #navbar .nav { position: relative !important; }
-  body.ib-inner-page #navbar #navToggle {
+  body:not(:has(.hero)) #navbar .nav.container {
+    position: relative !important;
     display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    height: 68px !important;
+    overflow: visible !important;
+  }
+  body:not(:has(.hero)) #navbar #navToggle.nav-toggle {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 5px !important;
     width: 44px !important;
     height: 44px !important;
-    padding: 10px !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 5px !important;
+    padding: 9px !important;
+    margin: 0 !important;
     background: transparent !important;
-    border: 0 !important;
+    border: none !important;
     border-radius: 10px !important;
     box-shadow: none !important;
-    cursor: pointer !important;
   }
-  body.ib-inner-page #navbar #navToggle span {
+  body:not(:has(.hero)) #navbar #navToggle.nav-toggle span {
     display: block !important;
-    width: 24px !important;
+    width: 23px !important;
     height: 2px !important;
-    flex-shrink: 0 !important;
-    background: #0d1b5e !important;
+    flex: 0 0 2px !important;
+    background: #0D1B5E !important;
     border-radius: 2px !important;
-    transition: transform .18s ease, opacity .18s ease !important;
   }
-  body.ib-inner-page #navbar #navToggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg) !important; }
-  body.ib-inner-page #navbar #navToggle[aria-expanded="true"] span:nth-child(2) { opacity: 0 !important; }
-  body.ib-inner-page #navbar #navToggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg) !important; }
-  body.ib-inner-page #navbar #navLinks.nav-links {
+  body:not(:has(.hero)) #navbar #navLinks.nav-links {
     position: absolute !important;
     top: calc(100% + 8px) !important;
     right: 0 !important;
     left: auto !important;
     bottom: auto !important;
-    display: none !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 0 !important;
     width: min(302px, calc(100vw - 48px)) !important;
+    max-width: none !important;
     height: auto !important;
     min-height: 0 !important;
-    max-height: min(425px, calc(100dvh - 125px)) !important;
+    max-height: min(425px, calc(100dvh - 115px)) !important;
     margin: 0 !important;
     padding: 8px !important;
+    display: none !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    gap: 0 !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
     background: #fff !important;
     border: 1px solid #e2e6f0 !important;
-    border-radius: 16px !important;
-    box-shadow: 0 14px 34px rgba(13,27,94,.12) !important;
+    border-radius: 17px !important;
+    box-shadow: 0 12px 30px rgba(13,27,94,.12) !important;
     transform: none !important;
     opacity: 1 !important;
     visibility: visible !important;
-    z-index: 1501 !important;
+    z-index: 3001 !important;
     list-style: none !important;
     -webkit-overflow-scrolling: touch;
   }
-  body.ib-inner-page #navbar #navLinks.nav-links.open {
+  body:not(:has(.hero)) #navbar #navLinks.nav-links.open {
     display: flex !important;
-    animation: ibMenuEnter .16s ease both !important;
+    animation: ibNavOpen 180ms ease-out both;
   }
-  body.ib-inner-page #navbar #navLinks.nav-links > li {
-    display: block !important;
+  body:not(:has(.hero)) #navbar #navLinks.nav-links > li {
     width: 100% !important;
+    display: block !important;
     margin: 0 !important;
     padding: 0 !important;
-    order: unset;
   }
-  body.ib-inner-page #navbar #navLinks.nav-links > li > a {
+  body:not(:has(.hero)) #navbar #navLinks.nav-links > li > a {
     display: flex !important;
     align-items: center !important;
-    justify-content: space-between !important;
     width: 100% !important;
-    min-height: 45px !important;
-    padding: 10px 13px !important;
+    min-height: 44px !important;
     margin: 0 !important;
-    color: #0d1b5e !important;
+    padding: 10px 14px !important;
+    color: #0D1B5E !important;
     background: transparent !important;
     font-size: 15px !important;
     font-weight: 600 !important;
@@ -1969,21 +1974,28 @@ body:has(.hero) .faq .faq-item p {
     text-decoration: none !important;
     text-shadow: none !important;
     filter: none !important;
-    box-shadow: none !important;
     transform: none !important;
-    border: 0 !important;
-    border-radius: 8px !important;
+    border: none !important;
+    border-radius: 9px !important;
+    box-shadow: none !important;
   }
-  body.ib-inner-page #navbar #navLinks.nav-links > li > a::before,
-  body.ib-inner-page #navbar #navLinks.nav-links > li > a::after { content: none !important; display: none !important; }
-  body.ib-inner-page #navbar #navLinks.nav-links > li > a:is(:hover, :focus-visible) { background: #f0f7e7 !important; }
-  body.ib-inner-page #navbar #navToggle:focus-visible,
-  body.ib-inner-page #navbar #navLinks a:focus-visible { outline: 2px solid #7dc51e !important; outline-offset: 2px !important; }
+  body:not(:has(.hero)) #navbar #navLinks.nav-links > li > a::before,
+  body:not(:has(.hero)) #navbar #navLinks.nav-links > li > a::after {
+    content: none !important;
+    display: none !important;
+  }
+  body:not(:has(.hero)) #navbar #navLinks.nav-links > li > a:focus-visible {
+    outline: 2px solid #7DC51E !important;
+    outline-offset: -2px !important;
+  }
+  body:not(:has(.hero)) #navbar #navLinks.nav-links > li > a:hover {
+    background: #f3f8ed !important;
+  }
 }
-@keyframes ibMenuEnter {
+@keyframes ibNavOpen {
   from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  body.ib-inner-page #navbar #navLinks.nav-links.open { animation: none !important; }
+  body:not(:has(.hero)) #navbar #navLinks.nav-links.open { animation: none !important; }
 }
