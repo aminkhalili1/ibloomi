@@ -13,6 +13,20 @@
 
   const BUILDER_URL = 'https://builder.ibloomi.nl';
 
+  // Prevent a stalled network/session refresh from hiding the sign-in page forever.
+  function withTimeout(promise, milliseconds, description) {
+    var timeout;
+    return Promise.race([
+      promise,
+      new Promise(function (_, reject) {
+        timeout = setTimeout(function () {
+          reject(new Error(description + ' timed out'));
+        }, milliseconds);
+      })
+    ]).finally(function () { clearTimeout(timeout); });
+  }
+
+
   // ─── DOM helpers ─────────────────────────────────────────────────────────────
 
   const $ = id => document.getElementById(id);
@@ -625,7 +639,7 @@
       const {
         data: sessionData,
         error: sessionError
-      } = await client.auth.getSession();
+      } = await withTimeout(client.auth.getSession(), 6500, 'Session lookup');
 
       if (
         sessionError ||
@@ -641,7 +655,7 @@
       const {
         data: userData,
         error: userError
-      } = await client.auth.getUser();
+      } = await withTimeout(client.auth.getUser(), 6500, 'User verification');
 
       if (
         userError ||
@@ -1279,6 +1293,13 @@
     initAuthUI(client);
   }
 
+  function showInitializationError(error) {
+    console.error('[Auth] Initialization failed:', error);
+    hide($('auth-config-loading'));
+    hide($('auth-main'));
+    show($('auth-config-error'));
+  }
+
   // ─── Start ────────────────────────────────────────────────────────────────────
 
   if (
@@ -1287,12 +1308,12 @@
 
     document.addEventListener(
       'DOMContentLoaded',
-      init
+      function () { init().catch(showInitializationError); }
     );
 
   } else {
 
-    init();
+    init().catch(showInitializationError);
 
   }
 
