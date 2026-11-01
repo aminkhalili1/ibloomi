@@ -1872,130 +1872,111 @@ body:has(.hero) .faq .faq-item p {
 }
 
 
-/* ============================================================
-   iBloomi | Mobile navigation for all INNER pages (2026-11)
-   Important: CSS-only; works with existing main.js `.open` toggle.
-   Does not rely on JS-added body classes or CSS in index.html.
-   Keep this block at the VERY END of the shared stylesheet.
-   ============================================================ */
-@media screen and (max-width: 768px) {
-  body:not(:has(.hero)) #navbar.nav-wrapper {
+/* IBLOOMI INNER-PAGE MOBILE NAVIGATION - single authoritative rule */
+@media (max-width: 768px) {
+  body.ib-inner-page #navbar.nav-wrapper {
     position: sticky !important;
     top: 0 !important;
-    z-index: 3000 !important;
+    z-index: 10000 !important;
+    background: #ffffff !important;
     overflow: visible !important;
-    background: rgba(255,255,255,.98) !important;
-    border-bottom: 1px solid #e2e6f0 !important;
+    isolation: isolate;
   }
-  body:not(:has(.hero)) #navbar .nav.container {
+  body.ib-inner-page #navbar .nav.container {
     position: relative !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
     height: 68px !important;
     overflow: visible !important;
   }
-  body:not(:has(.hero)) #navbar #navToggle.nav-toggle {
+  body.ib-inner-page #navToggle.nav-toggle {
     display: flex !important;
+    width: 44px !important;
+    height: 44px !important;
     flex-direction: column !important;
     justify-content: center !important;
     align-items: center !important;
     gap: 5px !important;
-    width: 44px !important;
-    height: 44px !important;
-    padding: 9px !important;
-    margin: 0 !important;
-    background: transparent !important;
-    border: none !important;
+    padding: 0 !important;
+    border: 0 !important;
     border-radius: 10px !important;
+    background: transparent !important;
     box-shadow: none !important;
+    cursor: pointer;
   }
-  body:not(:has(.hero)) #navbar #navToggle.nav-toggle span {
+  body.ib-inner-page #navToggle.nav-toggle span {
     display: block !important;
     width: 23px !important;
     height: 2px !important;
     flex: 0 0 2px !important;
     background: #0D1B5E !important;
-    border-radius: 2px !important;
+    border-radius: 2px;
+    transition: transform .2s ease, opacity .2s ease !important;
   }
-  body:not(:has(.hero)) #navbar #navLinks.nav-links {
+  body.ib-inner-page #navToggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg) !important; }
+  body.ib-inner-page #navToggle[aria-expanded="true"] span:nth-child(2) { opacity: 0 !important; }
+  body.ib-inner-page #navToggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg) !important; }
+  body.ib-inner-page #navbar #navLinks.nav-links {
+    display: none !important;
     position: absolute !important;
     top: calc(100% + 8px) !important;
     right: 0 !important;
     left: auto !important;
     bottom: auto !important;
-    width: min(302px, calc(100vw - 48px)) !important;
-    max-width: none !important;
+    width: min(296px, calc(100vw - 36px)) !important;
     height: auto !important;
     min-height: 0 !important;
-    max-height: min(425px, calc(100dvh - 115px)) !important;
-    margin: 0 !important;
+    max-height: min(420px, calc(100dvh - 125px)) !important;
     padding: 8px !important;
-    display: none !important;
-    flex-direction: column !important;
-    justify-content: flex-start !important;
-    align-items: stretch !important;
+    margin: 0 !important;
     gap: 0 !important;
-    overflow-x: hidden !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
     overflow-y: auto !important;
+    border: 1px solid #E2E6F0 !important;
+    border-radius: 16px !important;
     background: #fff !important;
-    border: 1px solid #e2e6f0 !important;
-    border-radius: 17px !important;
-    box-shadow: 0 12px 30px rgba(13,27,94,.12) !important;
+    box-shadow: 0 14px 35px rgba(20, 28, 49, .12) !important;
     transform: none !important;
     opacity: 1 !important;
     visibility: visible !important;
-    z-index: 3001 !important;
+    z-index: 10001 !important;
     list-style: none !important;
     -webkit-overflow-scrolling: touch;
   }
-  body:not(:has(.hero)) #navbar #navLinks.nav-links.open {
+  body.ib-inner-page #navbar #navLinks.nav-links.open {
     display: flex !important;
-    animation: ibNavOpen 180ms ease-out both;
+    animation: ibInnerMenu .2s ease both;
   }
-  body:not(:has(.hero)) #navbar #navLinks.nav-links > li {
-    width: 100% !important;
+  body.ib-inner-page #navbar #navLinks.nav-links > li {
     display: block !important;
+    width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
   }
-  body:not(:has(.hero)) #navbar #navLinks.nav-links > li > a {
+  body.ib-inner-page #navbar #navLinks.nav-links > li > a {
     display: flex !important;
     align-items: center !important;
     width: 100% !important;
     min-height: 44px !important;
     margin: 0 !important;
-    padding: 10px 14px !important;
-    color: #0D1B5E !important;
-    background: transparent !important;
+    padding: 10px 13px !important;
     font-size: 15px !important;
+    line-height: 1.4 !important;
     font-weight: 600 !important;
-    line-height: 1.35 !important;
+    color: #0D1B5E !important;
     text-decoration: none !important;
     text-shadow: none !important;
     filter: none !important;
     transform: none !important;
-    border: none !important;
-    border-radius: 9px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: transparent !important;
     box-shadow: none !important;
   }
-  body:not(:has(.hero)) #navbar #navLinks.nav-links > li > a::before,
-  body:not(:has(.hero)) #navbar #navLinks.nav-links > li > a::after {
-    content: none !important;
-    display: none !important;
-  }
-  body:not(:has(.hero)) #navbar #navLinks.nav-links > li > a:focus-visible {
-    outline: 2px solid #7DC51E !important;
-    outline-offset: -2px !important;
-  }
-  body:not(:has(.hero)) #navbar #navLinks.nav-links > li > a:hover {
-    background: #f3f8ed !important;
-  }
+  body.ib-inner-page #navbar #navLinks.nav-links > li > a::after,
+  body.ib-inner-page #navbar #navLinks.nav-links > li > a::before { content: none !important; display: none !important; }
+  body.ib-inner-page #navbar #navLinks.nav-links > li > a:is(:hover,:focus-visible) { background: #F2F8EA !important; }
+  body.ib-inner-page #navToggle:focus-visible,
+  body.ib-inner-page #navbar #navLinks a:focus-visible { outline: 2px solid #7DC51E !important; outline-offset: 2px; }
 }
-@keyframes ibNavOpen {
-  from { opacity: 0; transform: translateY(-5px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  body:not(:has(.hero)) #navbar #navLinks.nav-links.open { animation: none !important; }
-}
+@keyframes ibInnerMenu { from {opacity:0;transform:translateY(-5px)} to {opacity:1;transform:translateY(0)} }
+@media (prefers-reduced-motion: reduce) { body.ib-inner-page #navbar #navLinks.nav-links.open {animation:none !important;} }
