@@ -483,6 +483,123 @@
       color: #AAB3CC;
     }
   </style>
+
+  <!-- Mobile menu: compact floating panel, accessible dismissal and responsive layout. -->
+  <style>
+    @media (max-width: 768px) {
+      body:has(> .nav-wrapper + .hero) .nav-wrapper {
+        z-index: 1201;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper.mobile-menu-open {
+        background: rgba(255,255,255,.97) !important;
+        border-bottom-color: rgba(13,27,94,.09);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-toggle {
+        position: relative;
+        z-index: 2;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        border-radius: 12px;
+        padding: 10px;
+        -webkit-tap-highlight-color: transparent;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper.mobile-menu-open .nav-toggle span {
+        background: #0D1B5E !important;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-toggle span {
+        width: 24px;
+        flex: 0 0 2px;
+        transform-origin: center;
+        transition: transform .22s ease, opacity .18s ease, background .18s ease;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper.mobile-menu-open .nav-toggle span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper.mobile-menu-open .nav-toggle span:nth-child(2) {
+        opacity: 0;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper.mobile-menu-open .nav-toggle span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links {
+        position: absolute !important;
+        top: calc(100% + 10px) !important;
+        left: 16px !important;
+        right: 16px !important;
+        width: auto !important;
+        margin: 0 !important;
+        padding: 12px !important;
+        gap: 2px !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        background: #ffffff !important;
+        border: 1px solid rgba(13,27,94,.10) !important;
+        border-radius: 18px !important;
+        box-shadow: 0 18px 55px rgba(10,20,48,.20) !important;
+        max-height: min(70dvh, 520px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        z-index: 3;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links:not(.open) {
+        display: none !important;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links.open {
+        display: flex !important;
+        animation: ibloomiMenuIn .2s ease-out both;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links li {
+        display: block;
+        width: 100%;
+        margin: 0;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a,
+      body:has(> .nav-wrapper + .hero) .nav-wrapper:not(.home-nav-scrolled) .nav-links.open a {
+        display: flex !important;
+        align-items: center;
+        width: 100%;
+        min-height: 44px;
+        padding: 11px 16px !important;
+        font-size: 16px !important;
+        line-height: 1.4 !important;
+        font-weight: 500;
+        border-radius: 10px;
+        color: #0D1B5E !important;
+        text-shadow: none !important;
+        transform: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+      }
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a:active,
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a:focus-visible {
+        background: #F2F9E8 !important;
+        outline: none;
+      }
+      .ibloomi-mobile-menu-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 1200;
+        background: rgba(7,13,36,.38);
+        -webkit-tap-highlight-color: transparent;
+      }
+      .ibloomi-mobile-menu-backdrop.is-visible { display: block; }
+      body.ibloomi-mobile-menu-active { overflow: hidden; }
+    }
+    @keyframes ibloomiMenuIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links.open { animation: none !important; }
+    }
+  </style>
 </head>
 <body>
 
@@ -493,7 +610,7 @@
         <img src="images/logo.png" alt="iBloomi" />
       </a>
 
-      <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span><span></span>
       </button>
 
@@ -508,6 +625,8 @@
       </ul>
     </nav>
   </header>
+
+  <div class="ibloomi-mobile-menu-backdrop" id="mobileMenuBackdrop" aria-hidden="true"></div>
 
   <!-- HERO -->
   <section class="hero">
@@ -772,6 +891,56 @@
   </footer>
 
   <script src="js/main.js"></script>
+
+
+  <!-- Home mobile navigation: tap outside to dismiss, Escape, link selection, responsive reset. -->
+  <script>
+    (function () {
+      const navbar = document.getElementById('navbar');
+      const button = document.getElementById('navToggle');
+      const links = document.getElementById('navLinks');
+      const backdrop = document.getElementById('mobileMenuBackdrop');
+      const mobile = window.matchMedia('(max-width: 768px)');
+      if (!navbar || !button || !links || !backdrop) return;
+
+      function syncState() {
+        const opened = mobile.matches && links.classList.contains('open');
+        navbar.classList.toggle('mobile-menu-open', opened);
+        backdrop.classList.toggle('is-visible', opened);
+        document.body.classList.toggle('ibloomi-mobile-menu-active', opened);
+        button.setAttribute('aria-expanded', String(opened));
+        button.setAttribute('aria-label', opened ? 'Close menu' : 'Open menu');
+      }
+
+      function closeMenu(restoreFocus) {
+        links.classList.remove('open');
+        syncState();
+        if (restoreFocus) button.focus();
+      }
+
+      // Respect the existing toggle handler in js/main.js rather than adding a second toggle.
+      button.addEventListener('click', function () {
+        requestAnimationFrame(syncState);
+      });
+      new MutationObserver(syncState).observe(links, {
+        attributes: true,
+        attributeFilter: ['class']
+      });
+      backdrop.addEventListener('click', function () { closeMenu(false); });
+      document.addEventListener('pointerdown', function (event) {
+        if (mobile.matches && links.classList.contains('open') &&
+            !navbar.contains(event.target)) closeMenu(false);
+      });
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && links.classList.contains('open')) closeMenu(true);
+      });
+      links.addEventListener('click', function (event) {
+        if (event.target.closest('a')) closeMenu(false);
+      });
+      mobile.addEventListener('change', function () { closeMenu(false); });
+      syncState();
+    })();
+  </script>
 
   <!-- Keep the poster visible until the first video frame can actually be painted. -->
   <script>
