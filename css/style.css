@@ -2009,3 +2009,24 @@ body:has(.hero) .faq .faq-item p {
 @media(prefers-reduced-motion:reduce) {
   body.ib-inner-page #navbar #navLinks.nav-links.open { animation:none !important; }
 }
+
+/* Inner-page ending: remove excessive white space before the shared footer.
+   The homepage is intentionally excluded. */
+body > section.about.section:has(+ .footer),
+body > section.features.section:has(+ .footer),
+body > section.gallery-page.section:has(+ .footer),
+body > section.contact-page:has(+ .footer),
+body > section.team.section:has(+ .footer),
+body > section.legal-page:has(+ .footer) {
+  padding-bottom: 16px;
+}
+@media (max-width: 600px) {
+  body > section.about.section:has(+ .footer),
+  body > section.features.section:has(+ .footer),
+  body > section.gallery-page.section:has(+ .footer),
+  body > section.contact-page:has(+ .footer),
+  body > section.team.section:has(+ .footer),
+  body > section.legal-page:has(+ .footer) {
+    padding-bottom: 12px;
+  }
+}
