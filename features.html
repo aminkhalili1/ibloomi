@@ -16,7 +16,140 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css?v=20261101-menu4" />
+<style id="ibloomi-mobile-nav-critical">
+/* Mobile navigation: consistent homepage-style floating dropdown on inner pages.
+   Keep the entire inner-page menu in one stylesheet; no injected competing CSS. */
+@media (max-width: 768px) {
+  body #navbar.nav-wrapper {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1201 !important;
+    overflow: visible !important;
+    background: rgba(255,255,255,.97) !important;
+  }
+  body #navbar.mobile-menu-open {
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(13,27,94,.08);
+    box-shadow: 0 4px 20px rgba(10,17,41,.045);
+  }
+  body #navbar .nav.container {
+    position: relative !important;
+    height: 68px !important;
+    overflow: visible !important;
+  }
+  body #navbar #navToggle {
+    display: flex !important;
+    position: relative !important;
+    z-index: 7 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+    width: 44px !important;
+    height: 44px !important;
+    padding: 10px !important;
+    border: 0 !important;
+    border-radius: 12px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body #navbar #navToggle span {
+    display: block !important;
+    width: 23px !important;
+    height: 2px !important;
+    flex: 0 0 2px !important;
+    border-radius: 3px !important;
+    background: #0D1B5E !important;
+    transition: transform .18s ease,opacity .18s ease !important;
+  }
+  body #navbar.mobile-menu-open #navToggle span:nth-child(1) { transform:translateY(7px) rotate(45deg) !important; }
+  body #navbar.mobile-menu-open #navToggle span:nth-child(2) { opacity:0 !important; }
+  body #navbar.mobile-menu-open #navToggle span:nth-child(3) { transform:translateY(-7px) rotate(-45deg) !important; }
+  body #navbar #navLinks.nav-links {
+    display: none !important;
+    position: absolute !important;
+    top: calc(100% + 8px) !important;
+    left: auto !important;
+    right: max(18px, env(safe-area-inset-right)) !important;
+    bottom: auto !important;
+    width: min(302px, calc(100vw - 36px)) !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: min(420px, calc(100dvh - 115px)) !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    flex-wrap: nowrap !important;
+    gap: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    margin: 0 !important;
+    padding: 9px !important;
+    border: 1px solid #e7eaf0 !important;
+    border-radius: 17px !important;
+    background: #fff !important;
+    box-shadow: 0 16px 40px rgba(13,27,94,.13), 0 2px 8px rgba(13,27,94,.035) !important;
+    z-index: 8 !important;
+    -webkit-overflow-scrolling: touch;
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  body #navbar #navLinks.nav-links.open {
+    display: flex !important;
+    animation: ibloomiInnerMenuIn .16s cubic-bezier(.2,.8,.2,1) both;
+  }
+  body #navbar #navLinks.nav-links > li {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  body #navbar #navLinks.nav-links > li > a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    min-height: 45px !important;
+    margin: 0 !important;
+    padding: 10px 13px !important;
+    color: #0D1B5E !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+    text-decoration: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+    border: 0 !important;
+    border-radius: 9px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  body #navbar #navLinks.nav-links > li > a::before { content: none !important; display: none !important; }
+  body #navbar #navLinks.nav-links > li > a::after {
+    content: '' !important;
+    position: static !important;
+    display: block !important;
+    width: 6px !important;
+    height: 6px !important;
+    flex: 0 0 6px !important;
+    border: 0 !important;
+    border-top: 1.5px solid #8893aa !important;
+    border-right: 1.5px solid #8893aa !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    transform: rotate(45deg) !important;
+    opacity: .75;
+  }
+  body #navbar #navLinks.nav-links > li > a:is(:hover,:focus-visible) { background:#f3f8ed !important; }
+  body #navbar #navToggle:focus-visible,
+  body #navbar #navLinks a:focus-visible { outline:2px solid #7DC51E !important;outline-offset:-2px; }
+}
+
+</style>
 </head>
 <body>
   <!-- NAV -->
@@ -140,6 +273,6 @@
       <div class="footer-bottom"><p>© 2026 iBloomi. All rights reserved. · ibloomi.nl</p></div>
     </div>
   </footer>
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=20261101-menu4"></script>
 </body>
 </html>
