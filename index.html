@@ -160,13 +160,13 @@
       body:has(> .nav-wrapper + .hero) .nav-wrapper:not(.home-nav-scrolled) .nav-links a:hover,
       body:has(> .nav-wrapper + .hero) .nav-wrapper:not(.home-nav-scrolled) .nav-links a:focus-visible {
         color: #fff;
-        text-shadow: 0 2px 4px rgba(95,95,95,.42), 0 0 5px rgba(190,190,190,.35) !important;
+        text-shadow: 0 2px 5px rgba(90,90,90,0.32) !important;
         filter: none !important;
       }
       body:has(> .nav-wrapper + .hero) .nav-wrapper.home-nav-scrolled .nav-links a:hover,
       body:has(> .nav-wrapper + .hero) .nav-wrapper.home-nav-scrolled .nav-links a:focus-visible {
         color: #0D1B5E;
-        text-shadow: 0 2px 4px rgba(95,95,95,.30), 0 0 4px rgba(190,190,190,.22) !important;
+        text-shadow: 0 2px 5px rgba(90,90,90,0.28) !important;
         filter: none !important;
       }
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a::after {
@@ -193,6 +193,15 @@
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a,
       body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a::after {
         transition: none !important;
+      }
+    }
+
+    /* FINAL override: neutral GREY shadow on the TEXT only. No navy glow. */
+    @media (min-width: 769px) and (hover: hover) {
+      body:has(> .nav-wrapper + .hero) .nav-wrapper .nav-links a:is(:hover, :focus-visible) {
+        text-shadow: 0 2px 5px rgba(90, 90, 90, 0.32) !important;
+        -webkit-filter: none !important;
+        filter: none !important;
       }
     }
 
