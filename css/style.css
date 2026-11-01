@@ -2010,23 +2010,24 @@ body:has(.hero) .faq .faq-item p {
   body.ib-inner-page #navbar #navLinks.nav-links.open { animation:none !important; }
 }
 
-/* Inner-page ending: remove excessive white space before the shared footer.
-   The homepage is intentionally excluded. */
-body > section.about.section:has(+ .footer),
-body > section.features.section:has(+ .footer),
-body > section.gallery-page.section:has(+ .footer),
-body > section.contact-page:has(+ .footer),
-body > section.team.section:has(+ .footer),
-body > section.legal-page:has(+ .footer) {
-  padding-bottom: 16px;
+/* iBloomi inner-page spacing fix (homepage intentionally not included).
+   These pages use standalone content sections immediately before the footer. */
+body > section.about.section,
+body > section.features.section,
+body > section.gallery-page.section,
+body > section.contact-page,
+body > section.team.section,
+body > section.legal-page {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+  min-height: 0 !important;
 }
-@media (max-width: 600px) {
-  body > section.about.section:has(+ .footer),
-  body > section.features.section:has(+ .footer),
-  body > section.gallery-page.section:has(+ .footer),
-  body > section.contact-page:has(+ .footer),
-  body > section.team.section:has(+ .footer),
-  body > section.legal-page:has(+ .footer) {
-    padding-bottom: 12px;
-  }
+/* Avoid extra space from the final child of each content section. */
+body > section.about.section > :last-child,
+body > section.features.section > :last-child,
+body > section.gallery-page.section > :last-child,
+body > section.contact-page > :last-child,
+body > section.team.section > :last-child,
+body > section.legal-page > :last-child {
+  margin-bottom: 0 !important;
 }
