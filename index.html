@@ -40,6 +40,30 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 
+  <!-- Hero: show a full-size poster until the video has a rendered frame. -->
+  <style>
+    body:has(> .nav-wrapper + .hero) > .hero {
+      background-color: #17254b;
+      background-image: url("/images/video-poster.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+    }
+    body:has(> .nav-wrapper + .hero) > .hero .hero-background-video {
+      opacity: 0;
+      transition: opacity 550ms ease;
+      will-change: opacity;
+    }
+    body:has(> .nav-wrapper + .hero) > .hero.hero-video-ready .hero-background-video {
+      opacity: 1;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      body:has(> .nav-wrapper + .hero) > .hero .hero-background-video {
+        transition: none;
+      }
+    }
+  </style>
+
   <!-- Homepage only: transparent navbar, seamless cream wash behind original logo -->
   <style>
     body:has(> .nav-wrapper + .hero) .nav-wrapper {
@@ -748,6 +772,35 @@
   </footer>
 
   <script src="js/main.js"></script>
+
+  <!-- Keep the poster visible until the first video frame can actually be painted. -->
+  <script>
+    (function () {
+      const hero = document.querySelector('.hero');
+      const video = hero && hero.querySelector('.hero-background-video');
+      if (!hero || !video || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      let revealed = false;
+      function revealVideo() {
+        if (revealed || video.paused || video.readyState < 2) return;
+        revealed = true;
+        // Wait for a decoded frame when supported to avoid a blank video flash.
+        if (typeof video.requestVideoFrameCallback === 'function') {
+          video.requestVideoFrameCallback(function () {
+            hero.classList.add('hero-video-ready');
+          });
+        } else {
+          requestAnimationFrame(function () {
+            hero.classList.add('hero-video-ready');
+          });
+        }
+      }
+
+      video.addEventListener('playing', revealVideo);
+      video.addEventListener('loadeddata', revealVideo);
+      if (!video.paused && video.readyState >= 2) revealVideo();
+    })();
+  </script>
 
   <!-- Home navbar: solid only after scrolling; works independently of main.js -->
   <script>
