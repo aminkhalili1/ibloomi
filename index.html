@@ -906,7 +906,7 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=20261101-menu4"></script>
 
 
   <!-- Mobile navigation: let the existing main.js toggle links, only sync state and dismissal. -->
@@ -945,7 +945,7 @@
 
       // Only tapping OUTSIDE both dropdown and header dismisses it, with no overlay.
       document.addEventListener('pointerdown', (event) => {
-        if (isOpen() && !navbar.contains(event.target)) closeMenu(false);
+        if (isOpen() && !links.contains(event.target) && !button.contains(event.target)) closeMenu(false);
       });
       document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && isOpen()) closeMenu(true);
