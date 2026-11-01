@@ -2009,25 +2009,3 @@ body:has(.hero) .faq .faq-item p {
 @media(prefers-reduced-motion:reduce) {
   body.ib-inner-page #navbar #navLinks.nav-links.open { animation:none !important; }
 }
-
-/* iBloomi inner-page spacing fix (homepage intentionally not included).
-   These pages use standalone content sections immediately before the footer. */
-body > section.about.section,
-body > section.features.section,
-body > section.gallery-page.section,
-body > section.contact-page,
-body > section.team.section,
-body > section.legal-page {
-  padding-bottom: 0 !important;
-  margin-bottom: 0 !important;
-  min-height: 0 !important;
-}
-/* Avoid extra space from the final child of each content section. */
-body > section.about.section > :last-child,
-body > section.features.section > :last-child,
-body > section.gallery-page.section > :last-child,
-body > section.contact-page > :last-child,
-body > section.team.section > :last-child,
-body > section.legal-page > :last-child {
-  margin-bottom: 0 !important;
-}
