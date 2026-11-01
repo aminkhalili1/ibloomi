@@ -323,6 +323,32 @@
     }
   </style>
 
+<style>
+
+    /* Homepage footer: remove excessive empty navy space. */
+    body:has(.hero) .footer {
+      padding-top: 36px;
+      padding-bottom: 18px;
+      min-height: 0;
+      height: auto;
+    }
+    body:has(.hero) .footer .footer-top {
+      margin-bottom: 16px;
+      padding-bottom: 20px;
+      gap: 36px;
+    }
+    body:has(.hero) .footer .footer-bottom {
+      margin: 0;
+      padding: 0;
+      min-height: 0;
+      opacity: 1;
+      transform: none;
+    }
+    @media (max-width: 768px) {
+      body:has(.hero) .footer { padding-top: 28px; padding-bottom: 16px; }
+      body:has(.hero) .footer .footer-top { margin-bottom: 14px; padding-bottom: 16px; gap: 24px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -653,7 +679,7 @@
         '.value-props .section-header', '.value-props .value-card',
         '.testimonials .section-header', '.testimonials .testimonial-card',
         '.faq .section-header', '.faq .faq-item',
-        '.footer .footer-top', '.footer .footer-bottom'
+        '.footer .footer-top'
       ];
       const elements = document.querySelectorAll(selectors.join(', '));
       if (!elements.length) return;
