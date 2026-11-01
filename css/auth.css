@@ -4,34 +4,79 @@
    browser UA stylesheet and style.css overrides.
    ============================================= */
 
-/* ---- Page ---- */
+/* ---- Premium minimalist page canvas (forms remain unchanged) ---- */
 .auth-body {
   min-height: 100vh;
-  background: linear-gradient(to bottom, #233f8f 0%, #0D1B5E 45%, #050b2e 100%);
-  display: flex;
-  flex-direction: column;
+  min-height: 100svh;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  isolation: isolate;
+  overflow-x: hidden;
+  background:
+    radial-gradient(ellipse 55% 60% at 102% 4%, rgba(125,197,30,.115), transparent 72%),
+    radial-gradient(ellipse 50% 60% at -12% 100%, rgba(13,27,94,.065), transparent 75%),
+    linear-gradient(145deg, #fafbf8 0%, #f4f7f1 48%, #f9faf7 100%);
+}
+/* Subtle brand-inspired organic shapes, intentionally behind the form. */
+.auth-body::before,
+.auth-body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  border: 1px solid rgba(13,27,94,.065);
+  transform: rotate(-28deg);
+}
+.auth-body::before {
+  width: min(54vw, 690px);
+  height: min(75vw, 880px);
+  right: -32vw;
+  top: -35vw;
+  border-radius: 52% 8% 52% 8%;
+  background: linear-gradient(140deg, rgba(125,197,30,.085), rgba(255,255,255,0) 68%);
+}
+.auth-body::after {
+  width: min(42vw, 520px);
+  height: min(60vw, 710px);
+  left: -32vw;
+  bottom: -34vw;
+  border-radius: 52% 8% 52% 8%;
+  background: linear-gradient(120deg, rgba(13,27,94,.035), rgba(255,255,255,0) 75%);
 }
 
-/* ---- Nav ---- */
+/* ---- Clean brand header ---- */
 .auth-nav {
-  padding: 20px 32px;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 30px clamp(24px, 5vw, 84px);
   display: flex;
   align-items: center;
 }
-.auth-nav .nav-logo img {
-  height: 36px;
-  width: auto;
-  display: block;
-  /* Drop-shadow makes the dark navy letterforms visible on the dark gradient.
-     No invert/brightness — this is the original unmodified logo file. */
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.55))
-          drop-shadow(0 0 2px rgba(255, 255, 255, 0.9));
+.auth-nav .nav-logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
 }
+.auth-nav .nav-logo img {
+  display: block;
+  height: 38px;
+  width: auto;
+  max-width: 190px;
+  object-fit: contain;
+  filter: none !important;
+  transition: opacity .2s ease;
+}
+.auth-nav .nav-logo:hover img { opacity: .8; }
 
 /* ---- Centering wrapper ---- */
 .auth-main {
+  position: relative;
+  z-index: 1;
   flex: 1;
   display: flex;
   align-items: center;
@@ -365,6 +410,7 @@
 /* ---- Responsive ---- */
 @media (max-width: 480px) {
   .auth-card { padding: 28px 20px 24px; border-radius: 16px; }
-  .auth-nav { padding: 16px 20px; }
+  .auth-nav { padding: 22px 24px; }
+  .auth-nav .nav-logo img { height: 34px; }
   .auth-heading { font-size: 1.3rem !important; }
 }
