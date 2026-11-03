@@ -2009,3 +2009,15 @@ body:has(.hero) .faq .faq-item p {
 @media(prefers-reduced-motion:reduce) {
   body.ib-inner-page #navbar #navLinks.nav-links.open { animation:none !important; }
 }
+/* iBloomi — Remove extra bottom spacing on inner pages */
+/* Homepage and footer design remain unchanged */
+
+body:not(:has(.hero)) > section:has(+ footer.footer) {
+  padding-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  body:not(:has(.hero)) > section:has(+ footer.footer) {
+    padding-bottom: 12px;
+  }
+}
