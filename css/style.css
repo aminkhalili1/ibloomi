@@ -2074,3 +2074,7 @@ body .terms-page .intro-copy {
 /* Accordion typography is intentionally scoped to the terms page. */
 body .terms-page .terms-item summary { font-size: 1rem; line-height: 1.45; }
 body .terms-page .terms-answer { font-size: .93rem; line-height: 1.7; }
+/* Keep Terms & Conditions on one line */
+.footer-col a[href="/terms"] {
+  white-space: nowrap;
+}
