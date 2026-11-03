@@ -2078,3 +2078,11 @@ body .terms-page .terms-answer { font-size: .93rem; line-height: 1.7; }
 .footer-col a[href="/terms"] {
   white-space: nowrap;
 }
+
+/* iBloomi - Keep Terms & Conditions on one line */
+footer .footer-col a[href="/terms"],
+.footer .footer-col a[href="/terms"],
+.footer-col a[href="/terms"] {
+    white-space: nowrap !important;
+    display: inline-block !important;
+}
