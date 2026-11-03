@@ -2044,3 +2044,33 @@ body:not(:has(.hero)) .footer .footer-bottom {
     gap: 24px;
   }
 }
+/* iBloomi shared content typography — 2026-11-03 */
+/* Uniform type scale for content areas; does not alter nav, footer, buttons or hero. */
+:root {
+  --ib-content-title-size: clamp(1.75rem, 3vw, 2.25rem);
+  --ib-content-body-size: .95rem;
+  --ib-content-line-height: 1.65;
+}
+
+/* Use matching sizes for section headings across main and inner pages. */
+body .section-header h2,
+body .contact-page .contact-page-header h2,
+body .legal-page h1 {
+  font-size: var(--ib-content-title-size);
+  line-height: 1.25;
+}
+
+/* Consistent supporting copy across public content sections. */
+body .section-desc,
+body .about .about-content > p:not(.about-tagline),
+body .contact-page .contact-description,
+body .legal-page .legal-content > p,
+body .legal-page .legal-content > ul,
+body .terms-page .intro-copy {
+  font-size: var(--ib-content-body-size);
+  line-height: var(--ib-content-line-height);
+}
+
+/* Accordion typography is intentionally scoped to the terms page. */
+body .terms-page .terms-item summary { font-size: 1rem; line-height: 1.45; }
+body .terms-page .terms-answer { font-size: .93rem; line-height: 1.7; }
