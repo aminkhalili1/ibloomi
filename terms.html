@@ -4,10 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, follow" />
-  <title>Terms of Use — iBloomi</title>
-  <meta name="description" content="Read the Terms of Use for the iBloomi platform." />
-  <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="images/favicon.png" type="image/png" sizes="32x32" />
+  <title>Terms &amp; Conditions - iBloomi</title>
+  <meta name="description" content="Read the Terms &amp; Conditions for the iBloomi bouquet design platform." />
+  <link rel="icon" type="image/png" href="/images/favicon.png?v=10" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
@@ -145,13 +144,37 @@
 }
 
 </style>
-  <style>
-    .legal-page { padding: 100px 0; }
-    .legal-page h1 { font-size: 2.5rem; margin-bottom: 8px; }
-    .legal-page .meta { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 48px; }
-    .legal-page h2 { font-size: 1.25rem; font-family: 'Inter', sans-serif; font-weight: 600; color: var(--navy); margin: 32px 0 12px; }
-    .legal-page p { color: var(--text-muted); line-height: 1.8; margin-bottom: 16px; }
-    .legal-content { max-width: 720px; }
+  <style id="ibloomi-terms-accordion-style">
+    /* Scoped to Terms & Conditions only; site-wide header and footer remain intact. */
+    .legal-page.terms-page { padding: 76px 0 72px; background: #f8f9fc; }
+    .terms-page .legal-content { max-width: 940px; }
+    .terms-page .terms-intro { text-align: center; margin: 0 auto 36px; max-width: 790px; }
+    .terms-page h1 { color: #0d1b5e; font-size: clamp(2rem, 4vw, 3.1rem); line-height: 1.2; margin: 0 0 12px; font-weight: 700; }
+    .terms-page .meta { color: #7a849e; font-size: 0.9rem; margin: 0 0 15px; }
+    .terms-page .intro-copy { color: #68748f; line-height: 1.9; margin: 0; text-align: justify; text-align-last: center; }
+    .terms-page .terms-accordion { display: grid; gap: 13px; }
+    .terms-page details.terms-item { background: #fff; border: 1px solid #e1e6f0; border-radius: 14px; box-shadow: 0 3px 13px rgba(13,27,94,0.035); overflow: hidden; }
+    .terms-page .terms-item summary { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 21px 25px; cursor: pointer; list-style: none; font-size: 1.08rem; font-weight: 650; color: #0d1b5e; line-height: 1.45; }
+    .terms-page .terms-item summary::-webkit-details-marker { display: none; }
+    .terms-page .terms-item summary::after { content: '+'; font-size: 1.65rem; font-weight: 400; flex: 0 0 auto; color: #77be1d; line-height: 1; }
+    .terms-page .terms-item[open] summary::after { content: '−'; }
+    .terms-page .terms-item[open] summary { border-bottom: 1px solid #edf0f5; background: #fdfefe; }
+    .terms-page .terms-item summary:hover, .terms-page .terms-item summary:focus-visible { background: #f7fbf2; }
+    .terms-page .terms-item summary:focus-visible { outline: 2px solid #7dc51e; outline-offset: -3px; }
+    .terms-page .terms-answer { padding: 20px 25px 24px; color: #77829a; font-size: .97rem; line-height: 1.95; }
+    .terms-page .terms-answer p, .terms-page .terms-answer li { color: inherit; text-align: justify; line-height: inherit; }
+    .terms-page .terms-answer p { margin: 0 0 13px; }
+    .terms-page .terms-answer p:last-child, .terms-page .terms-answer ul:last-child { margin-bottom: 0; }
+    .terms-page .terms-answer ul { margin: 0 0 14px; padding-left: 22px; }
+    .terms-page .terms-answer li { margin-bottom: 6px; }
+    .terms-page .terms-answer a { color: #0d1b5e; text-decoration: underline; text-underline-offset: 3px; }
+    @media (max-width: 768px) {
+      .legal-page.terms-page { padding: 46px 0 48px; }
+      .terms-page .terms-intro { margin-bottom: 25px; }
+      .terms-page .terms-item summary { padding: 17px 17px; font-size: 1rem; }
+      .terms-page .terms-answer { padding: 16px 17px 19px; font-size: .93rem; }
+      .terms-page .terms-accordion { gap: 10px; }
+    }
   </style>
 </head>
 <body>
@@ -179,31 +202,125 @@
   </header>
 
 
-  <section class="legal-page">
+  <section class="legal-page terms-page" aria-labelledby="terms-heading">
     <div class="container legal-content">
-      <h1>Terms of Use</h1>
-      <p class="meta">Last updated: June 2026</p>
-
-      <h2>1. Acceptance of Terms</h2>
-      <p>By accessing or using iBloomi at ibloomi.nl, you agree to be bound by these Terms of Use. If you do not agree, please do not use our platform.</p>
-
-      <h2>2. Use of the Platform</h2>
-      <p>iBloomi grants you a limited, non-exclusive license to use our bouquet design platform for personal, non-commercial purposes. You may not reproduce, distribute, or create derivative works from our platform without our written consent.</p>
-
-      <h2>3. User Accounts</h2>
-      <p>You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.</p>
-
-      <h2>4. Orders and Payments</h2>
-      <p>All orders placed through iBloomi are subject to availability and confirmation. We reserve the right to cancel orders in cases of errors or unavailability of products.</p>
-
-      <h2>5. Intellectual Property</h2>
-      <p>All content, designs, and technology on iBloomi are the intellectual property of iBloomi and are protected by applicable Dutch and EU copyright law.</p>
-
-      <h2>6. Limitation of Liability</h2>
-      <p>iBloomi is not liable for indirect, incidental, or consequential damages arising from the use or inability to use our platform.</p>
-
-      <h2>7. Governing Law</h2>
-      <p>These terms are governed by the laws of the Netherlands. Disputes shall be resolved in the competent courts of Delft, Netherlands.</p>
+      <div class="terms-intro">
+        <h1 id="terms-heading">Terms &amp; Conditions</h1>
+        <p class="meta">Last updated: 3 November 2026</p>
+        <p class="intro-copy">Please review the terms governing use of the iBloomi platform. Select a heading below to read more. These terms cover our bouquet design experience and distinguish it from the terms of any florist fulfilling an order.</p>
+      </div>
+      <div class="terms-accordion">
+        <details class="terms-item">
+          <summary>1. Acceptance of Terms</summary>
+          <div class="terms-answer">
+            <p>By accessing or using iBloomi at ibloomi.nl, you agree to these Terms & Conditions. If you use the platform on behalf of a florist or other business, you confirm that you are authorised to act for that business.</p>
+            <p>These terms govern use of the iBloomi platform. Any separate agreement with a florist or other seller may govern the actual sale and fulfilment of a bouquet. Mandatory rights under applicable law remain unaffected.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>2. Use of the Platform</summary>
+          <div class="terms-answer">
+            <p>iBloomi provides AI-assisted tools to explore flowers, configure bouquet designs and view illustrative previews. The platform is intended for both people designing bouquets and florists using the service in connection with their business, subject to any applicable account or commercial agreement.</p>
+            <p>You may use the platform only for lawful purposes. You must not misuse the service, attempt unauthorised access, interfere with its operation, scrape or reproduce substantial parts of its content, or use its designs, branding or software outside the permissions granted to you.</p>
+            <p>Using the platform does not transfer ownership of iBloomi software, content or intellectual property. Any commercial use beyond normal authorised florist activities requires the relevant permission or agreement.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>3. Accounts and Security</summary>
+          <div class="terms-answer">
+            <p>If you create an account, you are responsible for providing accurate details, protecting your login credentials and notifying us promptly of suspected unauthorised access. We may restrict access where reasonably necessary to protect users, the service or legal compliance, subject to applicable law.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>4. Bouquet Design and AI Previews</summary>
+          <div class="terms-answer">
+            <p>AI-generated bouquet images are illustrative previews, not photographs or guarantees of a finished arrangement. Actual flower colours, sizes, shapes, stem counts, composition, packaging and appearance may vary because of natural variation, seasonal availability, the available catalogue and the florist’s professional judgement.</p>
+            <p>A saved design or preview alone does not confirm an order or guarantee that particular flowers or materials will be available. Customers should review the final specifications, availability and price shown before proceeding.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>5. Flower Availability and Substitutions</summary>
+          <div class="terms-answer">
+            <p>Flowers and materials may be seasonal, perishable or unavailable. If a requested item cannot be supplied, the relevant seller should communicate the available options and any material changes to the design, price or delivery before fulfilment, in accordance with the agreed order terms and applicable law.</p>
+            <p>No specific flower variety, colour or substitution is guaranteed merely because it appears in a gallery or AI-generated preview.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>6. Prices, Orders and Payment</summary>
+          <div class="terms-answer">
+            <p>Displayed prices and configurations depend on the items, sizes and packaging selected and the information available to the service. The final price, any taxes, delivery charges and additional fees should be made clear before an order is confirmed. A quotation or design preview is not, by itself, an accepted order.</p>
+            <p>Where ordering and payment are offered, the checkout or order confirmation should identify the contracting seller, accepted payment methods, applicable charges and order status. Any errors or unavailability will be handled in accordance with applicable consumer law and the seller’s confirmed terms. iBloomi does not promise any specific payment or delivery method unless it is expressly offered in the relevant ordering flow.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>7. Delivery and Fulfilment</summary>
+          <div class="terms-answer">
+            <p>If an order includes delivery, the seller or delivery provider responsible for fulfilment should communicate available delivery areas, charges and estimated dates before checkout. Delivery dates may be affected by seasonal demand, supply conditions, recipient availability or circumstances outside reasonable control.</p>
+            <p>Customers should provide complete and accurate recipient and delivery information. Please refer to the details confirmed with the relevant seller for delivery-specific arrangements and assistance.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>8. Cancellations, Returns and Statutory Rights</summary>
+          <div class="terms-answer">
+            <p>Under Dutch consumer law, online purchases generally carry a 14-day right of withdrawal, but legal exceptions may apply, including to fresh flowers that deteriorate quickly and goods genuinely made to an individual customer’s specifications. Not every bouquet or other item is automatically exempt; the exception depends on the actual product and circumstances.</p>
+            <p>Where a statutory withdrawal right applies, the responsible seller must provide the required information and cancellation arrangements. Where an exception applies, customers should be informed before purchase. Nothing in these terms excludes statutory remedies for faulty, damaged or non-conforming goods.</p>
+            <p>Cancellation and refund requests should be directed to the seller identified in the order confirmation, or via <a href="/contact">iBloomi’s contact page</a> if assistance identifying the responsible party is needed. Any voluntary cancellation policy must be clearly communicated before purchase.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>9. Quality Issues and Complaints</summary>
+          <div class="terms-answer">
+            <p>If a bouquet arrives damaged, incomplete, substantially different from the agreed specifications or otherwise defective, contact the responsible seller as soon as reasonably possible. Include an order reference and, if available, photographs so the issue can be assessed efficiently.</p>
+            <p>A prompt report helps preserve evidence for perishable products, but does not remove any mandatory statutory rights. Complaints relating to operation of the iBloomi platform may be submitted through our <a href="/contact">contact page</a>.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>10. Personal Messages and QR Features</summary>
+          <div class="terms-answer">
+            <p>Where available, a bouquet may include a personal message accessible through a QR code. You are responsible for any message or material you submit and must have the right to share it. Do not include unlawful, abusive, infringing or sensitive content that you do not want the intended recipient to access.</p>
+            <p>QR-linked content depends on the service and the recipient’s device and connectivity. Do not rely on it for emergency, confidential or time-critical communications. We may remove content where reasonably required by law, safety or these terms.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>11. Privacy and Cookies</summary>
+          <div class="terms-answer">
+            <p>Personal data is processed as described in our <a href="/privacy-policy">Privacy Policy</a>. Information about cookies and similar technologies is available in our <a href="/cookies">Cookie Policy</a>. Users should avoid placing sensitive personal information in free-text bouquet prompts or QR messages unless necessary and appropriate.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>12. Intellectual Property</summary>
+          <div class="terms-answer">
+            <p>The iBloomi name, branding, website content, interface and underlying software are protected by applicable intellectual property laws. You may not reproduce, distribute or exploit them without permission except as allowed by law or an applicable written agreement.</p>
+            <p>You retain any rights you have in material you submit. By submitting content, you grant the permissions reasonably necessary for iBloomi to process it and provide the requested feature, subject to applicable law and the Privacy Policy. Rights in AI-generated outputs may depend on the facts and applicable law; exclusive ownership is not guaranteed.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>13. Service Availability and Liability</summary>
+          <div class="terms-answer">
+            <p>We aim to provide a reliable platform, but do not guarantee uninterrupted access or error-free AI-generated recommendations. We may reasonably update or maintain the service. Nothing in these terms excludes or limits liability that cannot lawfully be excluded, including mandatory consumer protections.</p>
+            <p>Any limitation of liability applies only to the extent permitted by applicable law and any written agreement between the relevant parties. The florist or other identified seller remains responsible for its own contractual fulfilment obligations.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>14. Changes to These Terms</summary>
+          <div class="terms-answer">
+            <p>We may update these Terms & Conditions to reflect changes to the platform, applicable law or our practices. The current version will be published here with an updated date. Changes will not retroactively remove rights already accrued under a confirmed contract, and any notice legally required for material changes will be given.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>15. Applicable Law and Disputes</summary>
+          <div class="terms-answer">
+            <p>These terms are governed by Dutch law, without prejudice to any mandatory consumer protections that apply in your country of residence. Any dispute will be handled by a court having jurisdiction under applicable law. We encourage you to contact us first so we can try to resolve concerns directly.</p>
+          </div>
+        </details>
+        <details class="terms-item">
+          <summary>16. Contact and Business Information</summary>
+          <div class="terms-answer">
+            <p>For questions about these terms or operation of the platform, please use our <a href="/contact">Contact page</a>. If you are purchasing flowers, check the order confirmation for the identity and contact details of the contracting seller.</p>
+            <p>The company’s registered legal name, physical business address, Chamber of Commerce (KVK) number and any applicable VAT details should be published in the website’s business information before these terms are used as final commercial terms.</p>
+          </div>
+        </details>
+      </div>
     </div>
   </section>
 
@@ -245,7 +362,7 @@
             <h4>Legal</h4>
             <ul>
               <li><a href="/privacy-policy">Privacy Policy</a></li>
-              <li><a href="/terms">Terms of Use</a></li>
+              <li><a href="/terms">Terms &amp; Conditions</a></li>
               <li><a href="/cookies">Cookie Policy</a></li>
             </ul>
           </div>
