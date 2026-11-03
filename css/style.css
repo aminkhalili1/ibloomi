@@ -2009,15 +2009,38 @@ body:has(.hero) .faq .faq-item p {
 @media(prefers-reduced-motion:reduce) {
   body.ib-inner-page #navbar #navLinks.nav-links.open { animation:none !important; }
 }
-/* iBloomi — Remove extra bottom spacing on inner pages */
-/* Homepage and footer design remain unchanged */
 
-body:not(:has(.hero)) > section:has(+ footer.footer) {
-  padding-bottom: 16px;
+/* iBloomi - Compact footer for inner pages */
+/* Match the homepage footer spacing */
+
+body:not(:has(.hero)) .footer {
+  padding-top: 36px;
+  padding-bottom: 18px;
+  min-height: 0;
+  height: auto;
+}
+
+body:not(:has(.hero)) .footer .footer-top {
+  margin-bottom: 16px;
+  padding-bottom: 20px;
+  gap: 36px;
+}
+
+body:not(:has(.hero)) .footer .footer-bottom {
+  margin: 0;
+  padding: 0;
+  min-height: 0;
 }
 
 @media (max-width: 768px) {
-  body:not(:has(.hero)) > section:has(+ footer.footer) {
-    padding-bottom: 12px;
+  body:not(:has(.hero)) .footer {
+    padding-top: 28px;
+    padding-bottom: 16px;
+  }
+
+  body:not(:has(.hero)) .footer .footer-top {
+    margin-bottom: 14px;
+    padding-bottom: 16px;
+    gap: 24px;
   }
 }
