@@ -100,7 +100,7 @@
     banner.setAttribute('aria-label', 'Cookie choices');
     banner.innerHTML =
       '<div class="ib-cookie-copy">' +
-        '<h2>Your privacy matters</h2>' +
+        '<h2>Privacy preferences</h2>' +
         '<p>We use essential technologies for site functionality and security. With your permission, Google Analytics helps us understand website usage and improve iBloomi. Optional analytics stays off unless you agree. You can change your choice at any time. <a href="/cookies">Cookie Policy</a>.</p>' +
       '</div>' +
       '<div class="ib-cookie-actions">' +
