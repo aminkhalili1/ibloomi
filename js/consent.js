@@ -104,8 +104,8 @@
         '<p>We use essential technologies for site functionality and security. With your permission, Google Analytics helps us understand website usage and improve iBloomi. Optional analytics stays off unless you agree. You can change your choice at any time. <a href="/cookies">Cookie Policy</a>.</p>' +
       '</div>' +
       '<div class="ib-cookie-actions">' +
-        '<button type="button" class="ib-cookie-secondary" id="ib-cookie-customize">Customize cookies</button>' +
-        '<button type="button" class="ib-cookie-secondary" id="ib-cookie-reject">Reject</button>' +
+        '<button type="button" class="ib-cookie-secondary" id="ib-cookie-reject">Refuse</button>' +
+        '<button type="button" class="ib-cookie-secondary" id="ib-cookie-customize">Adjust settings</button>' +
         '<button type="button" class="ib-cookie-primary" id="ib-cookie-accept">Accept</button>' +
       '</div>';
 
@@ -149,7 +149,7 @@
         '</div>' +
         '<p class="ib-cookie-notice">You can change or withdraw consent later using “Cookie settings”. Read our <a href="/cookies">Cookie Policy</a> for details.</p>' +
         '<div class="ib-cookie-modal-actions">' +
-          '<button type="button" class="ib-cookie-secondary" id="ib-cookie-modal-reject">Reject</button>' +
+          '<button type="button" class="ib-cookie-secondary" id="ib-cookie-modal-reject">Refuse</button>' +
           '<button type="button" class="ib-cookie-primary" id="ib-cookie-save">Save preferences</button>' +
         '</div>' +
       '</section>';
