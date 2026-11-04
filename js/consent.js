@@ -9,7 +9,7 @@
   var KEY = 'ibloomi.analytics-consent.v1'; // Preserve decisions from previous consent module.
   var state = null;
   var gaLoaded = false;
-  var dialog, banner, trigger, analyticsToggle, previousFocus;
+  var dialog, banner, analyticsToggle, previousFocus;
 
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
@@ -67,9 +67,8 @@
   }
 
   function render() {
-    if (!banner || !trigger) return;
+    if (!banner) return;
     banner.hidden = state !== null;
-    trigger.hidden = state === null;
   }
 
   function showDialog() {
@@ -109,13 +108,6 @@
         '<button type="button" class="ib-cookie-primary" id="ib-cookie-accept">Accept</button>' +
       '</div>';
 
-    trigger = document.createElement('button');
-    trigger.id = 'ib-cookie-settings';
-    trigger.type = 'button';
-    trigger.className = 'ib-cookie-settings';
-    trigger.textContent = 'Cookie settings';
-    trigger.setAttribute('aria-label', 'Review or change cookie preferences');
-
     dialog = document.createElement('div');
     dialog.id = 'ib-cookie-modal';
     dialog.className = 'ib-cookie-modal';
@@ -147,7 +139,7 @@
           '<p>No marketing or advertising tracking is configured by this consent module. No marketing consent is requested.</p></div>' +
           '<span class="ib-cookie-not-in-use">Not in use</span>' +
         '</div>' +
-        '<p class="ib-cookie-notice">You can change or withdraw consent later using “Cookie settings”. Read our <a href="/cookies">Cookie Policy</a> for details.</p>' +
+        '<p class="ib-cookie-notice">You can change or withdraw consent through the Cookie Policy page. Read our <a href="/cookies">Cookie Policy</a> for details.</p>' +
         '<div class="ib-cookie-modal-actions">' +
           '<button type="button" class="ib-cookie-secondary" id="ib-cookie-modal-reject">Refuse</button>' +
           '<button type="button" class="ib-cookie-primary" id="ib-cookie-save">Save preferences</button>' +
@@ -155,14 +147,20 @@
       '</section>';
 
     document.body.appendChild(banner);
-    document.body.appendChild(trigger);
     document.body.appendChild(dialog);
     analyticsToggle = document.getElementById('ib-cookie-analytics-toggle');
 
     banner.querySelector('#ib-cookie-reject').addEventListener('click', function () { applyChoice(false); });
     banner.querySelector('#ib-cookie-accept').addEventListener('click', function () { applyChoice(true); });
     banner.querySelector('#ib-cookie-customize').addEventListener('click', showDialog);
-    trigger.addEventListener('click', showDialog);
+    // Non-floating access is provided only from the Cookie Policy page.
+    var manageLink = document.getElementById('ib-cookie-manage-link');
+    if (manageLink) {
+      manageLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        showDialog();
+      });
+    }
     dialog.querySelector('#ib-cookie-save').addEventListener('click', function () { applyChoice(analyticsToggle.checked); });
     dialog.querySelector('#ib-cookie-modal-reject').addEventListener('click', function () { applyChoice(false); });
     dialog.querySelector('.ib-cookie-close').addEventListener('click', hideDialog);
