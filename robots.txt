@@ -1,11 +1,11 @@
+
 User-agent: *
 Allow: /
 
-# Keep the private authentication area out of search results.
-# Legal pages use a noindex meta tag so search engines can see the directive.
-Disallow: /auth.html
+# Authentication pages use noindex meta tags.
+# Allow search engines to crawl them and read noindex.
 
-# Block any API or config endpoints
+# Block API endpoints
 Disallow: /api/
 
 Sitemap: https://ibloomi.nl/sitemap.xml
