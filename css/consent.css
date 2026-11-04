@@ -70,23 +70,23 @@ body.ib-cookie-dialog-open { overflow: hidden; }
 
 /* Compact, white centered consent card — no fixed square height. */
 .ib-cookie-banner {
-  width: min(94vw, 480px);
+  width: min(94vw, 520px);
   height: auto;
   min-height: 0;
   max-height: 90dvh;
-  padding: 24px 22px 22px;
+  padding: 26px 24px 24px;
   justify-content: flex-start;
   gap: 0;
   border-radius: 18px;
 }
 .ib-cookie-banner h2 {
-  font-size: 19px;
+  font-size: 20px;
   line-height: 1.35;
   text-align: center;
   margin: 0 0 15px;
 }
 .ib-cookie-banner .ib-cookie-copy p {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.65;
   margin: 0 0 23px;
 }
@@ -104,7 +104,7 @@ body.ib-cookie-dialog-open { overflow: hidden; }
   min-height: 44px;
   padding: 10px 5px;
   margin: 0;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   line-height: 1.25;
   white-space: normal;
@@ -118,19 +118,19 @@ body.ib-cookie-dialog-open { overflow: hidden; }
     right: auto;
     bottom: auto;
     transform: translate(-50%, -50%);
-    width: min(94vw, 480px);
+    width: min(94vw, 520px);
     height: auto;
     min-height: 0;
     max-height: 90dvh;
     padding: 20px 16px;
   }
-  .ib-cookie-banner h2 { font-size: 16px; margin-bottom: 12px; }
-  .ib-cookie-banner .ib-cookie-copy p { font-size: 12px; line-height: 1.58; margin-bottom: 18px; }
+  .ib-cookie-banner h2 { font-size: 17px; margin-bottom: 12px; }
+  .ib-cookie-banner .ib-cookie-copy p { font-size: 13px; line-height: 1.58; margin-bottom: 18px; }
   .ib-cookie-banner .ib-cookie-actions { gap: 6px; }
   .ib-cookie-banner .ib-cookie-actions button {
     flex: initial;
     min-height: 42px;
     padding: 9px 3px;
-    font-size: 10.5px;
+    font-size: 11.5px;
   }
 }
